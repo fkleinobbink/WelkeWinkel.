@@ -1,0 +1,38 @@
+name: probe
+
+on:
+  push:
+    branches: [probe]
+    paths: ["probe/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: probe
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run probe
+        run: |
+          if [ -f probe/run.sh ]; then bash probe/run.sh; else node tools/probe.mjs probe/jobs.json probe-out; fi
+      - name: Publish results to probe-results branch
+        run: |
+          cd probe-out
+          git init -q
+          git checkout -q -b probe-results
+          git config user.name "probe-bot"
+          git config user.email "probe-bot@users.noreply.github.com"
+          echo "${GITHUB_SHA}" > _source_sha.txt
+          git add -A
+          git commit -qm "probe ${GITHUB_SHA}"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" probe-results
