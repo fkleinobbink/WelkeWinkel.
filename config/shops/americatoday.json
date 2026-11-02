@@ -1,0 +1,5 @@
+{
+ "strategy": "sitemap",
+ "sitemapInclude": "nl-nl/sitemap_\\d+-product",
+ "urlInclude": "/nl-nl/"
+}

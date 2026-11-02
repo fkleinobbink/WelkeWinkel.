@@ -1,0 +1,7 @@
+{
+ "strategy": "sitemap",
+ "sitemaps": [
+  "https://www.beterbed.nl/sitemap.xml"
+ ],
+ "urlExclude": "/advies/|/inspiratie/|/winkels/|/service/"
+}

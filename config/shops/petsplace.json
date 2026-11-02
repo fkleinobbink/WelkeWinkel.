@@ -1,0 +1,6 @@
+{
+ "strategy": "sitemap",
+ "sitemapInclude": "products_\\d",
+ "concurrency": 6,
+ "delayMs": 120
+}

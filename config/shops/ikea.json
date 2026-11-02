@@ -1,0 +1,7 @@
+{
+ "strategy": "sitemap",
+ "sitemapInclude": "prod-nl-NL",
+ "urlInclude": "/nl/nl/p/",
+ "concurrency": 6,
+ "delayMs": 120
+}

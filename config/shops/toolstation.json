@@ -1,0 +1,7 @@
+{
+ "strategy": "sitemap",
+ "sitemaps": [
+  "https://www.toolstation.nl/sitemap/departments.xml"
+ ],
+ "multi": true
+}

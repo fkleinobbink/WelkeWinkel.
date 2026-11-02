@@ -1,0 +1,7 @@
+{
+ "strategy": "sitemap",
+ "sitemaps": [
+  "https://www.mitra.nl/sitemap"
+ ],
+ "urlInclude": "/product/"
+}

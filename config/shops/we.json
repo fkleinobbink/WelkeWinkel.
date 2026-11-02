@@ -1,0 +1,8 @@
+{
+ "strategy": "sitemap",
+ "sitemaps": [
+  "https://wefashion.com/nl_NL/sitemap_index.xml"
+ ],
+ "sitemapInclude": "nl_NL/sitemap_\\d",
+ "urlInclude": "/nl_NL/"
+}

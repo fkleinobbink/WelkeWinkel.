@@ -50,8 +50,10 @@ const first = (v) => (Array.isArray(v) ? v[0] : v);
 const str = (v) => {
   v = first(v);
   if (v == null) return null;
-  if (typeof v === "object") return v.name || v["@id"] || v.url || null;
-  return String(v).trim() || null;
+  if (typeof v === "object") v = v.name || v["@id"] || v.url || null;
+  if (v == null) return null;
+  const s = String(v).trim();
+  return s ? (s.includes("&") ? decodeHtml(s) : s) : null;
 };
 
 function pickOffer(offers) {
@@ -84,7 +86,7 @@ function normalizeProduct(p, pageUrl) {
   if (image && typeof image === "object") image = image.url || image.contentUrl || null;
   return {
     name,
-    brand: str(p.brand),
+    brand: (b => (b && /^https?:/.test(b) ? null : b))(str(p.brand)),
     price: offer.price ?? null,
     currency: offer.currency || null,
     availability,
@@ -106,9 +108,9 @@ export function productsFromJsonLd(html, pageUrl) {
   for (const n of nodes) {
     if (isType(n, "productgroup") && Array.isArray(n.hasVariant) && n.hasVariant.length) {
       for (const v of n.hasVariant) {
-        const merged = { brand: n.brand, image: n.image, category: n.category, ...v, name: v.name || n.name };
+        const merged = { brand: n.brand, image: n.image, category: n.category, url: n.url, ...v, name: v.name || n.name };
         const p = normalizeProduct(merged, pageUrl);
-        if (p) out.push({ ...p, group_id: n.productGroupID || n.sku || null });
+        if (p) out.push({ ...p, group_id: n.productGroupID || n.sku || null, group_name: str(n.name) });
       }
     } else if (isType(n, "product") || isType(n, "individualproduct") || isType(n, "productmodel") || isType(n, "book") || isType(n, "vehicle")) {
       const p = normalizeProduct(n, pageUrl);
@@ -129,7 +131,8 @@ function meta(html, key) {
 export function decodeHtml(s) {
   return String(s)
     .replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#39;|&#x27;|&apos;/g, "'")
-    .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&#(\d+);/g, (_, d) => String.fromCharCode(+d));
+    .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&nbsp;/g, " ")
+    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(+d)).replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)));
 }
 
 export function productFromMeta(html, pageUrl) {

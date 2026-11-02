@@ -1,0 +1,139 @@
+name: crawl
+
+# Dagelijks alle winkels crawlen en scraper.db bouwen.
+# Handmatig starten kan ook (Actions -> crawl -> Run workflow), eventueel voor een paar winkels.
+on:
+  schedule:
+    - cron: "17 1 * * *"
+  workflow_dispatch:
+    inputs:
+      shops:
+        description: "Komma-lijst met winkel-id's (leeg = alle met config)"
+        required: false
+        default: ""
+      max:
+        description: "Max pagina's per winkel (leeg = alles, handig om te testen)"
+        required: false
+        default: ""
+      minutes:
+        description: "Max minuten per winkel"
+        required: false
+        default: "330"
+  push:
+    branches: [crawl-trigger]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: crawl
+  cancel-in-progress: false
+
+env:
+  GH_TOKEN: ${{ github.token }}
+  RELEASE: data
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      shops: ${{ steps.list.outputs.shops }}
+      max: ${{ steps.list.outputs.max }}
+      minutes: ${{ steps.list.outputs.minutes }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: list
+        run: |
+          SHOPS="${{ github.event.inputs.shops }}"
+          MAX="${{ github.event.inputs.max }}"
+          MINUTES="${{ github.event.inputs.minutes }}"
+          if [ -f trigger.json ] && [ "${{ github.event_name }}" = "push" ]; then
+            SHOPS=$(node -p "require('./trigger.json').shops||''")
+            MAX=$(node -p "require('./trigger.json').max||''")
+            MINUTES=$(node -p "require('./trigger.json').minutes||''")
+          fi
+          node -e '
+            const fs=require("fs");
+            const want=(process.argv[1]||"").split(",").map(s=>s.trim()).filter(Boolean);
+            let ids=fs.readdirSync("config/shops").filter(f=>f.endsWith(".json")).map(f=>f.slice(0,-5))
+              .filter(id=>JSON.parse(fs.readFileSync("config/shops/"+id+".json")).enabled!==false);
+            if(want.length) ids=ids.filter(i=>want.includes(i));
+            fs.appendFileSync(process.env.GITHUB_OUTPUT,"shops="+JSON.stringify(ids)+"\n");
+          ' "$SHOPS"
+          echo "max=$MAX" >> $GITHUB_OUTPUT
+          echo "minutes=${MINUTES:-330}" >> $GITHUB_OUTPUT
+      - name: Release aanmaken als die nog niet bestaat
+        run: gh release view $RELEASE >/dev/null 2>&1 || gh release create $RELEASE --title "Database" --notes "Automatisch bijgewerkt. Download scraper.db.gz voor de volledige database."
+
+  crawl:
+    needs: setup
+    if: needs.setup.outputs.shops != '[]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        shop: ${{ fromJson(needs.setup.outputs.shops) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Install
+        run: if [ -f package-lock.json ]; then npm ci --omit=dev; fi
+      - name: Vorige data ophalen
+        run: gh release download $RELEASE -p "${{ matrix.shop }}.ndjson.gz" -D prev || echo "geen vorige data"
+      - name: Crawl
+        run: |
+          MAX="${{ needs.setup.outputs.max }}"
+          node --max-old-space-size=6000 src/crawl.mjs ${{ matrix.shop }} --prev prev/${{ matrix.shop }}.ndjson.gz --out out \
+            --minutes ${{ needs.setup.outputs.minutes }} ${MAX:+--max $MAX}
+      - name: Uploaden
+        if: always()
+        run: |
+          ls out || exit 0
+          # bij testruns (max gezet) niet de echte data overschrijven
+          if [ -n "${{ needs.setup.outputs.max }}" ]; then
+            for f in out/*; do mv "$f" "${f/out\//out/test-}"; done
+          fi
+          gh release upload $RELEASE out/* --clobber
+
+  build:
+    needs: [setup, crawl]
+    if: always() && needs.setup.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Data ophalen
+        run: |
+          mkdir -p data
+          gh release download $RELEASE -p "*.ndjson.gz" -p "*.report.json" -D data --clobber || true
+          rm -f data/test-*
+          ls data | head -300
+      - name: Filialen (OpenStreetMap)
+        run: node src/stores.mjs data/stores-new.ndjson.gz && mv data/stores-new.ndjson.gz data/stores.ndjson.gz || echo "OSM mislukt, vorige filialen gebruiken"
+      - name: Database bouwen
+        run: |
+          node src/build-db.mjs data scraper.db
+          ls -la scraper.db
+          gzip -kf scraper.db
+      - name: Publiceren
+        run: |
+          gh release upload $RELEASE scraper.db.gz data/stores.ndjson.gz --clobber
+          node -e '
+            const fs=require("fs");
+            const r=fs.readdirSync("data").filter(f=>f.endsWith(".report.json")&&!f.startsWith("test-")).map(f=>JSON.parse(fs.readFileSync("data/"+f)));
+            fs.writeFileSync("reports.json", JSON.stringify(r,null,1));
+          '
+          mkdir -p status && cp STATUS.md reports.json status/
+          cd status && git init -q && git checkout -q -b status
+          git config user.name "crawl-bot" && git config user.email "crawl-bot@users.noreply.github.com"
+          git add -A && git commit -qm "status $(date -u +%F)"
+          git push -qf "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" status
+      - name: Samenvatting
+        run: cat STATUS.md >> $GITHUB_STEP_SUMMARY

@@ -1,0 +1,8 @@
+{
+ "strategy": "sitemap",
+ "sitemaps": [
+  "https://www.msmode.nl/sitemap_index.xml"
+ ],
+ "sitemapInclude": "msmode\\.nl/.*product",
+ "urlInclude": "msmode\\.nl/"
+}
