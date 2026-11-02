@@ -1,3 +1,4 @@
 {
- "strategy": "sitemap"
+ "strategy": "sitemap",
+ "urlInclude": "-\\d{7}-\\d{3}\\.html"
 }

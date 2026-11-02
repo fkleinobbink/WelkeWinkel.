@@ -2,5 +2,6 @@
  "strategy": "sitemap",
  "sitemaps": [
   "https://www.takko.com/nl-nl/sitemap-nl-nl-sitemap.xml"
- ]
+ ],
+ "urlInclude": "/\\d{11}-\\d+\\.html"
 }

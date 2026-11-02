@@ -2,5 +2,6 @@
  "strategy": "sitemap",
  "sitemaps": [
   "https://hoogvliet.nl/sitemap-catalog.xml"
- ]
+ ],
+ "urlInclude": "-\\d{9}/?$"
 }
