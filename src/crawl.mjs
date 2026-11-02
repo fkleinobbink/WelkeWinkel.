@@ -82,7 +82,11 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
   report.sitemapsOpened = opened;
   report.urls = targets.length;
   log(`${shop.id}: ${targets.length} product-URL's uit ${opened} sitemaps`);
-  if (targets.length > max) targets = targets.slice(0, max);
+  if (targets.length > max) {
+    // testmodus: gelijkmatig verspreid over de sitemap, zodat we niet alleen categoriepagina's pakken
+    const step = targets.length / max;
+    targets = Array.from({ length: max }, (_, k) => targets[Math.floor(k * step)]);
+  }
 
   // 2) Vorige run inladen
   const prev = new Map();

@@ -32,8 +32,10 @@ for (const ep of endpoints) {
       signal: AbortSignal.timeout(1000000),
     });
     if (!r.ok) { console.log(ep, r.status); continue; }
-    data = await r.json();
-    console.log("ok via", ep, data.elements.length);
+    const d = await r.json();
+    console.log(ep, d.elements?.length, d.remark || "");
+    if ((d.elements?.length || 0) < 10000) continue; // onvolledig antwoord
+    data = d;
     break;
   } catch (e) { console.log(ep, String(e)); }
 }
