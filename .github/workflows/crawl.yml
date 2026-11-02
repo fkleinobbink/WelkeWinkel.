@@ -87,13 +87,16 @@ jobs:
         run: |
           if grep -q '"engine": *"browser"' config/shops/${{ matrix.shop }}.json; then
             npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+            sudo apt-get install -y xvfb >/dev/null
+            echo "WRAP=xvfb-run -a" >> $GITHUB_ENV
+            echo "HEADFUL=1" >> $GITHUB_ENV
           fi
       - name: Vorige data ophalen
         run: gh release download $RELEASE -p "${{ matrix.shop }}.ndjson.gz" -D prev || echo "geen vorige data"
       - name: Crawl
         run: |
           MAX="${{ needs.setup.outputs.max }}"
-          node --max-old-space-size=6000 src/crawl.mjs ${{ matrix.shop }} --prev prev/${{ matrix.shop }}.ndjson.gz --out out \
+          $WRAP node --max-old-space-size=6000 src/crawl.mjs ${{ matrix.shop }} --prev prev/${{ matrix.shop }}.ndjson.gz --out out \
             --minutes ${{ needs.setup.outputs.minutes }} ${MAX:+--max $MAX}
       - name: Testcontrole
         if: needs.setup.outputs.max != ''

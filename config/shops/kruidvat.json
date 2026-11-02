@@ -1,11 +1,8 @@
 {
- "strategy": "sitemap",
- "engine": "impersonate",
- "impersonate": "chrome",
- "sitemaps": ["https://www.kruidvat.nl/sitemap.xml"],
- "sitemapInclude": "Product-nl-EUR",
- "urlInclude": "/p/",
- "urlExclude": "/p/mp-",
- "concurrency": 4,
- "delayMs": 250
+ "strategy": "adapter",
+ "adapter": "kruidvat",
+ "engine": "browser",
+ "browserOrigin": "https://www.kruidvat.nl",
+ "delayMs": 800,
+ "notes": "Sitemap geeft maar 12k URL's (paginering kapot). Search-API via Chromium. Voorraad per filiaal bestaat (products/{code}/stock?latitude&longitude) maar alleen ~4 winkels per opvraging."
 }

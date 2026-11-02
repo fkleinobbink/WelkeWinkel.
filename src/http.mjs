@@ -32,8 +32,8 @@ export class HttpError extends Error {
 
 // engine: "fetch" (standaard) of "impersonate" (via tools/impersonate_server.py, browser-TLS)
 let ENGINE = { type: "fetch" };
-export function setEngine(type, impersonate = "chrome", port = 8765) {
-  ENGINE = { type, impersonate, port };
+export function setEngine(type, impersonate = "chrome", port = 8765, origin = null) {
+  ENGINE = { type, impersonate, port, origin };
 }
 
 // ---- browser-engine: echte Chromium via Playwright ----
@@ -73,7 +73,7 @@ export async function closeBrowser() {
   if (browserCtx) { try { await browserCtx.browser().close(); } catch {} browserCtx = null; originPages.clear(); }
 }
 async function browserFetch(url, { method, body, timeout, headers }) {
-  const origin = new URL(url).origin;
+  const origin = ENGINE.origin || new URL(url).origin;
   const page = await originPage(origin);
   const r = await page.evaluate(async ([u, m, b, h, t]) => {
     const ctl = new AbortController();
