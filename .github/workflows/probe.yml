@@ -26,8 +26,9 @@ jobs:
         run: |
           if [ -f probe/run.sh ]; then bash probe/run.sh; else node tools/probe.mjs probe/jobs.json probe-out; fi
       - name: Publish results to probe-results branch
+        if: always()
         run: |
-          cd probe-out
+          mkdir -p probe-out && cd probe-out
           git init -q
           git checkout -q -b probe-results
           git config user.name "probe-bot"

@@ -2,9 +2,15 @@
 
 export function jsonLdBlocks(html) {
   const out = [];
-  const re = /<script[^>]+type=["']?application\/ld\+json["']?[^>]*>([\s\S]*?)<\/script>/gi;
-  for (const m of html.matchAll(re)) {
-    const raw = m[1].trim().replace(/^<!--|-->$/g, "");
+  let pos = 0;
+  while (true) {
+    const i = html.indexOf("application/ld+json", pos);
+    if (i < 0) break;
+    const a = html.indexOf(">", i);
+    const b = html.indexOf("</script>", a);
+    if (a < 0 || b < 0) break;
+    pos = b;
+    const raw = html.slice(a + 1, b).trim().replace(/^<!--|-->$/g, "");
     try {
       out.push(JSON.parse(raw));
     } catch {

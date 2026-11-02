@@ -31,7 +31,8 @@ export async function discover(shop, { log = console.log } = {}) {
   const origin = `https://${shop.domain}`;
   const rep = { id: shop.id, name: shop.name, origin, steps: [], sitemaps: [], productSitemaps: [], samples: [], verdict: null };
   const home = await tryGet(origin + "/");
-  rep.home = { status: home.status, block: blockSignal(home.text, home.status), finalUrl: home.url, bytes: home.text.length, nextjs: !!nextData(home.text || "") };
+  const homeText = home.text || "";
+  rep.home = { status: home.status, block: blockSignal(home.text, home.status), finalUrl: home.url, bytes: home.text.length, nextjs: homeText.includes("__NEXT_DATA__") };
   const robots = await robotsSitemaps(origin);
   rep.robotsSitemaps = robots.sitemaps;
   rep.robotsDisallowAll = /^\s*user-agent:\s*\*\s*$[\s\S]*?^\s*disallow:\s*\/\s*$/im.test(robots.text);
@@ -53,7 +54,8 @@ export async function discover(shop, { log = console.log } = {}) {
     const r = await tryGet(loc, { timeout: 60000 });
     opened++;
     if (!r.ok) { rep.sitemaps.push({ loc, status: r.status, error: r.error }); continue; }
-    const { isIndex, entries } = parseSitemap(r.text);
+    const { isIndex, entries } = parseSitemap(r.text, 20000);
+    r.text = null;
     rep.sitemaps.push({ loc, isIndex, entries: entries.length, sample: entries.slice(0, 3).map((e) => e.loc) });
     if (isIndex) {
       if (depth < 3) entries.forEach((e) => queue.push({ loc: e.loc, depth: depth + 1 }));
@@ -129,7 +131,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const queue = [...list];
   const summary = [];
   await Promise.all(
-    Array.from({ length: 12 }, async () => {
+    Array.from({ length: 8 }, async () => {
       while (queue.length) {
         const s = queue.shift();
         const t = Date.now();

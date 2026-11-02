@@ -14,16 +14,38 @@ export async function robotsSitemaps(origin) {
 const decode = (s) =>
   s.replace(/<!\[CDATA\[(.*?)\]\]>/gs, "$1").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").trim();
 
-export function parseSitemap(xml) {
-  const isIndex = /<sitemapindex[\s>]/i.test(xml);
-  const blocks = xml.split(isIndex ? /<sitemap[\s>]/i : /<url[\s>]/i).slice(1);
+function tag(block, name) {
+  const a = block.indexOf(`<${name}>`);
+  if (a < 0) return null;
+  const b = block.indexOf(`</${name}>`, a);
+  if (b < 0) return null;
+  return decode(block.slice(a + name.length + 2, b));
+}
+
+// Zonder grote regexen (sitemaps kunnen 50MB zijn); limit = max aantal entries
+export function parseSitemap(xml, limit = Infinity) {
+  const head = xml.slice(0, 5000);
+  const isIndex = /<(\w+:)?sitemapindex[\s>]/i.test(head);
+  const open = isIndex ? "<sitemap" : "<url";
+  const close = isIndex ? "</sitemap>" : "</url>";
+  // namespace-prefix (bijv. <ns:url>) normaliseren
+  if (!xml.includes(open + ">") && !xml.includes(open + " ") && /<\w+:(url|sitemap)[\s>]/.test(head + xml.slice(0, 20000))) {
+    xml = xml.replace(/<(\/?)\w+:(urlset|url|loc|lastmod|sitemapindex|sitemap)\b/g, "<$1$2");
+  }
   const entries = [];
-  for (const b of blocks) {
-    const loc = b.match(/<loc>([\s\S]*?)<\/loc>/i);
+  let pos = 0;
+  while (entries.length < limit) {
+    let a = xml.indexOf(open, pos);
+    if (a < 0) break;
+    const ch = xml[a + open.length];
+    if (ch !== ">" && ch !== " " && ch !== "\n" && ch !== "\t" && ch !== "\r") { pos = a + open.length; continue; }
+    const b = xml.indexOf(close, a);
+    if (b < 0) break;
+    const block = xml.slice(a, b);
+    pos = b + close.length;
+    const loc = tag(block, "loc");
     if (!loc) continue;
-    const lastmod = b.match(/<lastmod>([\s\S]*?)<\/lastmod>/i);
-    const img = b.match(/<image:loc>([\s\S]*?)<\/image:loc>/i);
-    entries.push({ loc: decode(loc[1]), lastmod: lastmod ? decode(lastmod[1]) : null, image: img ? decode(img[1]) : null });
+    entries.push({ loc, lastmod: tag(block, "lastmod"), image: tag(block, "image:loc") });
   }
   return { isIndex, entries };
 }
