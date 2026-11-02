@@ -1,0 +1,11 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": ["https://www.kruidvat.nl/sitemap.xml"],
+ "sitemapInclude": "Product-nl-EUR",
+ "urlInclude": "/p/",
+ "urlExclude": "/p/mp-",
+ "concurrency": 4,
+ "delayMs": 250
+}
