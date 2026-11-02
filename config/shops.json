@@ -1,0 +1,1335 @@
+[
+ {
+  "id": "ah",
+  "name": "Albert Heijn",
+  "domain": "www.ah.nl",
+  "category": "supermarkt",
+  "osm_brands": [
+   "Albert Heijn",
+   "Albert Heijn to go",
+   "Albert Heijn XL"
+  ],
+  "osm_wikidata": [
+   "Q1653985",
+   "Q77971185",
+   "Q78163765"
+  ],
+  "osm_store_count": 1205
+ },
+ {
+  "id": "jumbo",
+  "name": "Jumbo",
+  "domain": "www.jumbo.com",
+  "category": "supermarkt",
+  "osm_brands": [
+   "Jumbo",
+   "Jumbo City"
+  ],
+  "osm_wikidata": [
+   "Q124846605",
+   "Q2262314"
+  ],
+  "osm_store_count": 680
+ },
+ {
+  "id": "lidl",
+  "name": "Lidl",
+  "domain": "www.lidl.nl",
+  "category": "supermarkt",
+  "osm_brands": [
+   "Lidl"
+  ],
+  "osm_wikidata": [
+   "Q151954"
+  ],
+  "osm_store_count": 438
+ },
+ {
+  "id": "aldi",
+  "name": "ALDI",
+  "domain": "www.aldi.nl",
+  "category": "supermarkt",
+  "osm_brands": [
+   "ALDI"
+  ],
+  "osm_wikidata": [
+   "Q41171373"
+  ],
+  "osm_store_count": 467
+ },
+ {
+  "id": "plus",
+  "name": "PLUS",
+  "domain": "www.plus.nl",
+  "category": "supermarkt",
+  "osm_brands": [
+   "PLUS"
+  ],
+  "osm_wikidata": [
+   "Q1978981",
+   "Q2390074"
+  ],
+  "osm_store_count": 435
+ },
+ {
+  "id": "dirk",
+  "name": "Dirk",
+  "domain": "www.dirk.nl",
+  "category": "supermarkt",
+  "osm_brands": [
+   "Dirk"
+  ],
+  "osm_wikidata": [
+   "Q17502722"
+  ],
+  "osm_store_count": 131
+ },
+ {
+  "id": "spar",
+  "name": "SPAR",
+  "domain": "www.spar.nl",
+  "category": "supermarkt",
+  "osm_brands": [
+   "SPAR",
+   "SPAR express",
+   "SPAR city"
+  ],
+  "osm_wikidata": [
+   "Q12321004",
+   "Q124630664",
+   "Q610492"
+  ],
+  "osm_store_count": 346
+ },
+ {
+  "id": "vomar",
+  "name": "Vomar",
+  "domain": "www.vomar.nl",
+  "category": "supermarkt",
+  "osm_brands": [
+   "Vomar"
+  ],
+  "osm_wikidata": [
+   "Q3202837"
+  ],
+  "osm_store_count": 104
+ },
+ {
+  "id": "dekamarkt",
+  "name": "DekaMarkt",
+  "domain": "www.dekamarkt.nl",
+  "category": "supermarkt",
+  "osm_brands": [
+   "DekaMarkt"
+  ],
+  "osm_wikidata": [
+   "Q2489350"
+  ],
+  "osm_store_count": 103
+ },
+ {
+  "id": "hoogvliet",
+  "name": "Hoogvliet",
+  "domain": "www.hoogvliet.com",
+  "category": "supermarkt",
+  "osm_brands": [
+   "Hoogvliet"
+  ],
+  "osm_wikidata": [
+   "Q2770647"
+  ],
+  "osm_store_count": 79
+ },
+ {
+  "id": "poiesz",
+  "name": "Poiesz",
+  "domain": "www.poiesz-supermarkten.nl",
+  "category": "supermarkt",
+  "osm_brands": [
+   "Poiesz"
+  ],
+  "osm_wikidata": [
+   "Q2521700"
+  ],
+  "osm_store_count": 85
+ },
+ {
+  "id": "ekoplaza",
+  "name": "Ekoplaza",
+  "domain": "www.ekoplaza.nl",
+  "category": "supermarkt",
+  "osm_brands": [
+   "Ekoplaza"
+  ],
+  "osm_wikidata": [
+   "Q47017915"
+  ],
+  "osm_store_count": 79
+ },
+ {
+  "id": "nettorama",
+  "name": "Nettorama",
+  "domain": "www.nettorama.nl",
+  "category": "supermarkt",
+  "osm_brands": [
+   "Nettorama"
+  ],
+  "osm_wikidata": [
+   "Q1828639"
+  ],
+  "osm_store_count": 85
+ },
+ {
+  "id": "boni",
+  "name": "Boni",
+  "domain": "www.bonisupermarkt.nl",
+  "category": "supermarkt",
+  "osm_brands": [
+   "Boni"
+  ],
+  "osm_wikidata": [
+   "Q4380634"
+  ],
+  "osm_store_count": 1
+ },
+ {
+  "id": "boons",
+  "name": "Boon's Markt",
+  "domain": "www.boonsmarkt.nl",
+  "category": "supermarkt",
+  "osm_brands": [
+   "Boon's Markt",
+   "Boon's Dagmarkt"
+  ],
+  "osm_wikidata": [
+   "Q125560633",
+   "Q97704873"
+  ],
+  "osm_store_count": 42
+ },
+ {
+  "id": "odin",
+  "name": "Odin",
+  "domain": "www.odin.nl",
+  "category": "supermarkt",
+  "osm_brands": [
+   "Odin"
+  ],
+  "osm_wikidata": [
+   "Q114839627"
+  ],
+  "osm_store_count": 40
+ },
+ {
+  "id": "sligro",
+  "name": "Sligro",
+  "domain": "www.sligro.nl",
+  "category": "groothandel",
+  "osm_brands": [
+   "Sligro"
+  ],
+  "osm_wikidata": [
+   "Q3170052"
+  ],
+  "osm_store_count": 44
+ },
+ {
+  "id": "makro",
+  "name": "Makro",
+  "domain": "www.makro.nl",
+  "category": "groothandel",
+  "osm_brands": [
+   "Makro"
+  ],
+  "osm_wikidata": [
+   "Q704606"
+  ],
+  "osm_store_count": 16
+ },
+ {
+  "id": "hanos",
+  "name": "HANOS",
+  "domain": "www.hanos.nl",
+  "category": "groothandel",
+  "osm_brands": [
+   "HANOS"
+  ],
+  "osm_wikidata": [
+   "Q2457982"
+  ],
+  "osm_store_count": 19
+ },
+ {
+  "id": "kruidvat",
+  "name": "Kruidvat",
+  "domain": "www.kruidvat.nl",
+  "category": "drogist",
+  "osm_brands": [
+   "Kruidvat"
+  ],
+  "osm_wikidata": [
+   "Q2226366"
+  ],
+  "osm_store_count": 988
+ },
+ {
+  "id": "etos",
+  "name": "Etos",
+  "domain": "www.etos.nl",
+  "category": "drogist",
+  "osm_brands": [
+   "Etos"
+  ],
+  "osm_wikidata": [
+   "Q2609459"
+  ],
+  "osm_store_count": 490
+ },
+ {
+  "id": "da",
+  "name": "DA",
+  "domain": "www.da.nl",
+  "category": "drogist",
+  "osm_brands": [
+   "DA"
+  ],
+  "osm_wikidata": [
+   "Q4899756"
+  ],
+  "osm_store_count": 204
+ },
+ {
+  "id": "trekpleister",
+  "name": "Trekpleister",
+  "domain": "www.trekpleister.nl",
+  "category": "drogist",
+  "osm_brands": [
+   "Trekpleister"
+  ],
+  "osm_wikidata": [
+   "Q2551576"
+  ],
+  "osm_store_count": 186
+ },
+ {
+  "id": "hollandbarrett",
+  "name": "Holland & Barrett",
+  "domain": "www.hollandandbarrett.nl",
+  "category": "drogist",
+  "osm_brands": [
+   "Holland & Barrett"
+  ],
+  "osm_wikidata": [
+   "Q5880870"
+  ],
+  "osm_store_count": 194
+ },
+ {
+  "id": "iciparisxl",
+  "name": "ICI PARIS XL",
+  "domain": "www.iciparisxl.nl",
+  "category": "parfumerie",
+  "osm_brands": [
+   "ICI PARIS XL"
+  ],
+  "osm_wikidata": [
+   "Q769749"
+  ],
+  "osm_store_count": 141
+ },
+ {
+  "id": "douglas",
+  "name": "Douglas",
+  "domain": "www.douglas.nl",
+  "category": "parfumerie",
+  "osm_brands": [
+   "Douglas"
+  ],
+  "osm_wikidata": [
+   "Q2052213",
+   "Q570747"
+  ],
+  "osm_store_count": 90
+ },
+ {
+  "id": "rituals",
+  "name": "Rituals",
+  "domain": "www.rituals.com",
+  "category": "cosmetica",
+  "osm_brands": [
+   "Rituals"
+  ],
+  "osm_wikidata": [
+   "Q62874140"
+  ],
+  "osm_store_count": 99
+ },
+ {
+  "id": "normal",
+  "name": "Normal",
+  "domain": "www.normalstores.com",
+  "category": "drogist",
+  "osm_brands": [
+   "Normal"
+  ],
+  "osm_wikidata": [
+   "Q19562429"
+  ],
+  "osm_store_count": 38
+ },
+ {
+  "id": "lush",
+  "name": "Lush",
+  "domain": "www.lush.com",
+  "category": "cosmetica",
+  "osm_brands": [
+   "Lush"
+  ],
+  "osm_wikidata": [
+   "Q1585448"
+  ],
+  "osm_store_count": 10
+ },
+ {
+  "id": "gall",
+  "name": "Gall & Gall",
+  "domain": "www.gall.nl",
+  "category": "drank",
+  "osm_brands": [
+   "Gall & Gall",
+   "Gall & Gall Gemak"
+  ],
+  "osm_wikidata": [
+   "Q130477874",
+   "Q13639185"
+  ],
+  "osm_store_count": 491
+ },
+ {
+  "id": "mitra",
+  "name": "Mitra",
+  "domain": "www.mitra.nl",
+  "category": "drank",
+  "osm_brands": [
+   "Mitra"
+  ],
+  "osm_wikidata": [
+   "Q109186241"
+  ],
+  "osm_store_count": 78
+ },
+ {
+  "id": "hema",
+  "name": "HEMA",
+  "domain": "www.hema.nl",
+  "category": "warenhuis",
+  "osm_brands": [
+   "HEMA"
+  ],
+  "osm_wikidata": [
+   "Q903805"
+  ],
+  "osm_store_count": 557
+ },
+ {
+  "id": "action",
+  "name": "Action",
+  "domain": "www.action.com",
+  "category": "warenhuis",
+  "osm_brands": [
+   "Action"
+  ],
+  "osm_wikidata": [
+   "Q2634111"
+  ],
+  "osm_store_count": 418
+ },
+ {
+  "id": "xenos",
+  "name": "Xenos",
+  "domain": "www.xenos.nl",
+  "category": "wonen",
+  "osm_brands": [
+   "Xenos"
+  ],
+  "osm_wikidata": [
+   "Q16547960"
+  ],
+  "osm_store_count": 157
+ },
+ {
+  "id": "blokker",
+  "name": "Blokker",
+  "domain": "www.blokker.nl",
+  "category": "huishoud",
+  "osm_brands": [
+   "Blokker"
+  ],
+  "osm_wikidata": [
+   "Q33903645"
+  ],
+  "osm_store_count": 57
+ },
+ {
+  "id": "bigbazar",
+  "name": "Big Bazar",
+  "domain": "www.bigbazar.eu",
+  "category": "warenhuis",
+  "osm_brands": [
+   "Big Bazar"
+  ],
+  "osm_wikidata": [
+   "Q15873104"
+  ],
+  "osm_store_count": 10
+ },
+ {
+  "id": "flyingtiger",
+  "name": "Flying Tiger Copenhagen",
+  "domain": "flyingtiger.com",
+  "category": "warenhuis",
+  "osm_brands": [
+   "Flying Tiger Copenhagen"
+  ],
+  "osm_wikidata": [
+   "Q2786319"
+  ],
+  "osm_store_count": 21
+ },
+ {
+  "id": "sostrenegrene",
+  "name": "Søstrene Grene",
+  "domain": "sostrenegrene.com",
+  "category": "wonen",
+  "osm_brands": [
+   "Søstrene Grene"
+  ],
+  "osm_wikidata": [
+   "Q10730152"
+  ],
+  "osm_store_count": 20
+ },
+ {
+  "id": "dillekamille",
+  "name": "Dille & Kamille",
+  "domain": "www.dille-kamille.nl",
+  "category": "wonen",
+  "osm_brands": [
+   "Dille & Kamille"
+  ],
+  "osm_wikidata": [
+   "Q65154379"
+  ],
+  "osm_store_count": 32
+ },
+ {
+  "id": "solow",
+  "name": "SoLow",
+  "domain": "www.solow.nl",
+  "category": "warenhuis",
+  "osm_brands": [
+   "SoLow"
+  ],
+  "osm_wikidata": [
+   "Q114243473"
+  ],
+  "osm_store_count": 45
+ },
+ {
+  "id": "diegrenze",
+  "name": "Die Grenze",
+  "domain": "www.diegrenze.nl",
+  "category": "warenhuis",
+  "osm_brands": [
+   "Die Grenze"
+  ],
+  "osm_wikidata": [
+   "Q100278556"
+  ],
+  "osm_store_count": 58
+ },
+ {
+  "id": "wibra",
+  "name": "Wibra",
+  "domain": "www.wibra.nl",
+  "category": "warenhuis",
+  "osm_brands": [
+   "Wibra"
+  ],
+  "osm_wikidata": [
+   "Q943405"
+  ],
+  "osm_store_count": 224
+ },
+ {
+  "id": "bruna",
+  "name": "Bruna",
+  "domain": "www.bruna.nl",
+  "category": "boeken",
+  "osm_brands": [
+   "Bruna"
+  ],
+  "osm_wikidata": [
+   "Q3317555"
+  ],
+  "osm_store_count": 266
+ },
+ {
+  "id": "primera",
+  "name": "Primera",
+  "domain": "www.primera.nl",
+  "category": "boeken",
+  "osm_brands": [
+   "Primera"
+  ],
+  "osm_wikidata": [
+   "Q2176149"
+  ],
+  "osm_store_count": 544
+ },
+ {
+  "id": "readshop",
+  "name": "ReadShop",
+  "domain": "www.readshop.nl",
+  "category": "boeken",
+  "osm_brands": [
+   "ReadShop"
+  ],
+  "osm_wikidata": [
+   "Q114905224"
+  ],
+  "osm_store_count": 131
+ },
+ {
+  "id": "boekenvoordeel",
+  "name": "Boekenvoordeel",
+  "domain": "www.boekenvoordeel.nl",
+  "category": "boeken",
+  "osm_brands": [
+   "Boekenvoordeel"
+  ],
+  "osm_wikidata": [
+   "Q3345649"
+  ],
+  "osm_store_count": 54
+ },
+ {
+  "id": "praxis",
+  "name": "Praxis",
+  "domain": "www.praxis.nl",
+  "category": "bouwmarkt",
+  "osm_brands": [
+   "Praxis"
+  ],
+  "osm_wikidata": [
+   "Q2741995"
+  ],
+  "osm_store_count": 170
+ },
+ {
+  "id": "gamma",
+  "name": "Gamma",
+  "domain": "www.gamma.nl",
+  "category": "bouwmarkt",
+  "osm_brands": [
+   "Gamma"
+  ],
+  "osm_wikidata": [
+   "Q2294120"
+  ],
+  "osm_store_count": 162
+ },
+ {
+  "id": "karwei",
+  "name": "Karwei",
+  "domain": "www.karwei.nl",
+  "category": "bouwmarkt",
+  "osm_brands": [
+   "Karwei"
+  ],
+  "osm_wikidata": [
+   "Q2097480"
+  ],
+  "osm_store_count": 128
+ },
+ {
+  "id": "hubo",
+  "name": "Hubo",
+  "domain": "www.hubo.nl",
+  "category": "bouwmarkt",
+  "osm_brands": [
+   "Hubo"
+  ],
+  "osm_wikidata": [
+   "Q5473953"
+  ],
+  "osm_store_count": 133
+ },
+ {
+  "id": "hornbach",
+  "name": "HORNBACH",
+  "domain": "www.hornbach.nl",
+  "category": "bouwmarkt",
+  "osm_brands": [
+   "HORNBACH",
+   "Hornbach"
+  ],
+  "osm_wikidata": [
+   "Q685926"
+  ],
+  "osm_store_count": 19
+ },
+ {
+  "id": "toolstation",
+  "name": "Toolstation",
+  "domain": "www.toolstation.nl",
+  "category": "bouwmarkt",
+  "osm_brands": [
+   "Toolstation"
+  ],
+  "osm_wikidata": [
+   "Q7824103"
+  ],
+  "osm_store_count": 94
+ },
+ {
+  "id": "bauhaus",
+  "name": "Bauhaus",
+  "domain": "nl.bauhaus",
+  "category": "bouwmarkt",
+  "osm_brands": [
+   "Bauhaus"
+  ],
+  "osm_wikidata": [
+   "Q672043"
+  ],
+  "osm_store_count": 4
+ },
+ {
+  "id": "welkoop",
+  "name": "Welkoop",
+  "domain": "www.welkoop.nl",
+  "category": "tuin & dier",
+  "osm_brands": [
+   "Welkoop"
+  ],
+  "osm_wikidata": [
+   "Q72799253"
+  ],
+  "osm_store_count": 167
+ },
+ {
+  "id": "intratuin",
+  "name": "Intratuin",
+  "domain": "www.intratuin.nl",
+  "category": "tuin & dier",
+  "osm_brands": [
+   "Intratuin"
+  ],
+  "osm_wikidata": [
+   "Q2927176"
+  ],
+  "osm_store_count": 57
+ },
+ {
+  "id": "groenrijk",
+  "name": "GroenRijk",
+  "domain": "www.groenrijk.nl",
+  "category": "tuin & dier",
+  "osm_brands": [
+   "GroenRijk"
+  ],
+  "osm_wikidata": [
+   "Q2738788"
+  ],
+  "osm_store_count": 20
+ },
+ {
+  "id": "petsplace",
+  "name": "Pets Place",
+  "domain": "www.petsplace.nl",
+  "category": "tuin & dier",
+  "osm_brands": [
+   "Pets Place",
+   "Pets Place - Boerenbond"
+  ],
+  "osm_wikidata": [
+   "Q116951772",
+   "Q2403854"
+  ],
+  "osm_store_count": 107
+ },
+ {
+  "id": "maxizoo",
+  "name": "Maxi Zoo",
+  "domain": "www.maxizoo.nl",
+  "category": "tuin & dier",
+  "osm_brands": [
+   "Maxi Zoo"
+  ],
+  "osm_wikidata": [
+   "Q108403242"
+  ],
+  "osm_store_count": 69
+ },
+ {
+  "id": "ranzijn",
+  "name": "Ranzijn",
+  "domain": "www.ranzijn.nl",
+  "category": "tuin & dier",
+  "osm_brands": [
+   "Ranzijn tuin & dier"
+  ],
+  "osm_wikidata": [
+   "Q121527228"
+  ],
+  "osm_store_count": 16
+ },
+ {
+  "id": "ikea",
+  "name": "IKEA",
+  "domain": "www.ikea.com",
+  "category": "wonen",
+  "osm_brands": [
+   "IKEA"
+  ],
+  "osm_wikidata": [
+   "Q54078"
+  ],
+  "osm_store_count": 15
+ },
+ {
+  "id": "jysk",
+  "name": "JYSK",
+  "domain": "jysk.nl",
+  "category": "wonen",
+  "osm_brands": [
+   "JYSK"
+  ],
+  "osm_wikidata": [
+   "Q138913"
+  ],
+  "osm_store_count": 110
+ },
+ {
+  "id": "kwantum",
+  "name": "Kwantum",
+  "domain": "www.kwantum.nl",
+  "category": "wonen",
+  "osm_brands": [
+   "Kwantum"
+  ],
+  "osm_wikidata": [
+   "Q2262591"
+  ],
+  "osm_store_count": 97
+ },
+ {
+  "id": "leenbakker",
+  "name": "Leen Bakker",
+  "domain": "www.leenbakker.nl",
+  "category": "wonen",
+  "osm_brands": [
+   "Leen Bakker"
+  ],
+  "osm_wikidata": [
+   "Q3333662"
+  ],
+  "osm_store_count": 90
+ },
+ {
+  "id": "beterbed",
+  "name": "Beter Bed",
+  "domain": "www.beterbed.nl",
+  "category": "wonen",
+  "osm_brands": [
+   "Beter Bed"
+  ],
+  "osm_wikidata": [
+   "Q831076"
+  ],
+  "osm_store_count": 85
+ },
+ {
+  "id": "swisssense",
+  "name": "Swiss Sense",
+  "domain": "www.swisssense.nl",
+  "category": "wonen",
+  "osm_brands": [
+   "Swiss Sense"
+  ],
+  "osm_wikidata": [
+   "Q110908101"
+  ],
+  "osm_store_count": 37
+ },
+ {
+  "id": "thuisin",
+  "name": "Thuisin",
+  "domain": "thuisin.nl",
+  "category": "wonen",
+  "osm_brands": [
+   "Thuisin"
+  ],
+  "osm_wikidata": [
+   "Q140700802"
+  ],
+  "osm_store_count": 52
+ },
+ {
+  "id": "mediamarkt",
+  "name": "MediaMarkt",
+  "domain": "www.mediamarkt.nl",
+  "category": "elektronica",
+  "osm_brands": [
+   "MediaMarkt"
+  ],
+  "osm_wikidata": [
+   "Q2381223"
+  ],
+  "osm_store_count": 53
+ },
+ {
+  "id": "coolblue",
+  "name": "Coolblue",
+  "domain": "www.coolblue.nl",
+  "category": "elektronica",
+  "osm_brands": [
+   "Coolblue"
+  ],
+  "osm_wikidata": [
+   "Q4992516"
+  ],
+  "osm_store_count": 21
+ },
+ {
+  "id": "expert",
+  "name": "Expert",
+  "domain": "www.expert.nl",
+  "category": "elektronica",
+  "osm_brands": [
+   "Expert"
+  ],
+  "osm_wikidata": [
+   "Q2298792",
+   "Q680990"
+  ],
+  "osm_store_count": 120
+ },
+ {
+  "id": "ep",
+  "name": "EP:",
+  "domain": "www.ep.nl",
+  "category": "elektronica",
+  "osm_brands": [
+   "EP:"
+  ],
+  "osm_wikidata": [
+   "Q110271192"
+  ],
+  "osm_store_count": 70
+ },
+ {
+  "id": "amac",
+  "name": "Amac",
+  "domain": "www.amac.nl",
+  "category": "elektronica",
+  "osm_brands": [
+   "Amac"
+  ],
+  "osm_wikidata": [
+   "Q109187530"
+  ],
+  "osm_store_count": 49
+ },
+ {
+  "id": "intertoys",
+  "name": "Intertoys",
+  "domain": "www.intertoys.nl",
+  "category": "speelgoed",
+  "osm_brands": [
+   "Intertoys"
+  ],
+  "osm_wikidata": [
+   "Q1891407"
+  ],
+  "osm_store_count": 175
+ },
+ {
+  "id": "top1toys",
+  "name": "Top1Toys",
+  "domain": "www.top1toys.nl",
+  "category": "speelgoed",
+  "osm_brands": [
+   "Top1Toys"
+  ],
+  "osm_wikidata": [
+   "Q130312768"
+  ],
+  "osm_store_count": 80
+ },
+ {
+  "id": "decathlon",
+  "name": "Decathlon",
+  "domain": "www.decathlon.nl",
+  "category": "sport",
+  "osm_brands": [
+   "Decathlon"
+  ],
+  "osm_wikidata": [
+   "Q509349"
+  ],
+  "osm_store_count": 22
+ },
+ {
+  "id": "intersport",
+  "name": "Intersport",
+  "domain": "www.intersport.nl",
+  "category": "sport",
+  "osm_brands": [
+   "Intersport"
+  ],
+  "osm_wikidata": [
+   "Q666888"
+  ],
+  "osm_store_count": 36
+ },
+ {
+  "id": "sport2000",
+  "name": "Sport 2000",
+  "domain": "www.sport2000.nl",
+  "category": "sport",
+  "osm_brands": [
+   "Sport 2000"
+  ],
+  "osm_wikidata": [
+   "Q262394"
+  ],
+  "osm_store_count": 43
+ },
+ {
+  "id": "bever",
+  "name": "Bever",
+  "domain": "www.bever.nl",
+  "category": "sport",
+  "osm_brands": [
+   "Bever"
+  ],
+  "osm_wikidata": [
+   "Q123596881"
+  ],
+  "osm_store_count": 40
+ },
+ {
+  "id": "anwb",
+  "name": "ANWB",
+  "domain": "www.anwb.nl",
+  "category": "sport",
+  "osm_brands": [
+   "ANWB"
+  ],
+  "osm_wikidata": [
+   "Q2646455"
+  ],
+  "osm_store_count": 75
+ },
+ {
+  "id": "run2day",
+  "name": "Run2Day",
+  "domain": "www.run2day.nl",
+  "category": "sport",
+  "osm_brands": [
+   "Run2Day"
+  ],
+  "osm_wikidata": [
+   "Q124628974"
+  ],
+  "osm_store_count": 17
+ },
+ {
+  "id": "halfords",
+  "name": "Halfords",
+  "domain": "www.halfords.nl",
+  "category": "fiets",
+  "osm_brands": [
+   "Halfords"
+  ],
+  "osm_wikidata": [
+   "Q133455696"
+  ],
+  "osm_store_count": 14
+ },
+ {
+  "id": "partspoint",
+  "name": "PartsPoint",
+  "domain": "www.partspoint.nl",
+  "category": "auto",
+  "osm_brands": [
+   "PartsPoint"
+  ],
+  "osm_wikidata": [
+   "Q127859868"
+  ],
+  "osm_store_count": 92
+ },
+ {
+  "id": "zeeman",
+  "name": "Zeeman",
+  "domain": "www.zeeman.com",
+  "category": "kleding",
+  "osm_brands": [
+   "Zeeman"
+  ],
+  "osm_wikidata": [
+   "Q184399"
+  ],
+  "osm_store_count": 387
+ },
+ {
+  "id": "shoeby",
+  "name": "Shoeby",
+  "domain": "www.shoeby.nl",
+  "category": "kleding",
+  "osm_brands": [
+   "Shoeby"
+  ],
+  "osm_wikidata": [
+   "Q109186138"
+  ],
+  "osm_store_count": 224
+ },
+ {
+  "id": "terstal",
+  "name": "terStal",
+  "domain": "www.terstal.nl",
+  "category": "kleding",
+  "osm_brands": [
+   "terStal"
+  ],
+  "osm_wikidata": [
+   "Q114905394"
+  ],
+  "osm_store_count": 177
+ },
+ {
+  "id": "scapino",
+  "name": "Scapino",
+  "domain": "www.scapino.nl",
+  "category": "schoenen",
+  "osm_brands": [
+   "Scapino"
+  ],
+  "osm_wikidata": [
+   "Q2298792"
+  ],
+  "osm_store_count": 168
+ },
+ {
+  "id": "hunkemoller",
+  "name": "Hunkemöller",
+  "domain": "www.hunkemoller.nl",
+  "category": "kleding",
+  "osm_brands": [
+   "Hunkemöller"
+  ],
+  "osm_wikidata": [
+   "Q2604175"
+  ],
+  "osm_store_count": 149
+ },
+ {
+  "id": "vanharen",
+  "name": "vanHaren",
+  "domain": "www.vanharen.nl",
+  "category": "schoenen",
+  "osm_brands": [
+   "vanHaren"
+  ],
+  "osm_wikidata": [
+   "Q62390668"
+  ],
+  "osm_store_count": 129
+ },
+ {
+  "id": "hm",
+  "name": "H&M",
+  "domain": "www2.hm.com",
+  "category": "kleding",
+  "osm_brands": [
+   "H&M"
+  ],
+  "osm_wikidata": [
+   "Q188326"
+  ],
+  "osm_store_count": 82
+ },
+ {
+  "id": "ca",
+  "name": "C&A",
+  "domain": "www.c-and-a.com",
+  "category": "kleding",
+  "osm_brands": [
+   "C&A"
+  ],
+  "osm_wikidata": [
+   "Q701338"
+  ],
+  "osm_store_count": 95
+ },
+ {
+  "id": "primark",
+  "name": "Primark",
+  "domain": "www.primark.com",
+  "category": "kleding",
+  "osm_brands": [
+   "Primark"
+  ],
+  "osm_wikidata": [
+   "Q137023"
+  ],
+  "osm_store_count": 19
+ },
+ {
+  "id": "zara",
+  "name": "Zara",
+  "domain": "www.zara.com",
+  "category": "kleding",
+  "osm_brands": [
+   "Zara"
+  ],
+  "osm_wikidata": [
+   "Q147662"
+  ],
+  "osm_store_count": 28
+ },
+ {
+  "id": "we",
+  "name": "WE Fashion",
+  "domain": "www.wefashion.com",
+  "category": "kleding",
+  "osm_brands": [
+   "WE"
+  ],
+  "osm_wikidata": [
+   "Q1987861"
+  ],
+  "osm_store_count": 86
+ },
+ {
+  "id": "jeanscentre",
+  "name": "Jeans Centre",
+  "domain": "www.jeanscentre.nl",
+  "category": "kleding",
+  "osm_brands": [
+   "Jeans Centre"
+  ],
+  "osm_wikidata": [
+   "Q114966094"
+  ],
+  "osm_store_count": 87
+ },
+ {
+  "id": "kik",
+  "name": "KiK",
+  "domain": "www.kik.nl",
+  "category": "kleding",
+  "osm_brands": [
+   "KiK"
+  ],
+  "osm_wikidata": [
+   "Q883965"
+  ],
+  "osm_store_count": 85
+ },
+ {
+  "id": "takko",
+  "name": "Takko Fashion",
+  "domain": "www.takko.com",
+  "category": "kleding",
+  "osm_brands": [
+   "Takko Fashion"
+  ],
+  "osm_wikidata": [
+   "Q1371302"
+  ],
+  "osm_store_count": 88
+ },
+ {
+  "id": "thesting",
+  "name": "The Sting",
+  "domain": "www.thesting.com",
+  "category": "kleding",
+  "osm_brands": [
+   "The Sting"
+  ],
+  "osm_wikidata": [
+   "Q2518794"
+  ],
+  "osm_store_count": 52
+ },
+ {
+  "id": "msmode",
+  "name": "MS Mode",
+  "domain": "www.msmode.nl",
+  "category": "kleding",
+  "osm_brands": [
+   "MS Mode"
+  ],
+  "osm_wikidata": [
+   "Q6718117"
+  ],
+  "osm_store_count": 67
+ },
+ {
+  "id": "americatoday",
+  "name": "America Today",
+  "domain": "www.america-today.com",
+  "category": "kleding",
+  "osm_brands": [
+   "America Today"
+  ],
+  "osm_wikidata": [
+   "Q97011125"
+  ],
+  "osm_store_count": 32
+ },
+ {
+  "id": "lucardi",
+  "name": "Lucardi",
+  "domain": "www.lucardi.nl",
+  "category": "sieraden",
+  "osm_brands": [
+   "Lucardi"
+  ],
+  "osm_wikidata": [
+   "Q13774940"
+  ],
+  "osm_store_count": 95
+ },
+ {
+  "id": "rataplan",
+  "name": "RataPlan",
+  "domain": "rataplan.nl",
+  "category": "kringloop",
+  "osm_brands": [
+   "RataPlan"
+  ],
+  "osm_wikidata": [
+   "Q100890251"
+  ],
+  "osm_store_count": 51
+ },
+ {
+  "id": "hetgoed",
+  "name": "Het Goed",
+  "domain": "www.hetgoed.nl",
+  "category": "kringloop",
+  "osm_brands": [
+   "Het Goed"
+  ],
+  "osm_wikidata": [
+   "Q56683074"
+  ],
+  "osm_store_count": 31
+ }
+]

@@ -1,0 +1,10 @@
+{
+  "name": "welkewinkel-scraper",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "discover": "node src/discover.mjs config/shops.json out"
+  }
+}
