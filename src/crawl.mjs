@@ -10,6 +10,35 @@ import { get, setHostDelay, blockSignal, setEngine, closeBrowser } from "./http.
 import { walkSitemaps, robotsSitemaps } from "./sitemap.mjs";
 import { extractProducts } from "./extract.mjs";
 
+// Overzichtspagina's aflopen (bv. /producten/?offSet={offset}) en productlinks verzamelen.
+// listing: { pages: ["https://x/producten/?offSet={offset}"], start: 0, step: 24, maxPages: 3000, link: "regex", base: "https://x" }
+async function collectFromListing(shop, { deadline, log, max }) {
+  const L = shop.listing;
+  const linkRe = new RegExp(L.link, "g");
+  const seen = new Set();
+  const urls = [];
+  let opened = 0;
+  for (const tpl of L.pages) {
+    let empty = 0;
+    for (let k = 0; k < (L.maxPages ?? 5000); k++) {
+      if (Date.now() > deadline - 60 * 60000) break; // laat tijd over voor productpagina's
+      const offset = (L.start ?? 0) + k * (L.step ?? 1);
+      const url = tpl.replace("{offset}", offset).replace("{page}", k + (L.pageStart ?? 0));
+      let html;
+      try { html = (await get(url, { retries: 2, timeout: 45000 })).text; opened++; } catch (e) { log(`listing fout ${url}: ${e.message}`); empty++; if (empty > 2) break; continue; }
+      let fresh = 0;
+      for (const m of html.matchAll(linkRe)) {
+        const u = new URL(m[1] || m[0], L.base || `https://${shop.domain}`).href;
+        if (!seen.has(u)) { seen.add(u); urls.push({ loc: u, lastmod: null }); fresh++; }
+      }
+      if (!fresh) { empty++; if (empty >= 2) break; } else empty = 0;
+      if (opened % 100 === 0) log(`${shop.id}: ${opened} overzichtspagina's, ${urls.length} links`);
+      if (urls.length >= max * 3 && max !== Infinity) break;
+    }
+  }
+  return { urls, opened };
+}
+
 export function loadShop(id) {
   const base = JSON.parse(fs.readFileSync("config/shops.json", "utf8")).find((s) => s.id === id);
   if (!base) throw new Error(`onbekende winkel ${id}`);
@@ -66,7 +95,11 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
     return finish(shop, items, report, outDir, t0);
   }
 
-  // 1) URL's verzamelen uit sitemaps
+  // 1) URL's verzamelen: uit overzichtspagina's (listing) of uit sitemaps
+  let urls, opened = 0;
+  if (shop.listing) {
+    ({ urls, opened } = await collectFromListing(shop, { deadline, log, max }));
+  } else {
   let roots = shop.sitemaps;
   if (!roots || !roots.length) {
     const r = await robotsSitemaps(origin);
@@ -74,11 +107,12 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
   }
   const smInc = rx(shop.sitemapInclude), smExc = rx(shop.sitemapExclude);
   const urlInc = rx(shop.urlInclude), urlExc = rx(shop.urlExclude);
-  const { urls, opened } = await walkSitemaps(roots, {
+  ({ urls, opened } = await walkSitemaps(roots, {
     sitemapFilter: (u) => (!smInc || smInc.test(u)) && (!smExc || !smExc.test(u)),
     urlFilter: (u) => (!urlInc || urlInc.test(u)) && (!urlExc || !urlExc.test(u)),
     log,
-  });
+  }));
+  }
   const seen = new Set();
   let targets = urls.filter((u) => (seen.has(u.loc) ? false : seen.add(u.loc)));
   report.sitemapsOpened = opened;

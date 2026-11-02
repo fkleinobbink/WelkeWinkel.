@@ -1,0 +1,13 @@
+{
+ "strategy": "listing",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "listing": {
+  "pages": ["https://www.jumbo.com/producten/?offSet={offset}"],
+  "start": 0, "step": 24, "maxPages": 2500,
+  "link": "href=\"(/producten/[a-z0-9(),.%-]+-\\d+[A-Z]+)\"",
+  "base": "https://www.jumbo.com"
+ },
+ "concurrency": 4,
+ "delayMs": 200
+}
