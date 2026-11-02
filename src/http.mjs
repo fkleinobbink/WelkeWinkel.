@@ -30,6 +30,48 @@ export class HttpError extends Error {
   }
 }
 
+// engine: "fetch" (standaard) of "impersonate" (via tools/impersonate_server.py, browser-TLS)
+let ENGINE = { type: "fetch" };
+export function setEngine(type, impersonate = "chrome", port = 8765) {
+  ENGINE = { type, impersonate, port };
+}
+
+async function doFetch(url, { method, body, timeout, headers, maxBytes }) {
+  if (ENGINE.type === "impersonate") {
+    const r = await fetch(`http://127.0.0.1:${ENGINE.port}/fetch`, {
+      method: "POST",
+      signal: AbortSignal.timeout(timeout + 5000),
+      body: JSON.stringify({ url, method, body: body ?? null, timeout: timeout / 1000, impersonate: ENGINE.impersonate, headers: { "accept-language": "nl-NL,nl;q=0.9", ...headers } }),
+    });
+    const buffer = Buffer.from(await r.arrayBuffer());
+    if (r.status === 599) throw new Error("impersonate: " + buffer.toString().slice(0, 200));
+    const status = parseInt(r.headers.get("x-status"), 10);
+    return { status, ok: status >= 200 && status < 300, url: r.headers.get("x-final-url") || url, headers: new Headers({ "content-type": r.headers.get("x-content-type") || "" }), buffer };
+  }
+  const res = await fetch(url, {
+    method,
+    body,
+    redirect: "follow",
+    signal: AbortSignal.timeout(timeout),
+    headers: {
+      "user-agent": UA,
+      "accept-language": "nl-NL,nl;q=0.9,en;q=0.8",
+      accept: "text/html,application/xhtml+xml,application/xml;q=0.9,application/json;q=0.8,*/*;q=0.7",
+      ...headers,
+    },
+  });
+  const chunks = [];
+  let size = 0;
+  if (res.body) {
+    for await (const c of res.body) {
+      size += c.length;
+      if (size > maxBytes) { try { await res.body.cancel(); } catch {} break; }
+      chunks.push(c);
+    }
+  }
+  return { status: res.status, ok: res.ok, url: res.url, headers: res.headers, buffer: Buffer.concat(chunks) };
+}
+
 export async function get(url, opts = {}) {
   const { headers = {}, retries = 2, timeout = 30000, method = "GET", body, raw = false, okStatuses, maxBytes = 80e6 } = opts;
   const host = new URL(url).host;
@@ -37,28 +79,8 @@ export async function get(url, opts = {}) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     await waitForHost(host);
     try {
-      const res = await fetch(url, {
-        method,
-        body,
-        redirect: "follow",
-        signal: AbortSignal.timeout(timeout),
-        headers: {
-          "user-agent": UA,
-          "accept-language": "nl-NL,nl;q=0.9,en;q=0.8",
-          accept: "text/html,application/xhtml+xml,application/xml;q=0.9,application/json;q=0.8,*/*;q=0.7",
-          ...headers,
-        },
-      });
-      const chunks = [];
-      let size = 0;
-      if (res.body) {
-        for await (const c of res.body) {
-          size += c.length;
-          if (size > maxBytes) { try { await res.body.cancel(); } catch {} break; }
-          chunks.push(c);
-        }
-      }
-      let buf = Buffer.concat(chunks);
+      const res = await doFetch(url, { method, body, timeout, headers, maxBytes });
+      let buf = res.buffer;
       if (buf[0] === 0x1f && buf[1] === 0x8b) {
         try { buf = zlib.gunzipSync(buf); } catch {}
       }

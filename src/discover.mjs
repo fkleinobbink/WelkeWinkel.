@@ -2,7 +2,7 @@
 // robots.txt -> sitemaps -> product-sitemaps herkennen -> paar productpagina's testen.
 // Output per winkel: rapport + voorgestelde config.
 import fs from "node:fs";
-import { get, blockSignal } from "./http.mjs";
+import { get, blockSignal, setEngine } from "./http.mjs";
 import { robotsSitemaps, parseSitemap } from "./sitemap.mjs";
 import { extractProducts, nextData } from "./extract.mjs";
 
@@ -123,6 +123,7 @@ function commonUrlPattern(urls) {
 
 // CLI: node src/discover.mjs config/shops.json out [ids...]
 if (import.meta.url === `file://${process.argv[1]}`) {
+  if (process.env.ENGINE) setEngine("impersonate", process.env.ENGINE);
   const shops = JSON.parse(fs.readFileSync(process.argv[2], "utf8"));
   const out = process.argv[3] || "out";
   const only = process.argv.slice(4);

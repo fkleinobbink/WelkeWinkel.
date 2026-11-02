@@ -82,6 +82,11 @@ jobs:
           node-version: 24
       - name: Install
         run: if [ -f package-lock.json ]; then npm ci --omit=dev; fi
+      - name: Browser-TLS proxy starten
+        run: |
+          pip install -q curl_cffi
+          nohup python3 tools/impersonate_server.py 8765 > /tmp/imp.log 2>&1 &
+          sleep 2
       - name: Vorige data ophalen
         run: gh release download $RELEASE -p "${{ matrix.shop }}.ndjson.gz" -D prev || echo "geen vorige data"
       - name: Crawl
