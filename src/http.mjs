@@ -31,7 +31,7 @@ export class HttpError extends Error {
 }
 
 export async function get(url, opts = {}) {
-  const { headers = {}, retries = 2, timeout = 30000, method = "GET", body, raw = false, okStatuses } = opts;
+  const { headers = {}, retries = 2, timeout = 30000, method = "GET", body, raw = false, okStatuses, maxBytes = 80e6 } = opts;
   const host = new URL(url).host;
   let lastErr;
   for (let attempt = 0; attempt <= retries; attempt++) {
@@ -49,7 +49,16 @@ export async function get(url, opts = {}) {
           ...headers,
         },
       });
-      let buf = Buffer.from(await res.arrayBuffer());
+      const chunks = [];
+      let size = 0;
+      if (res.body) {
+        for await (const c of res.body) {
+          size += c.length;
+          if (size > maxBytes) { try { await res.body.cancel(); } catch {} break; }
+          chunks.push(c);
+        }
+      }
+      let buf = Buffer.concat(chunks);
       if (buf[0] === 0x1f && buf[1] === 0x8b) {
         try { buf = zlib.gunzipSync(buf); } catch {}
       }

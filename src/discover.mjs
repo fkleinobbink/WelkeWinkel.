@@ -135,6 +135,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       while (queue.length) {
         const s = queue.shift();
         const t = Date.now();
+        console.log('start', s.id);
         let rep;
         try {
           rep = await Promise.race([discover(s), new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), 240000))]);
