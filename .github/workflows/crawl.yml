@@ -25,10 +25,6 @@ on:
 permissions:
   contents: write
 
-concurrency:
-  group: crawl
-  cancel-in-progress: false
-
 env:
   GH_TOKEN: ${{ github.token }}
   RELEASE: data
@@ -87,6 +83,11 @@ jobs:
           pip install -q curl_cffi
           nohup python3 tools/impersonate_server.py 8765 > /tmp/imp.log 2>&1 &
           sleep 2
+      - name: Chromium installeren (alleen voor engine=browser)
+        run: |
+          if grep -q '"engine": *"browser"' config/shops/${{ matrix.shop }}.json; then
+            npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+          fi
       - name: Vorige data ophalen
         run: gh release download $RELEASE -p "${{ matrix.shop }}.ndjson.gz" -D prev || echo "geen vorige data"
       - name: Crawl
@@ -94,6 +95,9 @@ jobs:
           MAX="${{ needs.setup.outputs.max }}"
           node --max-old-space-size=6000 src/crawl.mjs ${{ matrix.shop }} --prev prev/${{ matrix.shop }}.ndjson.gz --out out \
             --minutes ${{ needs.setup.outputs.minutes }} ${MAX:+--max $MAX}
+      - name: Testcontrole
+        if: needs.setup.outputs.max != ''
+        run: node src/check.mjs out/${{ matrix.shop }}.ndjson.gz out/${{ matrix.shop }}.report.json | tee -a $GITHUB_STEP_SUMMARY
       - name: Uploaden
         if: always()
         run: |
@@ -106,8 +110,11 @@ jobs:
 
   build:
     needs: [setup, crawl]
-    if: always() && needs.setup.result == 'success'
+    if: always() && needs.setup.result == 'success' && needs.setup.outputs.max == ''
     runs-on: ubuntu-latest
+    concurrency:
+      group: build
+      cancel-in-progress: false
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4

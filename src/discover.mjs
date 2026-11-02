@@ -123,7 +123,8 @@ function commonUrlPattern(urls) {
 
 // CLI: node src/discover.mjs config/shops.json out [ids...]
 if (import.meta.url === `file://${process.argv[1]}`) {
-  if (process.env.ENGINE) setEngine("impersonate", process.env.ENGINE);
+  if (process.env.ENGINE === "browser") setEngine("browser");
+  else if (process.env.ENGINE) setEngine("impersonate", process.env.ENGINE);
   const shops = JSON.parse(fs.readFileSync(process.argv[2], "utf8"));
   const out = process.argv[3] || "out";
   const only = process.argv.slice(4);

@@ -153,9 +153,28 @@ export function productFromMeta(html, pageUrl) {
   };
 }
 
+// Breadcrumb (schema.org BreadcrumbList) -> "Wonen > Verlichting > Hanglampen"
+export function breadcrumb(html) {
+  const nodes = flatten(jsonLdBlocks(html));
+  for (const n of nodes) {
+    if (!isType(n, "breadcrumblist") || !Array.isArray(n.itemListElement)) continue;
+    const names = n.itemListElement
+      .slice()
+      .sort((a, b) => (a.position || 0) - (b.position || 0))
+      .map((e) => str(e.name || e.item?.name))
+      .filter((x) => x && !/^(home|homepage|start|voorpagina)$/i.test(x));
+    if (names.length) return names.join(" > ");
+  }
+  return null;
+}
+
 export function extractProducts(html, pageUrl) {
   const ld = productsFromJsonLd(html, pageUrl);
-  if (ld.length) return { method: "jsonld", products: ld };
+  if (ld.length) {
+    const bc = breadcrumb(html);
+    if (bc) for (const p of ld) { p.breadcrumb = bc; if (!p.category) p.category = bc.split(" > ").slice(-1)[0]; }
+    return { method: "jsonld", products: ld };
+  }
   const m = productFromMeta(html, pageUrl);
   if (m) return { method: "meta", products: [m] };
   return { method: null, products: [] };

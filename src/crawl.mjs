@@ -6,7 +6,7 @@
 import fs from "node:fs";
 import zlib from "node:zlib";
 import path from "node:path";
-import { get, setHostDelay, blockSignal, setEngine } from "./http.mjs";
+import { get, setHostDelay, blockSignal, setEngine, closeBrowser } from "./http.mjs";
 import { walkSitemaps, robotsSitemaps } from "./sitemap.mjs";
 import { extractProducts } from "./extract.mjs";
 
@@ -52,6 +52,7 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
   const report = { id: shop.id, started: new Date().toISOString(), errors: {}, blocked: 0, fetched: 0, reused: 0, kept: 0, products: 0 };
   setHostDelay(new URL(origin).host, shop.delayMs ?? 200);
   if (shop.engine === "impersonate") setEngine("impersonate", shop.impersonate || "chrome");
+  if (shop.engine === "browser") setEngine("browser");
 
   // Adapter? (src/adapters/<id>.mjs) -> volledig eigen logica
   const adapterPath = path.resolve(`src/adapters/${shop.adapter || shop.id}.mjs`);
@@ -176,4 +177,5 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     minutes: parseFloat(opt("--minutes", "330")),
     max: opt("--max") ? parseInt(opt("--max"), 10) : Infinity,
   });
+  await closeBrowser();
 }

@@ -36,7 +36,73 @@ export function setEngine(type, impersonate = "chrome", port = 8765) {
   ENGINE = { type, impersonate, port };
 }
 
+// ---- browser-engine: echte Chromium via Playwright ----
+// Per origin één tabblad dat eerst de homepage opent (cookies / JS-challenge), daarna
+// worden URL's opgehaald met fetch() binnen die pagina (echte browser-TLS + cookies).
+// Lukt dat niet (403/challenge), dan een volledige page.goto.
+let browserCtx = null;
+const originPages = new Map();
+async function browserContext() {
+  if (browserCtx) return browserCtx;
+  const { chromium } = await import("playwright");
+  const headless = process.env.HEADFUL ? false : true;
+  const browser = await chromium.launch({ headless, args: ["--disable-blink-features=AutomationControlled"] });
+  browserCtx = await browser.newContext({ locale: "nl-NL", timezoneId: "Europe/Amsterdam", viewport: { width: 1366, height: 900 } });
+  await browserCtx.addInitScript(() => { Object.defineProperty(navigator, "webdriver", { get: () => undefined }); });
+  // geen afbeeldingen/fonts/media laden
+  await browserCtx.route("**/*", (route) => (["image", "font", "media"].includes(route.request().resourceType()) ? route.abort() : route.continue()));
+  return browserCtx;
+}
+async function originPage(origin) {
+  if (originPages.has(origin)) return originPages.get(origin);
+  const p = (async () => {
+    const ctx = await browserContext();
+    const page = await ctx.newPage();
+    try { await page.goto(origin + "/", { waitUntil: "domcontentloaded", timeout: 60000 }); } catch {}
+    await page.waitForTimeout(3000);
+    // cookiebanner wegklikken als die er is
+    for (const sel of ["#onetrust-accept-btn-handler", "button:has-text('Accepteren')", "button:has-text('Alles accepteren')", "button:has-text('Akkoord')", "button:has-text('Accept')"]) {
+      try { const b = page.locator(sel).first(); if (await b.isVisible({ timeout: 500 })) { await b.click(); break; } } catch {}
+    }
+    return page;
+  })();
+  originPages.set(origin, p);
+  return p;
+}
+export async function closeBrowser() {
+  if (browserCtx) { try { await browserCtx.browser().close(); } catch {} browserCtx = null; originPages.clear(); }
+}
+async function browserFetch(url, { method, body, timeout, headers }) {
+  const origin = new URL(url).origin;
+  const page = await originPage(origin);
+  const r = await page.evaluate(async ([u, m, b, h, t]) => {
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), t);
+    try {
+      const res = await fetch(u, { method: m, body: b, headers: h, credentials: "include", signal: ctl.signal });
+      const txt = await res.text();
+      return { status: res.status, url: res.url, ct: res.headers.get("content-type") || "", txt };
+    } catch (e) { return { status: 0, err: String(e) }; } finally { clearTimeout(timer); }
+  }, [url, method, body ?? null, headers || {}, timeout]);
+  if (r.status === 0 || r.status === 403 || (r.txt && blockSignal(r.txt, r.status))) {
+    // volledige navigatie als fallback (alleen GET)
+    if (method === "GET") {
+      const ctx = await browserContext();
+      const p2 = await ctx.newPage();
+      try {
+        const resp = await p2.goto(url, { waitUntil: "domcontentloaded", timeout });
+        await p2.waitForTimeout(1500);
+        const html = await p2.content();
+        return { status: resp ? resp.status() : 0, ok: resp ? resp.ok() : false, url: p2.url(), headers: new Headers({ "content-type": "text/html" }), buffer: Buffer.from(html) };
+      } finally { await p2.close(); }
+    }
+    if (r.status === 0) throw new Error("browser fetch: " + r.err);
+  }
+  return { status: r.status, ok: r.status >= 200 && r.status < 300, url: r.url || url, headers: new Headers({ "content-type": r.ct }), buffer: Buffer.from(r.txt) };
+}
+
 async function doFetch(url, { method, body, timeout, headers, maxBytes }) {
+  if (ENGINE.type === "browser") return browserFetch(url, { method, body, timeout, headers });
   if (ENGINE.type === "impersonate") {
     const r = await fetch(`http://127.0.0.1:${ENGINE.port}/fetch`, {
       method: "POST",
