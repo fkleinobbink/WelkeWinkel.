@@ -18,10 +18,11 @@ async function collectFromListing(shop, { deadline, log, max }) {
   const seen = new Set();
   const urls = [];
   let opened = 0;
+  const listingDeadline = Date.now() + Math.min(90 * 60000, (deadline - Date.now()) * 0.4);
   for (const tpl of L.pages) {
     let empty = 0;
     for (let k = 0; k < (L.maxPages ?? 5000); k++) {
-      if (Date.now() > deadline - 60 * 60000) break; // laat tijd over voor productpagina's
+      if (Date.now() > listingDeadline) break; // laat tijd over voor productpagina's
       const offset = (L.start ?? 0) + k * (L.step ?? 1);
       const url = tpl.replace("{offset}", offset).replace("{page}", k + (L.pageStart ?? 0));
       let html;
