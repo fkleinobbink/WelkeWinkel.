@@ -70,7 +70,7 @@ jobs:
     timeout-minutes: 350
     strategy:
       fail-fast: false
-      max-parallel: 20
+      max-parallel: 15
       matrix:
         shop: ${{ fromJson(needs.setup.outputs.shops) }}
     steps:
