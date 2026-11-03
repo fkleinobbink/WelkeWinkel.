@@ -1,0 +1,13 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": [
+  "https://www.sleepfast.nl/feed/custom/28295/",
+  "https://www.sleepfast.nl/feed/custom/28296/",
+  "https://www.sleepfast.nl/sitemap.xml"
+ ],
+ "concurrency": 3,
+ "delayMs": 300,
+ "auto": true
+}

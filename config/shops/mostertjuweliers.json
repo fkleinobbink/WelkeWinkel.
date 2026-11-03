@@ -1,0 +1,13 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": [
+  "http://www.mostert-juweliers.nl/sitemapindex.xml"
+ ],
+ "concurrency": 3,
+ "delayMs": 300,
+ "auto": true,
+ "sitemapInclude": "product",
+ "urlInclude": "/product/"
+}

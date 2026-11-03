@@ -1,0 +1,13 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": [
+  "https://www.gerstaecker.nl/sitemaps/sitemap_gerstaecker.nl.xml",
+  "https://www.gerstaecker.nl/sitemaps/sitemap_images_gerstaecker.nl.xml",
+  "https://www.gerstaecker.nl/sitemaps/sitemap_content_gerstaecker.nl.xml"
+ ],
+ "concurrency": 3,
+ "delayMs": 300,
+ "auto": true
+}
