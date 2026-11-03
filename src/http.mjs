@@ -80,10 +80,18 @@ async function browserFetch(url, { method, body, timeout, headers }) {
     const timer = setTimeout(() => ctl.abort(), t);
     try {
       const res = await fetch(u, { method: m, body: b, headers: h, credentials: "include", signal: ctl.signal });
+      const ct = res.headers.get("content-type") || "";
+      if (/gzip|octet-stream/i.test(ct) || /\.gz(\?|$)/.test(u)) {
+        // binair (bv. sitemap.xml.gz): als base64 doorgeven
+        const buf = new Uint8Array(await res.arrayBuffer());
+        let bin = ""; for (let i = 0; i < buf.length; i += 0x8000) bin += String.fromCharCode.apply(null, buf.subarray(i, i + 0x8000));
+        return { status: res.status, url: res.url, ct, b64: btoa(bin) };
+      }
       const txt = await res.text();
-      return { status: res.status, url: res.url, ct: res.headers.get("content-type") || "", txt };
+      return { status: res.status, url: res.url, ct, txt };
     } catch (e) { return { status: 0, err: String(e) }; } finally { clearTimeout(timer); }
   }, [url, method, body ?? null, headers || {}, timeout]);
+  if (r.b64) return { status: r.status, ok: r.status >= 200 && r.status < 300, url: r.url || url, headers: new Headers({ "content-type": r.ct }), buffer: Buffer.from(r.b64, "base64") };
   if (r.status === 0 || r.status === 403 || (r.txt && blockSignal(r.txt, r.status))) {
     // volledige navigatie als fallback (alleen GET)
     if (method === "GET") {
