@@ -27,6 +27,8 @@ function flatten(node, acc = []) {
   acc.push(node);
   if (node["@graph"]) flatten(node["@graph"], acc);
   if (node.mainEntity) flatten(node.mainEntity, acc);
+  if (node.object && typeof node.object === "object") flatten(node.object, acc); // bv. BuyAction -> Product (MediaMarkt)
+  if (node.itemOffered && typeof node.itemOffered === "object") flatten(node.itemOffered, acc);
   if (node.itemListElement) flatten(node.itemListElement.map?.((x) => x.item || x) || [], acc);
   return acc;
 }
@@ -172,7 +174,12 @@ export function extractProducts(html, pageUrl) {
   const ld = productsFromJsonLd(html, pageUrl);
   if (ld.length) {
     const bc = breadcrumb(html);
-    if (bc) for (const p of ld) { p.breadcrumb = bc; if (!p.category) p.category = bc.split(" > ").slice(-1)[0]; }
+    if (bc) for (const p of ld) {
+      let parts = bc.split(" > ");
+      if (parts.length > 1 && parts[parts.length - 1].toLowerCase() === String(p.name).toLowerCase()) parts = parts.slice(0, -1);
+      p.breadcrumb = parts.join(" > ");
+      if (!p.category || p.category === p.name) p.category = parts.slice(-1)[0];
+    }
     return { method: "jsonld", products: ld };
   }
   const m = productFromMeta(html, pageUrl);
