@@ -146,7 +146,8 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
   }
   todo.sort((a, b) => b.age - a.age); // nooit opgehaald / oudste eerst
 
-  // 3) Pagina's ophalen
+  // 3) Pagina's ophalen (eigen parser per winkel mogelijk: src/parsers/<naam>.mjs)
+  const parser = shop.parser ? await import(path.resolve(`src/parsers/${shop.parser}.mjs`)) : null;
   const conc = shop.concurrency ?? 4;
   const multi = !!shop.multi;
   let i = 0, consecutiveBlocks = 0, stop = false;
@@ -157,7 +158,8 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
       try {
         const r = await get(t.loc, { retries: 2, timeout: 30000, headers: shop.headers || {} });
         report.fetched++;
-        const ex = extractProducts(r.text, t.loc);
+        let ex = parser ? { method: shop.parser, products: parser.parse(r.text, t.loc) } : extractProducts(r.text, t.loc);
+        if (parser && !ex.products.length) ex = extractProducts(r.text, t.loc);
         const prods = pickProduct(ex.products, t.loc, multi).filter((p) => p.name);
         if (prods.length) {
           consecutiveBlocks = 0;
