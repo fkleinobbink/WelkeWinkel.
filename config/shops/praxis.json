@@ -9,5 +9,6 @@
  "urlInclude": "/\\d{7}$",
  "concurrency": 3,
  "delayMs": 300,
- "notes": "7-cijferige artikelnummers = eigen assortiment; 8 cijfers = partners (online only)"
+ "notes": "7-cijferige artikelnummers = eigen assortiment; 8 cijfers = partners (online only)",
+ "daily": true
 }

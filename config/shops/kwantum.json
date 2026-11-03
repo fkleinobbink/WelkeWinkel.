@@ -16,5 +16,6 @@
   "maxPages": 2500
  },
  "concurrency": 3,
- "delayMs": 300
+ "delayMs": 300,
+ "daily": true
 }
