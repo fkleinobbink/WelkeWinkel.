@@ -1,1 +1,6 @@
-{ "strategy": "adapter", "adapter": "ah", "delayMs": 300 }
+{
+ "strategy": "adapter",
+ "adapter": "ah",
+ "delayMs": 300,
+ "daily": true
+}

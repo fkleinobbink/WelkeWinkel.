@@ -48,11 +48,13 @@ jobs:
             MAX=$(node -p "require('./trigger.json').max||''")
             MINUTES=$(node -p "require('./trigger.json').minutes||''")
           fi
-          node -e '
+          EVENT=${{ github.event_name }} node -e '
             const fs=require("fs");
             const want=(process.argv[1]||"").split(",").map(s=>s.trim()).filter(Boolean);
             let ids=fs.readdirSync("config/shops").filter(f=>f.endsWith(".json")).map(f=>f.slice(0,-5))
               .filter(id=>JSON.parse(fs.readFileSync("config/shops/"+id+".json")).enabled!==false);
+            // dagelijkse (geplande) run: alleen winkels die getest en goedgekeurd zijn
+            if(process.env.EVENT==="schedule") ids=ids.filter(id=>JSON.parse(fs.readFileSync("config/shops/"+id+".json")).daily===true);
             if(want.length) ids=ids.filter(i=>want.includes(i));
             fs.appendFileSync(process.env.GITHUB_OUTPUT,"shops="+JSON.stringify(ids)+"\n");
           ' "$SHOPS"
