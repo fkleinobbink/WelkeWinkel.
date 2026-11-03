@@ -1,13 +1,14 @@
 {
  "strategy": "sitemap",
- "engine": "impersonate",
+ "engine": "browser",
  "sitemaps": [
   "https://www.mediamarkt.nl/sitemaps/sitemap-index.xml"
  ],
  "sitemapInclude": "productdetailspages",
  "urlInclude": "/nl/product/",
- "concurrency": 4,
- "delayMs": 250,
+ "concurrency": 3,
+ "delayMs": 400,
  "daily": false,
- "impersonate": "chrome"
+ "browserOrigin": "https://www.mediamarkt.nl",
+ "reuseDays": 21
 }
