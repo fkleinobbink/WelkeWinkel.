@@ -3,8 +3,9 @@ name: crawl
 # Dagelijks alle winkels crawlen en scraper.db bouwen.
 # Handmatig starten kan ook (Actions -> crawl -> Run workflow), eventueel voor een paar winkels.
 on:
-  schedule:
-    - cron: "17 1 * * *"
+  # Nachtelijke run staat uit tot de site live is. Aanzetten: onderstaande 2 regels weer activeren.
+  # schedule:
+  #   - cron: "17 1 * * *"
   workflow_dispatch:
     inputs:
       shops:
