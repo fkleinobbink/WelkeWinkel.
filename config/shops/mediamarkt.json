@@ -8,7 +8,7 @@
  "urlInclude": "/nl/product/",
  "concurrency": 3,
  "delayMs": 400,
- "daily": false,
+ "daily": true,
  "browserOrigin": "https://www.mediamarkt.nl",
  "reuseDays": 21
 }
