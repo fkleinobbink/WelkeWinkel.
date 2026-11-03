@@ -17,7 +17,7 @@ ctx.on("response", async (res) => {
   if (!["xhr", "fetch", "document"].includes(type)) return;
   let body = "";
   try { body = (await res.text()).slice(0, 3000); } catch {}
-  log.push({ type, method: req.method(), url: req.url(), status: res.status(), post: req.postData()?.slice(0, 1500) || null, reqHeaders: type !== "document" ? await req.allHeaders().catch(() => ({})) : undefined, body: type === "document" ? body.slice(0, 300) : body });
+  log.push({ type, method: req.method(), url: req.url(), status: res.status(), post: req.postData()?.slice(0, 30000) || null, reqHeaders: type !== "document" ? await req.allHeaders().catch(() => ({})) : undefined, body: type === "document" ? body.slice(0, 300) : body });
 });
 let n = 0;
 for (const job of jobs) {
