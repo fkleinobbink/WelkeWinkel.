@@ -4,5 +4,6 @@
   "https://www.msmode.nl/sitemap_index.xml"
  ],
  "sitemapInclude": "msmode\\.nl/.*product",
- "urlInclude": "msmode\\.nl/"
+ "urlInclude": "msmode\\.nl/",
+ "daily": true
 }

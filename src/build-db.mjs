@@ -60,10 +60,44 @@ const addStore = (r, source) => {
   storeCounts[r.site] = (storeCounts[r.site] || 0) + 1;
   return id;
 };
-for (const r of read(`${dir}/stores.ndjson.gz`)) if (!ownStores.has(r.site)) addStore(r, "osm");
+// plaats aanvullen als OSM geen adres heeft: dichtstbijzijnde postcodegebied (PC4)
+const pc4 = fs.existsSync("config/4pp.csv")
+  ? fs.readFileSync("config/4pp.csv", "utf8").split("\n").slice(1).map((l) => l.match(/^\d+,(\d{4}),"([^"]*)",.*,([\d.]+),([\d.]+),"([^"]*)"\s*$/)).filter((m) => m && m[5] !== "Postbus").map((m) => ({ pc: m[1], city: m[2], lat: +m[3], lon: +m[4] }))
+  : [];
+function nearestPc4(lat, lon) {
+  let best = null, bd = Infinity;
+  const cl = Math.cos((lat * Math.PI) / 180);
+  for (const p of pc4) { const d = (p.lat - lat) ** 2 + ((p.lon - lon) * cl) ** 2; if (d < bd) { bd = d; best = p; } }
+  return best;
+}
+let filled = 0;
+for (const r of read(`${dir}/stores.ndjson.gz`)) {
+  if (ownStores.has(r.site)) continue;
+  if (!r.city && pc4.length && r.latitude) { const n = nearestPc4(r.latitude, r.longitude); if (n) { r.city = n.city; r.pc4 = n.pc; filled++; } }
+  addStore(r, "osm");
+}
+if (filled) console.log(`plaats aangevuld voor ${filled} filialen`);
 for (const site of ownStores) for (const r of read(`${dir}/${site}.stores.ndjson.gz`)) addStore({ ...r, site }, "retailer");
 
 // 2) producten
+const stripTags = (v) => (v == null ? v : String(v).replace(/<\/?[a-z][a-z0-9]*(\s[^>]*)?\/?>/gi, " ").replace(/\s+/g, " ").trim());
+const variantKey = (p) => [String(p.name || "").toLowerCase().replace(/\s+/g, " ").trim(), String(p.amount || "").toLowerCase(), String(p.brand || "").toLowerCase()].join("|");
+// varianten (zelfde naam/inhoud/merk, andere kleur/maat-URL) samenvoegen tot 1 product, tenzij ze in verschillende filialen liggen
+function collapseVariants(list) {
+  const groups = new Map();
+  for (const p of list) {
+    const k = variantKey(p) + "|" + (p.store_hint || p.store_ref || "");
+    const g = groups.get(k);
+    if (!g) { groups.set(k, { ...p, variants: p.variants || 1, variant_urls: [] }); continue; }
+    g.variants += p.variants || 1;
+    if (g.variant_urls.length < 20) g.variant_urls.push(p.product_url);
+    if (typeof p.price === "number" && (g.price == null || p.price < g.price)) g.price = p.price;
+    if (!g.gtin && p.gtin) g.gtin = p.gtin;
+    if (!g.image_url && p.image_url) g.image_url = p.image_url;
+    if (/instock/i.test(p.availability || "")) g.availability = p.availability;
+  }
+  return [...groups.values()].map((g) => (g.variants === 1 ? { ...g, variants: null } : g));
+}
 const stockSites = new Set();
 const prodCounts = {};
 // filiaal zoeken op plaatsnaam/naam (voor winkels waar elk item in 1 filiaal ligt, bv. kringloop)
@@ -93,7 +127,8 @@ const productKey = new Map(); // site|key -> id
 for (const f of fs.readdirSync(dir).filter((f) => /^[a-z0-9_-]+\.ndjson\.gz$/.test(f) && f !== "stores.ndjson.gz")) {
   const site = f.replace(".ndjson.gz", "");
   const seen = new Set();
-  for (const p of read(`${dir}/${f}`)) {
+  const raw = read(`${dir}/${f}`).filter((p) => p.name).map((p) => ({ ...p, name: stripTags(p.name), price: typeof p.price === "number" && p.price > 0 && p.price < 100000 ? p.price : null }));
+  for (const p of collapseVariants(raw)) {
     if (!p.name) continue;
     const key = p.product_url || p.sku || p.name;
     if (seen.has(key)) continue;

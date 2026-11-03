@@ -2,5 +2,6 @@
  "strategy": "sitemap",
  "sitemaps": [
   "https://www.lidl.nl/p/export/NL/nl/product_sitemap.xml.gz"
- ]
+ ],
+ "daily": true
 }

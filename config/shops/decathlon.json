@@ -5,5 +5,6 @@
  "sitemapInclude": "product",
  "urlInclude": "/p/",
  "concurrency": 3,
- "delayMs": 300
+ "delayMs": 300,
+ "daily": false
 }

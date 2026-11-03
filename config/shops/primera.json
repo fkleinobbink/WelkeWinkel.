@@ -2,5 +2,6 @@
  "strategy": "sitemap",
  "sitemaps": [
   "https://www.primera.nl/media/sitemap/primera_b2c_nl/products.xml"
- ]
+ ],
+ "daily": true
 }

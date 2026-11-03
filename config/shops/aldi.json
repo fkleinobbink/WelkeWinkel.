@@ -1,7 +1,10 @@
 {
  "strategy": "sitemap",
- "sitemaps": ["https://www.aldi.nl/sitemaps/.aldi-nord-sitemap-products.xml"],
+ "sitemaps": [
+  "https://www.aldi.nl/sitemaps/.aldi-nord-sitemap-products.xml"
+ ],
  "parser": "aldi",
  "concurrency": 3,
- "delayMs": 250
+ "delayMs": 250,
+ "daily": true
 }

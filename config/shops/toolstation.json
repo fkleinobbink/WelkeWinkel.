@@ -3,5 +3,6 @@
  "sitemaps": [
   "https://www.toolstation.nl/sitemap/departments.xml"
  ],
- "multi": true
+ "multi": true,
+ "daily": false
 }

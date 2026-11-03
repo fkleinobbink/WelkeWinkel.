@@ -94,7 +94,10 @@ jobs:
             echo "HEADFUL=1" >> $GITHUB_ENV
           fi
       - name: Vorige data ophalen
-        run: gh release download $RELEASE -p "${{ matrix.shop }}.ndjson.gz" -D prev || echo "geen vorige data"
+        # bij een testrun bewust niets hergebruiken, anders test je niets
+        run: |
+          if [ -n "${{ needs.setup.outputs.max }}" ]; then echo "testrun: geen vorige data"; exit 0; fi
+          gh release download $RELEASE -p "${{ matrix.shop }}.ndjson.gz" -D prev || echo "geen vorige data"
       - name: Crawl
         run: |
           MAX="${{ needs.setup.outputs.max }}"
@@ -133,7 +136,11 @@ jobs:
           rm -f data/test-*
           ls data | head -300
       - name: Filialen (OpenStreetMap)
-        run: node src/stores.mjs data/stores-new.ndjson.gz && mv data/stores-new.ndjson.gz data/stores.ndjson.gz || echo "OSM mislukt, vorige filialen gebruiken"
+        # alleen bij de nachtelijke run (of als er nog niets is) opnieuw ophalen
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ] || [ ! -f data/stores.ndjson.gz ]; then
+            node src/stores.mjs data/stores-new.ndjson.gz && mv data/stores-new.ndjson.gz data/stores.ndjson.gz || echo "OSM mislukt, vorige filialen gebruiken"
+          else echo "filialen uit vorige build"; fi
       - name: Database bouwen
         run: |
           node src/build-db.mjs data scraper.db

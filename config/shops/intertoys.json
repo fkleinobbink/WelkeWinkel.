@@ -1,4 +1,5 @@
 {
  "strategy": "sitemap",
- "urlExclude": "/winkel-zoeken|/acties|/merken|/service|/klantenservice"
+ "urlExclude": "/winkel-zoeken|/acties|/merken|/service|/klantenservice",
+ "daily": true
 }

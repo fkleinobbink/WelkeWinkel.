@@ -4,5 +4,6 @@
   "https://flyingtiger.com/sitemap.xml"
  ],
  "sitemapInclude": "nl-nl/sitemap_products",
- "urlInclude": "/nl-nl/products/"
+ "urlInclude": "/nl-nl/products/",
+ "daily": true
 }

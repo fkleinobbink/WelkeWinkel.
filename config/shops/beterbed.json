@@ -3,5 +3,6 @@
  "sitemaps": [
   "https://www.beterbed.nl/sitemap.xml"
  ],
- "urlExclude": "/advies/|/inspiratie/|/winkels/|/service/"
+ "urlExclude": "/advies/|/inspiratie/|/winkels/|/service/",
+ "daily": true
 }

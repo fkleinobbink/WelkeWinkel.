@@ -3,5 +3,6 @@
  "sitemaps": [
   "https://hoogvliet.nl/sitemap-catalog.xml"
  ],
- "urlInclude": "-\\d{9}/?$"
+ "urlInclude": "-\\d{9}/?$",
+ "daily": true
 }

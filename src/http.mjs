@@ -154,6 +154,7 @@ export async function get(url, opts = {}) {
       if (!ok) {
         if ([429, 500, 502, 503, 504].includes(res.status) && attempt < retries) {
           const ra = parseInt(res.headers.get("retry-after") || "", 10);
+          if (res.status === 429) { const st = hostState.get(host); if (st) st.delay = Math.min((st.delay || 250) * 1.5 + 250, 8000); }
           await new Promise((r) => setTimeout(r, (Number.isFinite(ra) ? ra * 1000 : 3000 * (attempt + 1))));
           continue;
         }

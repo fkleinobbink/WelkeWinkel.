@@ -1,4 +1,5 @@
 {
  "strategy": "sitemap",
- "urlInclude": "^https://jysk\\.nl/[^/]+/[^/]+/[^/]+/[^/]+$"
+ "urlInclude": "^https://jysk\\.nl/[^/]+/[^/]+/[^/]+/[^/]+$",
+ "daily": true
 }

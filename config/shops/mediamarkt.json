@@ -2,9 +2,12 @@
  "strategy": "sitemap",
  "engine": "browser",
  "browserOrigin": "https://www.mediamarkt.nl",
- "sitemaps": ["https://www.mediamarkt.nl/sitemaps/sitemap-index.xml"],
+ "sitemaps": [
+  "https://www.mediamarkt.nl/sitemaps/sitemap-index.xml"
+ ],
  "sitemapInclude": "product",
  "urlInclude": "/nl/product/",
  "concurrency": 3,
- "delayMs": 400
+ "delayMs": 400,
+ "daily": false
 }

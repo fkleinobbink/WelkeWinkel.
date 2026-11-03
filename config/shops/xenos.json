@@ -2,5 +2,6 @@
  "strategy": "sitemap",
  "sitemaps": [
   "https://www.xenos.nl/storage/sitemap/default/sitemap.xml"
- ]
+ ],
+ "daily": true
 }

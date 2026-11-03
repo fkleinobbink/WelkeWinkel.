@@ -3,5 +3,6 @@
  "sitemaps": [
   "https://www.mitra.nl/sitemap"
  ],
- "urlInclude": "/product/"
+ "urlInclude": "/product/",
+ "daily": true
 }

@@ -1,5 +1,6 @@
 {
  "strategy": "sitemap",
  "sitemapInclude": "product",
- "urlInclude": "/nl-nl/"
+ "urlInclude": "/nl-nl/",
+ "daily": true
 }

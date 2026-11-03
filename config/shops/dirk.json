@@ -7,5 +7,6 @@
  "engine": "impersonate",
  "impersonate": "chrome",
  "concurrency": 2,
- "delayMs": 700
+ "delayMs": 700,
+ "daily": true
 }

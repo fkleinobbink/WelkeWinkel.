@@ -1,4 +1,5 @@
 {
  "strategy": "sitemap",
- "urlInclude": "-\\d{7}-\\d{3}\\.html"
+ "urlInclude": "-\\d{7}-\\d{3}\\.html",
+ "daily": true
 }

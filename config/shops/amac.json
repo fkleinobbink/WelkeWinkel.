@@ -2,5 +2,6 @@
  "strategy": "sitemap",
  "sitemaps": [
   "https://www.amac.nl/media/sitemap/b2c/sitemap_nl.xml"
- ]
+ ],
+ "daily": true
 }

@@ -1,4 +1,5 @@
 {
  "strategy": "sitemap",
- "sitemapInclude": "product"
+ "sitemapInclude": "product",
+ "daily": true
 }

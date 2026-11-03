@@ -1,4 +1,5 @@
 {
  "strategy": "sitemap",
- "sitemapInclude": "sitemap_\\d+\\.xml"
+ "sitemapInclude": "sitemap_\\d+\\.xml",
+ "daily": true
 }

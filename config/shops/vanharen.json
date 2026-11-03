@@ -2,5 +2,6 @@
  "strategy": "sitemap",
  "sitemaps": [
   "https://www.vanharen.nl/nl-nl/sitemap_products.xml"
- ]
+ ],
+ "daily": true
 }

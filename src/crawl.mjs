@@ -40,6 +40,10 @@ async function collectFromListing(shop, { deadline, log, max }) {
   return { urls, opened };
 }
 
+// Netjes stoppen bij annuleren/time-out van de Actions-job: alles wat binnen is wordt nog weggeschreven.
+let STOP = false;
+for (const sig of ["SIGTERM", "SIGINT"]) process.on(sig, () => { if (!STOP) console.log(`signaal ${sig}: stoppen en opslaan`); STOP = true; });
+
 export function loadShop(id) {
   const base = JSON.parse(fs.readFileSync("config/shops.json", "utf8")).find((s) => s.id === id);
   if (!base) throw new Error(`onbekende winkel ${id}`);
@@ -92,7 +96,7 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
     const items = [];
     for await (const p of mod.products({ shop, log, deadline, max, get, report })) {
       items.push({ ...p, fetched_at: new Date().toISOString() });
-      if (items.length >= max) break;
+      if (items.length >= max || STOP) break;
     }
     return finish(shop, items, report, outDir, t0);
   }
@@ -151,10 +155,12 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
   const parser = shop.parser ? await import(path.resolve(`src/parsers/${shop.parser}.mjs`)) : null;
   const conc = shop.concurrency ?? 4;
   const multi = !!shop.multi;
-  let i = 0, consecutiveBlocks = 0, stop = false;
+  let i = 0, consecutiveBlocks = 0, stop = false, pausedUntil = 0, cooldowns = 0;
+  let hostDelay = shop.delayMs ?? 200;
   const worker = async () => {
     while (!stop && i < todo.length) {
-      if (Date.now() > deadline) { stop = true; break; }
+      if (Date.now() > deadline || STOP) { stop = true; break; }
+      if (Date.now() < pausedUntil) { await new Promise((r) => setTimeout(r, pausedUntil - Date.now())); continue; }
       const t = todo[i++];
       try {
         const r = await get(t.loc, { retries: 2, timeout: 30000, headers: shop.headers || {} });
@@ -177,7 +183,18 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
         if (e.status === 403 || e.status === 429) consecutiveBlocks++;
         if (e.status === 404 || e.status === 410) results.delete(t.loc);
       }
-      if (consecutiveBlocks >= 25) { log(`${shop.id}: geblokkeerd, stop`); report.aborted = "blocked"; stop = true; }
+      if (consecutiveBlocks >= 12) {
+        // eerst afkoelen en trager gaan; pas na 3 pogingen echt stoppen
+        if (cooldowns >= 3) { log(`${shop.id}: geblokkeerd, stop`); report.aborted = "blocked"; stop = true; }
+        else {
+          cooldowns++; consecutiveBlocks = 0;
+          hostDelay = Math.min(hostDelay * 2 + 500, 10000);
+          setHostDelay(new URL(origin).host, hostDelay);
+          pausedUntil = Date.now() + 120000 * cooldowns;
+          log(`${shop.id}: geblokkeerd, pauze ${2 * cooldowns} min, vertraging nu ${hostDelay}ms`);
+          i = Math.max(0, i - 12); // mislukte pagina's opnieuw proberen
+        }
+      }
       if (report.fetched % 500 === 0 && report.fetched) log(`${shop.id}: ${report.fetched}/${todo.length} opgehaald, ${results.size} met product, ${Math.round((Date.now() - t0) / 60000)} min`);
     }
   };

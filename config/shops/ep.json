@@ -2,5 +2,6 @@
  "strategy": "sitemap",
  "sitemaps": [
   "https://www.ep.nl/sitemap/products.xml"
- ]
+ ],
+ "daily": true
 }

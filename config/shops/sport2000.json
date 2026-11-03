@@ -1,4 +1,5 @@
 {
  "strategy": "sitemap",
- "urlInclude": "/nl/\\d+/"
+ "urlInclude": "/nl/\\d+/",
+ "daily": true
 }

@@ -2,8 +2,11 @@
  "strategy": "sitemap",
  "engine": "browser",
  "browserOrigin": "https://www.action.com",
- "sitemaps": ["https://www.action.com/nl-nl/product-sitemap.xml"],
+ "sitemaps": [
+  "https://www.action.com/nl-nl/product-sitemap.xml"
+ ],
  "urlInclude": "/nl-nl/p/",
  "concurrency": 3,
- "delayMs": 300
+ "delayMs": 300,
+ "daily": true
 }
