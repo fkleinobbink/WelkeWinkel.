@@ -5,5 +5,6 @@
  ],
  "urlInclude": "/producten/(?!alle-producten)",
  "concurrency": 3,
- "delayMs": 300
+ "delayMs": 300,
+ "parser": "odin"
 }
