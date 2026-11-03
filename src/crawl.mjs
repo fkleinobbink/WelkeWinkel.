@@ -8,7 +8,7 @@ import zlib from "node:zlib";
 import path from "node:path";
 import { get, setHostDelay, blockSignal, setEngine, closeBrowser } from "./http.mjs";
 import { walkSitemaps, robotsSitemaps } from "./sitemap.mjs";
-import { extractProducts } from "./extract.mjs";
+import { extractProducts, guessAmount } from "./extract.mjs";
 
 // Overzichtspagina's aflopen (bv. /producten/?offSet={offset}) en productlinks verzamelen.
 // listing: { pages: ["https://x/producten/?offSet={offset}"], start: 0, step: 24, maxPages: 3000, link: "regex", base: "https://x" }
@@ -71,6 +71,7 @@ function pickProduct(list, pageUrl, multi) {
     out.gtins = [...new Set(list.map((p) => p.gtin).filter(Boolean))].slice(0, 50);
   }
   out.product_url = pageUrl;
+  if (!out.amount) { try { out.amount = guessAmount(decodeURIComponent(new URL(pageUrl).pathname).replace(/[-_/]/g, " ")); } catch {} }
   delete out.group_name;
   return [out];
 }
