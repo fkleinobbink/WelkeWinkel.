@@ -8,5 +8,11 @@
  "parser": "dirk",
  "concurrency": 2,
  "delayMs": 600,
- "notes": "Zelfde platform als Dirk (Detailresult)"
+ "notes": "Zelfde platform als Dirk (Detailresult)",
+ "urlRewrite": [
+  [
+   "/boodschappen/producten/",
+   "/producten/"
+  ]
+ ]
 }

@@ -193,3 +193,31 @@ export function nextData(html) {
   if (!m) return null;
   try { return JSON.parse(m[1]); } catch { return null; }
 }
+
+// Nuxt 3 payload (__NUXT_DATA__, 'devalue'-formaat): platte array waarin objecten naar indexen verwijzen.
+export function nuxtData(html) {
+  const m = html.match(/<script[^>]*id="__NUXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
+  if (!m) return null;
+  let arr; try { arr = JSON.parse(m[1]); } catch { return null; }
+  return { arr, resolve: (i, depth = 0) => resolveDevalue(arr, i, depth) };
+}
+function resolveDevalue(arr, i, depth) {
+  if (typeof i !== "number" || depth > 6) return i;
+  const v = arr[i];
+  if (Array.isArray(v)) {
+    if (typeof v[0] === "string" && ["ShallowReactive", "Reactive", "Ref", "ShallowRef", "EmptyRef", "Set", "Map", "Date"].includes(v[0])) return resolveDevalue(arr, v[1], depth + 1);
+    return v.map((x) => resolveDevalue(arr, x, depth + 1));
+  }
+  if (v && typeof v === "object") { const o = {}; for (const [k, x] of Object.entries(v)) o[k] = resolveDevalue(arr, x, depth + 1); return o; }
+  return v;
+}
+// Zoekt in de payload het eerste object dat al deze sleutels heeft
+export function nuxtFind(html, keys) {
+  const nd = nuxtData(html);
+  if (!nd) return null;
+  for (let i = 0; i < nd.arr.length; i++) {
+    const v = nd.arr[i];
+    if (v && typeof v === "object" && !Array.isArray(v) && keys.every((k) => k in v)) return nd.resolve(i);
+  }
+  return null;
+}

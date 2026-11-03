@@ -160,6 +160,8 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
     log,
   }));
   }
+  // URL's herschrijven als de sitemap verouderde paden bevat (bv. DekaMarkt /boodschappen/producten/ -> /producten/)
+  for (const [from, to] of shop.urlRewrite || []) { const re = new RegExp(from); for (const u of urls) u.loc = u.loc.replace(re, to); }
   const seen = new Set();
   let targets = urls.filter((u) => (seen.has(u.loc) ? false : seen.add(u.loc)));
   report.sitemapsOpened = opened;
