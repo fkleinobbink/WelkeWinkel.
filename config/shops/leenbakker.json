@@ -10,10 +10,11 @@
    "https://www.leenbakker.nl/"
   ],
   "seedSitemap": true,
-  "follow": "leenbakker\\.nl/[a-z-]+(/[a-z0-9-]+){0,3}$",
-  "product": "leenbakker\\.nl/[a-z0-9-]+/[a-z0-9-]+/[a-z0-9-]+-\\d{6,}$|leenbakker\\.nl/[a-z0-9-]+-\\d{6,}$",
+  "follow": "leenbakker\\.nl/(banken|bed|gordijnen|kasten|opbergers|tafelen|tafels|tuin|verlichting|woonaccessoires|vloeren|kinderkamer|badkamer|keuken|slaapkamer|woonkamer|matrassen|dekbedden|kussens|meubels|accessoires)[a-z0-9-]*(/[a-z0-9-]+){0,3}$",
+  "product": "leenbakker\\.nl(/[a-z0-9-]+){4}$",
   "pageParam": "page",
-  "maxPages": 2500
+  "maxPages": 6000,
+  "followProducts": true
  },
  "concurrency": 3,
  "delayMs": 300

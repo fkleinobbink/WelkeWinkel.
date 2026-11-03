@@ -69,8 +69,9 @@ async function collectByLinkCrawl(shop, { deadline, log, max }) {
     for (const m of html.matchAll(/href=["']([^"'#]+)["']/g)) {
       let abs; try { abs = new URL(m[1].replace(/&amp;/g, "&"), base).href.split("#")[0]; } catch { continue; }
       if (!abs.startsWith(base)) continue;
-      if (product.test(abs)) { const k = L.stripQuery ? abs.split("?")[0] : abs; if (!prods.has(k)) { prods.set(k, { loc: k, lastmod: null }); fresh++; } }
-      else if (follow.test(abs)) { const k = abs.split("?")[0]; if (!seenPages.has(k)) { seenPages.add(k); queue.push({ u: k, page: 1 }); } }
+      const isProd = product.test(abs);
+      if (isProd) { const k = L.stripQuery ? abs.split("?")[0] : abs; if (!prods.has(k)) { prods.set(k, { loc: k, lastmod: null }); fresh++; } }
+      if ((!isProd || L.followProducts) && follow.test(abs)) { const k = abs.split("?")[0]; if (!seenPages.has(k)) { seenPages.add(k); queue.push({ u: k, page: 1 }); } }
     }
     if (L.pageParam && fresh > 0 && page < (L.maxPagesPerList ?? 50)) queue.unshift({ u, page: page + 1 });
     if (opened % 100 === 0) log(`${shop.id}: ${opened} pagina's doorlopen, ${prods.size} productlinks, ${queue.length} in wachtrij`);
