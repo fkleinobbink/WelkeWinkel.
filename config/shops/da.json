@@ -4,5 +4,6 @@
  "impersonate": "chrome",
  "sitemapInclude": "product",
  "concurrency": 3,
- "delayMs": 300
+ "delayMs": 300,
+ "urlInclude": "/product/"
 }
