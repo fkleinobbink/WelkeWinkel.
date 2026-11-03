@@ -5,5 +5,7 @@
  "sitemaps": [
   "https://www.lush.com/sitemap-index.xml.gz"
  ],
- "urlInclude": "/nl/nl/p/"
+ "urlInclude": "/nl/nl/p/",
+ "engine": "impersonate",
+ "impersonate": "chrome"
 }

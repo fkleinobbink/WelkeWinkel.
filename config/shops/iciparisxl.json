@@ -8,5 +8,6 @@
   "https://www.iciparisxl.nl/sitemap.xml"
  ],
  "sitemapInclude": "Product-nl",
- "urlInclude": "/p/"
+ "urlInclude": "/p/",
+ "daily": true
 }

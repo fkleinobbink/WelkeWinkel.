@@ -1,11 +1,12 @@
 {
  "strategy": "sitemap",
- "concurrency": 3,
- "delayMs": 300,
+ "concurrency": 1,
+ "delayMs": 1200,
  "engine": "impersonate",
  "impersonate": "chrome",
  "sitemaps": [
   "https://www.lucardi.nl/sitemap_products-custom.xml"
  ],
- "urlInclude": "/product/"
+ "urlInclude": "/product/",
+ "daily": true
 }

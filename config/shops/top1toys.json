@@ -6,5 +6,6 @@
  "impersonate": "chrome",
  "sitemaps": [
   "https://www.top1toys.nl/media/sitemap/sitemap.xml"
- ]
+ ],
+ "daily": true
 }

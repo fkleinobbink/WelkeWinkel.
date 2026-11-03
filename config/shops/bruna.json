@@ -10,5 +10,6 @@
  "sitemapInclude": "product",
  "urlExclude": "/engelse-boeken/|/duitse-boeken/|/franse-boeken/|/spaanse-boeken/",
  "reuseDays": 30,
- "notes": "Enorme catalogus (meeste online-only); progressief over meerdere dagen"
+ "notes": "Enorme catalogus (meeste online-only); progressief over meerdere dagen",
+ "daily": true
 }
