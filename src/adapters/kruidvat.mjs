@@ -7,8 +7,8 @@ export async function* products({ shop, get, log, deadline, max }) {
   const pageSize = 100;
   let page = 0, totalPages = 1, n = 0;
   while (page < totalPages && Date.now() < deadline && n < max) {
-    const q = encodeURIComponent(":score:marketplaceProduct:false");
-    const url = `${API}/search?fields=FULL&searchType=PRODUCT&query=${q}&pageSize=${pageSize}&currentPage=${page}&lang=nl&curr=EUR`;
+    const q = encodeURIComponent(":name-asc:marketplaceProduct:false");
+    const url = `${API}/search?fields=FULL&searchType=PRODUCT&query=${q}&pageSize=${pageSize}&currentPage=${page}&sort=name-asc&lang=nl&curr=EUR`;
     let data;
     try {
       data = JSON.parse((await get(url, { retries: 3, timeout: 60000, headers: { accept: "application/json" } })).text);
