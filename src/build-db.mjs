@@ -64,7 +64,31 @@ for (const r of read(`${dir}/stores.ndjson.gz`)) if (!ownStores.has(r.site)) add
 for (const site of ownStores) for (const r of read(`${dir}/${site}.stores.ndjson.gz`)) addStore({ ...r, site }, "retailer");
 
 // 2) producten
+const stockSites = new Set();
 const prodCounts = {};
+// filiaal zoeken op plaatsnaam/naam (voor winkels waar elk item in 1 filiaal ligt, bv. kringloop)
+const storesBySite = new Map();
+for (const r of db.prepare("SELECT id, site, store_name, city, street FROM store_locations").all()) {
+  if (!storesBySite.has(r.site)) storesBySite.set(r.site, []);
+  storesBySite.get(r.site).push(r);
+}
+const norm = (x) => String(x || "").toLowerCase().replace(/&#8217;|’|'/g, "").replace(/a.dam/g, "amsterdam").replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+const hintCache = new Map();
+function storeByHint(site, hint) {
+  const k = site + "|" + hint;
+  if (hintCache.has(k)) return hintCache.get(k);
+  const h = norm(hint);
+  const list = storesBySite.get(site) || [];
+  const words = h.split(" ");
+  let best = null, bestScore = 0;
+  for (const st of list) {
+    const hay = norm([st.store_name, st.city, st.street].join(" "));
+    const score = words.filter((w) => w.length > 2 && hay.includes(w)).length;
+    if (score > bestScore) { best = st.id; bestScore = score; }
+  }
+  hintCache.set(k, best);
+  return best;
+}
 const productKey = new Map(); // site|key -> id
 for (const f of fs.readdirSync(dir).filter((f) => /^[a-z0-9_-]+\.ndjson\.gz$/.test(f) && f !== "stores.ndjson.gz")) {
   const site = f.replace(".ndjson.gz", "");
@@ -74,16 +98,17 @@ for (const f of fs.readdirSync(dir).filter((f) => /^[a-z0-9_-]+\.ndjson\.gz$/.te
     const key = p.product_url || p.sku || p.name;
     if (seen.has(key)) continue;
     seen.add(key);
-    const storeId = p.store_ref ? storeRefIndex.get(`${site}|${p.store_ref}`) ?? null : null;
+    let storeId = p.store_ref ? storeRefIndex.get(`${site}|${p.store_ref}`) ?? null : null;
+    if (!storeId && p.store_hint) storeId = storeByHint(site, p.store_hint);
     const res = insProd.run(site, s(p.name, 300), s(p.brand, 120), s(p.amount, 60), typeof p.price === "number" ? p.price : null, s(p.currency, 5), s(p.gtin, 60), s(p.sku, 80), s(p.category, 200), s(p.availability, 40), n(p.variants), s(p.product_url), s(p.image_url || p.sitemap_image), s(p.description, 500), storeId, s(p.first_seen || p.fetched_at) || now, s(p.fetched_at) || now);
     const id = Number(res.lastInsertRowid);
     for (const k of [p.product_url, p.sku, p.gtin].filter(Boolean)) productKey.set(`${site}|${k}`, id);
+    if (storeId) { insStock.run(id, storeId, "in_stock", 1, s(p.fetched_at) || now); stockSites.add(site); }
     prodCounts[site] = (prodCounts[site] || 0) + 1;
   }
 }
 
 // 3) voorraad per filiaal
-const stockSites = new Set();
 for (const f of fs.readdirSync(dir).filter((f) => f.endsWith(".stock.ndjson.gz"))) {
   const site = f.replace(".stock.ndjson.gz", "");
   for (const r of read(`${dir}/${f}`)) {
