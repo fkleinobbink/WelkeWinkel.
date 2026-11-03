@@ -17,6 +17,7 @@ const priced = items.filter((p) => typeof p.price === "number" && p.price > 0).l
 const res = {
   products: items.length,
   pages,
+  uniqueUrls: new Set(items.map((p) => p.product_url)).size,
   categories: cats.size,
   pricePct: items.length ? Math.round((priced / items.length) * 100) : 0,
   gtinPct: items.length ? Math.round((items.filter((p) => p.gtin).length / items.length) * 100) : 0,
