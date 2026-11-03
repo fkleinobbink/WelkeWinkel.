@@ -16,11 +16,11 @@ export async function* products({ get, log, deadline, max }) {
       let d;
       try { d = JSON.parse((await get(url, { headers: A, retries: 3, timeout: 60000 })).text); }
       catch (e) { log(`ah: ${c.name} p${page} mislukt ${e.message}`); break; }
-      if (page === 0 && d.page.totalElements > 3000 && d.taxonomyNodes?.length && c.depth !== 3) {
-        // te groot: subcategorieën apart
-        for (const t of d.taxonomyNodes) queue.push({ id: t.id, name: `${c.name} > ${t.name}`, depth: (c.depth || 0) + 1 });
-        log(`ah: ${c.name} te groot (${d.page.totalElements}), opgesplitst`);
-        break;
+      const subs = (d.filters || []).find((f) => f.id === "taxonomy")?.options || [];
+      if (page === 0 && d.page.totalElements > 3000 && subs.length && (c.depth || 0) < 3) {
+        // API geeft max 3000 per zoekvraag: subcategorieën apart (en deze pagina's toch meenemen)
+        for (const t of subs) if (String(t.id) !== String(c.id)) queue.push({ id: t.id, name: `${c.name} > ${t.label}`, depth: (c.depth || 0) + 1 });
+        log(`ah: ${c.name} te groot (${d.page.totalElements}), ${subs.length} subcategorieën`);
       }
       for (const p of d.products || []) {
         if (seen.has(p.webshopId)) continue;
@@ -45,7 +45,7 @@ export async function* products({ get, log, deadline, max }) {
         };
         n++;
       }
-      if (page + 1 >= d.page.totalPages) break;
+      if (page + 1 >= d.page.totalPages || (page + 1) * 1000 >= 3000) break;
     }
   }
   log(`ah: ${n} unieke producten`);
