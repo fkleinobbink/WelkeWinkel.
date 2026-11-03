@@ -5,7 +5,7 @@
 let API = "https://api.kruidvat.nl/api/v2/kvn-spa";
 let MEDIA = "https://media.kruidvat.nl";
 let SITE = "https://www.kruidvat.nl";
-const BASE_Q = ":name-asc:marketplaceProduct:false";
+let BASE_Q = ":name-asc:marketplaceProduct:false";
 
 async function search(get, query, page, pageSize = 100) {
   const url = `${API}/search?fields=FULL&searchType=PRODUCT&query=${encodeURIComponent(query)}&pageSize=${pageSize}&currentPage=${page}&lang=nl&curr=EUR`;
@@ -38,6 +38,7 @@ export async function* products({ shop, get, log, deadline, max }) {
   if (shop.api) API = shop.api;
   if (shop.media) MEDIA = shop.media;
   if (shop.site) SITE = shop.site;
+  if (shop.baseQuery) BASE_Q = shop.baseQuery;
   const first = await search(get, BASE_Q, 0, 20);
   const total = first.pagination?.totalResults;
   const cats = (first.facets || []).find((f) => f.code === "categoryCodeLevel2")?.values || [];

@@ -6,5 +6,6 @@
  "api": "https://api.trekpleister.nl/api/v2/kvtp-spa",
  "site": "https://www.trekpleister.nl",
  "media": "https://media.trekpleister.nl",
- "delayMs": 800
+ "delayMs": 800,
+ "baseQuery": ":name-asc"
 }
