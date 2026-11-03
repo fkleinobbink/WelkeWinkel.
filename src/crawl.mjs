@@ -94,9 +94,11 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
   if (shop.strategy === "adapter" || (shop.adapter && fs.existsSync(adapterPath))) {
     const mod = await import(adapterPath);
     const items = [];
+    let lastCp = Date.now();
     for await (const p of mod.products({ shop, log, deadline, max, get, report })) {
       items.push({ ...p, fetched_at: new Date().toISOString() });
       if (items.length >= max || STOP) break;
+      if (Date.now() - lastCp > 10 * 60000) { lastCp = Date.now(); checkpoint(shop, () => items, outDir); }
     }
     return finish(shop, items, report, outDir, t0);
   }
@@ -155,7 +157,7 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
   const parser = shop.parser ? await import(path.resolve(`src/parsers/${shop.parser}.mjs`)) : null;
   const conc = shop.concurrency ?? 4;
   const multi = !!shop.multi;
-  let i = 0, consecutiveBlocks = 0, stop = false, pausedUntil = 0, cooldowns = 0;
+  let i = 0, consecutiveBlocks = 0, stop = false, pausedUntil = 0, cooldowns = 0, lastCheckpoint = Date.now();
   let hostDelay = shop.delayMs ?? 200;
   const worker = async () => {
     while (!stop && i < todo.length) {
@@ -195,6 +197,7 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
           i = Math.max(0, i - 12); // mislukte pagina's opnieuw proberen
         }
       }
+      if (Date.now() - lastCheckpoint > 10 * 60000) { lastCheckpoint = Date.now(); checkpoint(shop, () => [...new Map([...prev, ...results]).values()].flat(), outDir); }
       if (report.fetched % 500 === 0 && report.fetched) log(`${shop.id}: ${report.fetched}/${todo.length} opgehaald, ${results.size} met product, ${Math.round((Date.now() - t0) / 60000)} min`);
     }
   };
@@ -205,6 +208,17 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
     if (!results.has(t.loc) && prev.has(t.loc)) { results.set(t.loc, prev.get(t.loc)); report.kept++; }
   }
   return finish(shop, [...results.values()].flat(), report, outDir, t0);
+}
+
+// tussentijds opslaan, zodat bij annuleren/time-out niet alles verloren gaat
+function checkpoint(shop, getItems, outDir) {
+  try {
+    const items = getItems();
+    fs.mkdirSync(outDir, { recursive: true });
+    fs.writeFileSync(`${outDir}/${shop.id}.ndjson.gz.tmp`, zlib.gzipSync(items.map((p) => JSON.stringify({ site: shop.id, ...p })).join("\n") + "\n"));
+    fs.renameSync(`${outDir}/${shop.id}.ndjson.gz.tmp`, `${outDir}/${shop.id}.ndjson.gz`);
+    console.log(`${shop.id}: tussenstand opgeslagen (${items.length})`);
+  } catch (e) { console.log("checkpoint mislukt", e.message); }
 }
 
 function finish(shop, items, report, outDir, t0) {
