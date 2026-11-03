@@ -139,7 +139,8 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
   for (const t of targets) {
     const old = prev.get(t.loc);
     const age = old ? (Date.now() - Date.parse(old[0].fetched_at || 0)) / 86400000 : Infinity;
-    if (old && t.lastmod && old[0].lastmod === t.lastmod && age < reuseDays) {
+    const sameVersion = !t.lastmod || shop.ignoreLastmod || old?.[0].lastmod === t.lastmod;
+    if (old && sameVersion && age < reuseDays) {
       results.set(t.loc, old);
       report.reused++;
     } else todo.push({ ...t, age });
