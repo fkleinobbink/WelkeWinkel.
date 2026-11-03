@@ -60,5 +60,17 @@ export async function* products({ shop, get, log, deadline, max }) {
       }
     }
   }
+  // tweede ronde: volledige lijst (vangt producten zonder niveau-2-categorie)
+  for (let page = 0, pages = 1; page < pages && Date.now() < deadline && n < max; page++) {
+    let d;
+    try { d = await search(get, BASE_Q, page); } catch (e) { log(`${shop.id}: lijst p${page} mislukt: ${e.message}`); continue; }
+    pages = d.pagination?.totalPages ?? 1;
+    for (const p of d.products || []) {
+      if (p.marketplaceProduct || String(p.code).startsWith("mp-") || seen.has(p.code)) continue;
+      seen.add(p.code);
+      yield map(p, `all:${page}`);
+      n++;
+    }
+  }
   log(`${shop.id}: ${n} unieke producten (van ${total})`);
 }
