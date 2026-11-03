@@ -1,0 +1,10 @@
+{
+ "strategy": "sitemap",
+ "sitemaps": [
+  "https://www.jeanscentre.nl/sitemap-products.xml.gz"
+ ],
+ "parser": "jeanscentre",
+ "concurrency": 3,
+ "delayMs": 300,
+ "notes": "Prijs wordt client-side geladen; zonder prijs"
+}

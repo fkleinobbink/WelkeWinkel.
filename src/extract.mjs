@@ -10,7 +10,8 @@ export function jsonLdBlocks(html) {
     const b = html.indexOf("</script>", a);
     if (a < 0 || b < 0) break;
     pos = b;
-    const raw = html.slice(a + 1, b).trim().replace(/^<!--|-->$/g, "");
+    let raw = html.slice(a + 1, b).trim().replace(/^<!--|-->$/g, "");
+    if (raw.startsWith("{&quot;") || raw.startsWith("[&quot;")) raw = decodeHtml(raw); // HTML-gecodeerde JSON-LD (bv. Jeans Centre)
     try {
       out.push(JSON.parse(raw));
     } catch {
