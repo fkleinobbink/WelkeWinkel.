@@ -69,6 +69,7 @@ export async function walkSitemaps(roots, { sitemapFilter = () => true, urlFilte
       continue;
     }
     const { isIndex, entries } = parseSitemap(xml);
+    for (const e of entries) { try { e.loc = new URL(e.loc, sm).href; } catch {} } // relatieve URL's (bv. Praxis)
     if (isIndex) {
       for (const e of entries) if (sitemapFilter(e.loc)) queue.push(e.loc);
     } else {
