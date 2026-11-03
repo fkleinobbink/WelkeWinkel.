@@ -1,0 +1,11 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "concurrency": 3,
+ "delayMs": 300,
+ "sitemaps": [
+  "https://www.c-and-a.com/nl/nl/sitemap.xml"
+ ],
+ "urlInclude": "/nl/nl/shop/[^/]+-\\d{6,}/\\d+$"
+}

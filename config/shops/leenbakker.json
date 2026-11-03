@@ -1,0 +1,11 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "concurrency": 3,
+ "delayMs": 300,
+ "sitemaps": [
+  "https://www.leenbakker.nl/sitemap_index.xml"
+ ],
+ "sitemapInclude": "product"
+}
