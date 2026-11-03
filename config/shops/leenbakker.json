@@ -1,11 +1,20 @@
 {
- "strategy": "sitemap",
+ "strategy": "linkcrawl",
  "engine": "impersonate",
  "impersonate": "chrome",
- "concurrency": 3,
- "delayMs": 300,
  "sitemaps": [
   "https://www.leenbakker.nl/sitemap_index.xml"
  ],
- "sitemapInclude": "product"
+ "linkcrawl": {
+  "seeds": [
+   "https://www.leenbakker.nl/"
+  ],
+  "seedSitemap": true,
+  "follow": "leenbakker\\.nl/[a-z-]+(/[a-z0-9-]+){0,3}$",
+  "product": "leenbakker\\.nl/[a-z0-9-]+/[a-z0-9-]+/[a-z0-9-]+-\\d{6,}$|leenbakker\\.nl/[a-z0-9-]+-\\d{6,}$",
+  "pageParam": "page",
+  "maxPages": 2500
+ },
+ "concurrency": 3,
+ "delayMs": 300
 }

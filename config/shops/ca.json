@@ -1,11 +1,17 @@
 {
- "strategy": "sitemap",
+ "strategy": "linkcrawl",
  "engine": "impersonate",
  "impersonate": "chrome",
- "concurrency": 3,
- "delayMs": 300,
  "sitemaps": [
   "https://www.c-and-a.com/nl/nl/sitemap.xml"
  ],
- "urlInclude": "/nl/nl/shop/[^/]+-\\d{6,}/\\d+$"
+ "linkcrawl": {
+  "seedSitemap": true,
+  "follow": "/nl/nl/shop/[a-z0-9-]+(/[a-z0-9-]+)*$",
+  "product": "/nl/nl/shop/[a-z0-9-]+-\\d{6,}/\\d+$",
+  "pageParam": "page",
+  "maxPages": 3000
+ },
+ "concurrency": 3,
+ "delayMs": 300
 }

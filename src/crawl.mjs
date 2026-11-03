@@ -44,6 +44,42 @@ async function collectFromListing(shop, { deadline, log, max }) {
 let STOP = false;
 for (const sig of ["SIGTERM", "SIGINT"]) process.on(sig, () => { if (!STOP) console.log(`signaal ${sig}: stoppen en opslaan`); STOP = true; });
 
+// Site doorlopen via links: begin bij seeds (of de sitemap), volg categorie-links (follow) en verzamel productlinks (product).
+// linkcrawl: { seeds: [...], seedSitemap: true, follow: "regex", product: "regex", pageParam: "page", maxPages: 4000 }
+async function collectByLinkCrawl(shop, { deadline, log, max }) {
+  const L = shop.linkcrawl;
+  const base = `https://${shop.domain}`;
+  const follow = new RegExp(L.follow, "i"), product = new RegExp(L.product, "i");
+  const listingDeadline = Date.now() + Math.min(120 * 60000, (deadline - Date.now()) * 0.45);
+  let seeds = [...(L.seeds || [])];
+  if (L.seedSitemap) {
+    const { urls } = await walkSitemaps(shop.sitemaps || [`${base}/sitemap.xml`], { urlFilter: (u) => follow.test(u) });
+    seeds.push(...urls.map((u) => u.loc));
+  }
+  const queue = [...new Set(seeds)].map((u) => ({ u, page: 1 }));
+  const seenPages = new Set(queue.map((q) => q.u));
+  const prods = new Map();
+  let opened = 0;
+  while (queue.length && opened < (L.maxPages ?? 4000) && Date.now() < listingDeadline && !STOP) {
+    const { u, page } = queue.shift();
+    const url = page > 1 && L.pageParam ? `${u}${u.includes("?") ? "&" : "?"}${L.pageParam}=${page}` : u;
+    let html;
+    try { html = (await get(url, { retries: 1, timeout: 45000 })).text; opened++; } catch { continue; }
+    let fresh = 0;
+    for (const m of html.matchAll(/href=["']([^"'#]+)["']/g)) {
+      let abs; try { abs = new URL(m[1].replace(/&amp;/g, "&"), base).href.split("#")[0]; } catch { continue; }
+      if (!abs.startsWith(base)) continue;
+      if (product.test(abs)) { const k = L.stripQuery ? abs.split("?")[0] : abs; if (!prods.has(k)) { prods.set(k, { loc: k, lastmod: null }); fresh++; } }
+      else if (follow.test(abs)) { const k = abs.split("?")[0]; if (!seenPages.has(k)) { seenPages.add(k); queue.push({ u: k, page: 1 }); } }
+    }
+    if (L.pageParam && fresh > 0 && page < (L.maxPagesPerList ?? 50)) queue.unshift({ u, page: page + 1 });
+    if (opened % 100 === 0) log(`${shop.id}: ${opened} pagina's doorlopen, ${prods.size} productlinks, ${queue.length} in wachtrij`);
+    if (max !== Infinity && prods.size >= max * 3) break;
+  }
+  log(`${shop.id}: linkcrawl ${opened} pagina's, ${prods.size} producten`);
+  return { urls: [...prods.values()], opened };
+}
+
 export function loadShop(id) {
   const base = JSON.parse(fs.readFileSync("config/shops.json", "utf8")).find((s) => s.id === id);
   if (!base) throw new Error(`onbekende winkel ${id}`);
@@ -107,6 +143,8 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
   let urls, opened = 0;
   if (shop.listing) {
     ({ urls, opened } = await collectFromListing(shop, { deadline, log, max }));
+  } else if (shop.linkcrawl) {
+    ({ urls, opened } = await collectByLinkCrawl(shop, { deadline, log, max }));
   } else {
   let roots = shop.sitemaps;
   if (!roots || !roots.length) {

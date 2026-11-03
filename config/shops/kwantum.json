@@ -1,11 +1,20 @@
 {
- "strategy": "sitemap",
+ "strategy": "linkcrawl",
  "engine": "impersonate",
  "impersonate": "chrome",
- "concurrency": 3,
- "delayMs": 300,
  "sitemaps": [
   "https://www.kwantum.nl/sitemap_index.xml"
  ],
- "urlInclude": "kwantum\\.nl/[a-z0-9-]+-\\d{6,}$"
+ "linkcrawl": {
+  "seeds": [
+   "https://www.kwantum.nl/"
+  ],
+  "seedSitemap": true,
+  "follow": "kwantum\\.nl/[a-z-]+(/[a-z0-9-]+){0,3}$",
+  "product": "kwantum\\.nl/[a-z0-9-]+-\\d{6,}$",
+  "pageParam": "page",
+  "maxPages": 2500
+ },
+ "concurrency": 3,
+ "delayMs": 300
 }

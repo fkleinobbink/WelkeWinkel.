@@ -2,10 +2,12 @@
  "strategy": "sitemap",
  "engine": "impersonate",
  "impersonate": "chrome",
- "concurrency": 3,
- "delayMs": 300,
  "sitemaps": [
   "https://www.praxis.nl/sitemap.xml"
  ],
- "sitemapInclude": "product"
+ "sitemapInclude": "praxisproductpages",
+ "urlInclude": "/\\d{7}$",
+ "concurrency": 3,
+ "delayMs": 300,
+ "notes": "7-cijferige artikelnummers = eigen assortiment; 8 cijfers = partners (online only)"
 }
