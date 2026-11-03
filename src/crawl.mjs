@@ -208,7 +208,8 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
         report.fetched++;
         let ex = parser ? { method: shop.parser, products: parser.parse(r.text, t.loc) } : extractProducts(r.text, t.loc);
         if (parser && !ex.products.length) ex = extractProducts(r.text, t.loc);
-        const prods = pickProduct(ex.products, t.loc, multi).filter((p) => p.name);
+        // JSON-roundtrip: strings die met regex uit de HTML komen houden anders de hele pagina in het geheugen vast (V8 sliced strings)
+        const prods = JSON.parse(JSON.stringify(pickProduct(ex.products, t.loc, multi).filter((p) => p.name)));
         if (prods.length) {
           consecutiveBlocks = 0;
           results.set(t.loc, prods.map((p) => ({ ...p, page_url: t.loc, lastmod: t.lastmod, sitemap_image: t.image, fetched_at: new Date().toISOString(), method: ex.method })));
