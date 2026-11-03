@@ -9,5 +9,6 @@
  "delayMs": 300,
  "auto": true,
  "sitemapInclude": "product",
- "urlInclude": "/product/"
+ "urlInclude": "/product/",
+ "daily": true
 }

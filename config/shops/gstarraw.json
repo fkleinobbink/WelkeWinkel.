@@ -7,5 +7,7 @@
  ],
  "concurrency": 3,
  "delayMs": 300,
- "auto": true
+ "auto": true,
+ "urlInclude": "/nl_nl/",
+ "daily": true
 }

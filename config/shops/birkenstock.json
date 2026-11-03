@@ -8,5 +8,7 @@
  ],
  "concurrency": 3,
  "delayMs": 300,
- "auto": true
+ "auto": true,
+ "urlInclude": "birkenstock\\.com/nl/",
+ "daily": true
 }

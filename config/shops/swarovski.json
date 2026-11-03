@@ -8,5 +8,7 @@
  "concurrency": 3,
  "delayMs": 300,
  "auto": true,
- "sitemapInclude": "product"
+ "sitemapInclude": "product",
+ "urlInclude": "/nl-NL/",
+ "daily": true
 }
