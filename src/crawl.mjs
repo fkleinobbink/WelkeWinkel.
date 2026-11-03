@@ -169,6 +169,7 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
           const b = blockSignal(r.text, r.status);
           if (b) { report.blocked++; consecutiveBlocks++; }
           report.errors.noProduct = (report.errors.noProduct || 0) + 1;
+          (report.noProductSamples ||= []).length < 5 && report.noProductSamples.push({ url: t.loc, status: r.status, bytes: r.text.length, title: (r.text.match(/<title[^>]*>([^<]{0,120})/i) || [])[1] || null, block: b });
         }
       } catch (e) {
         const k = e.status ? `http${e.status}` : "net";
