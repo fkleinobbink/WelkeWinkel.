@@ -1,0 +1,9 @@
+{
+ "strategy": "sitemap",
+ "concurrency": 3,
+ "delayMs": 300,
+ "sitemaps": [
+  "https://www.lush.com/sitemap-index.xml.gz"
+ ],
+ "urlInclude": "/nl/nl/p/"
+}

@@ -1,0 +1,14 @@
+{
+ "strategy": "sitemap",
+ "concurrency": 3,
+ "delayMs": 300,
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": [
+  "https://prdapi.readshop.nl/waroot/sitemap-readshop_nl.xml"
+ ],
+ "sitemapInclude": "product",
+ "urlExclude": "/engelse-boeken/|/duitse-boeken/|/franse-boeken/|/spaanse-boeken/",
+ "reuseDays": 30,
+ "notes": "Enorme catalogus; progressief"
+}

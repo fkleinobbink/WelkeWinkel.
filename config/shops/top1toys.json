@@ -1,0 +1,10 @@
+{
+ "strategy": "sitemap",
+ "concurrency": 3,
+ "delayMs": 300,
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": [
+  "https://www.top1toys.nl/media/sitemap/sitemap.xml"
+ ]
+}
