@@ -751,10 +751,12 @@
   "category": "tuin & dier",
   "osm_brands": [
    "Pets Place",
-   "Pets Place - Boerenbond"
+   "Pets Place - Boerenbond",
+   "Boerenbond"
   ],
   "osm_wikidata": [
    "Q116951772",
+   "Q2403854",
    "Q2403854"
   ],
   "osm_store_count": 107
@@ -1576,10 +1578,12 @@
   "domain": "www.sissy-boy.com",
   "category": "kleding",
   "osm_brands": [
-   "Sissy-Boy"
+   "Sissy-Boy",
+   "Victoria's Secret"
   ],
   "osm_wikidata": [
-   "Q17125357"
+   "Q17125357",
+   "Q332477"
   ],
   "osm_store_count": 48,
   "tier": 2
@@ -3054,9 +3058,11 @@
   "domain": "www.nike.com",
   "category": "kleding",
   "osm_brands": [
-   "Nike"
+   "Nike",
+   "Nike Factory Store"
   ],
   "osm_wikidata": [
+   "Q483915",
    "Q483915"
   ],
   "osm_store_count": 12,
@@ -3155,5 +3161,1267 @@
   ],
   "osm_store_count": 12,
   "tier": 2
+ },
+ {
+  "id": "libris",
+  "name": "Libris",
+  "domain": "libris.nl",
+  "category": "boeken",
+  "osm_brands": [
+   "Libris"
+  ],
+  "osm_wikidata": [
+   "Q2933427"
+  ],
+  "osm_store_count": 11,
+  "tier": 3
+ },
+ {
+  "id": "woonsquare",
+  "name": "Woonsquare",
+  "domain": "www.woonsquare.nl",
+  "category": "wonen",
+  "osm_brands": [
+   "Woonsquare"
+  ],
+  "osm_wikidata": [
+   "Q135723209"
+  ],
+  "osm_store_count": 11,
+  "tier": 3
+ },
+ {
+  "id": "paprika",
+  "name": "Paprika",
+  "domain": "www.paprika-shopping.nl",
+  "category": "kleding",
+  "osm_brands": [
+   "Paprika"
+  ],
+  "osm_wikidata": [
+   "Q117351748"
+  ],
+  "osm_store_count": 11,
+  "tier": 3
+ },
+ {
+  "id": "velvetmusic",
+  "name": "Velvet Music",
+  "domain": "www.velvetmusic.nl",
+  "category": "elektronica",
+  "osm_brands": [
+   "Velvet Music"
+  ],
+  "osm_wikidata": [
+   "Q140668249"
+  ],
+  "osm_store_count": 11,
+  "tier": 3
+ },
+ {
+  "id": "miniso",
+  "name": "Miniso",
+  "domain": "miniso.nl",
+  "category": "warenhuis",
+  "osm_brands": [
+   "Miniso"
+  ],
+  "osm_wikidata": [
+   "Q20732498"
+  ],
+  "osm_store_count": 11,
+  "tier": 3
+ },
+ {
+  "id": "smitmode",
+  "name": "Smit Mode",
+  "domain": "www.smitmode.nl",
+  "category": "kleding",
+  "osm_brands": [
+   "Smit Mode"
+  ],
+  "osm_wikidata": [
+   "Q140668070"
+  ],
+  "osm_store_count": 11,
+  "tier": 3
+ },
+ {
+  "id": "pmelegend",
+  "name": "PME Legend",
+  "domain": "www.pme-legend.com",
+  "category": "kleding",
+  "osm_brands": [
+   "PME Legend"
+  ],
+  "osm_wikidata": [
+   "Q94776153"
+  ],
+  "osm_store_count": 11,
+  "tier": 3
+ },
+ {
+  "id": "bouwcenterlogusdehoo",
+  "name": "Bouwcenter Logus-De Hoop",
+  "domain": "logusdehoop.nl",
+  "category": "bouwmarkt",
+  "osm_brands": [
+   "Bouwcenter Logus-De Hoop"
+  ],
+  "osm_wikidata": [
+   "Q126912815"
+  ],
+  "osm_store_count": 11,
+  "tier": 3
+ },
+ {
+  "id": "stach",
+  "name": "STACH",
+  "domain": "stach-food.nl",
+  "category": "eten",
+  "osm_brands": [
+   "STACH"
+  ],
+  "osm_wikidata": [
+   "Q124807442"
+  ],
+  "osm_store_count": 10,
+  "tier": 3
+ },
+ {
+  "id": "timberland",
+  "name": "Timberland",
+  "domain": "www.timberland.nl",
+  "category": "kleding",
+  "osm_brands": [
+   "Timberland"
+  ],
+  "osm_wikidata": [
+   "Q1539185"
+  ],
+  "osm_store_count": 10,
+  "tier": 3
+ },
+ {
+  "id": "profile",
+  "name": "Profile",
+  "domain": "www.profilerodenburg.nl",
+  "category": "fiets",
+  "osm_brands": [
+   "Profile"
+  ],
+  "osm_wikidata": [
+   "Q124339994"
+  ],
+  "osm_store_count": 10,
+  "tier": 3
+ },
+ {
+  "id": "schroeder",
+  "name": "Schroeder",
+  "domain": "schroeder.nl",
+  "category": "kringloop",
+  "osm_brands": [
+   "Schroeder"
+  ],
+  "osm_wikidata": [
+   "Q138434651"
+  ],
+  "osm_store_count": 10,
+  "tier": 3
+ },
+ {
+  "id": "candyshop",
+  "name": "CandyShop",
+  "domain": "www.decandyshop.nl",
+  "category": "eten",
+  "osm_brands": [
+   "CandyShop"
+  ],
+  "osm_wikidata": [],
+  "osm_store_count": 10,
+  "tier": 3
+ },
+ {
+  "id": "runnersworld",
+  "name": "Runnersworld",
+  "domain": "www.runnersworld.nl",
+  "category": "sport",
+  "osm_brands": [
+   "Runnersworld"
+  ],
+  "osm_wikidata": [
+   "Q138506801"
+  ],
+  "osm_store_count": 10,
+  "tier": 3
+ },
+ {
+  "id": "sikkenscentervaneijk",
+  "name": "Sikkens Center Van Eijk",
+  "domain": "sikkensvaneijk.sikkenscenter.nl",
+  "category": "bouwmarkt",
+  "osm_brands": [
+   "Sikkens Center Van Eijk"
+  ],
+  "osm_wikidata": [
+   "Q132674416"
+  ],
+  "osm_store_count": 10,
+  "tier": 3
+ },
+ {
+  "id": "triumph",
+  "name": "Triumph",
+  "domain": "eu.triumph.com",
+  "category": "kleding",
+  "osm_brands": [
+   "Triumph"
+  ],
+  "osm_wikidata": [
+   "Q671216"
+  ],
+  "osm_store_count": 10,
+  "tier": 3
+ },
+ {
+  "id": "lionbeddenshop",
+  "name": "Lion Beddenshop",
+  "domain": "www.lionbeddenshop.nl",
+  "category": "wonen",
+  "osm_brands": [
+   "Lion Beddenshop"
+  ],
+  "osm_wikidata": [
+   "Q136806508"
+  ],
+  "osm_store_count": 10,
+  "tier": 3
+ },
+ {
+  "id": "laminaatenparketnl",
+  "name": "LaminaatenParket.nl",
+  "domain": "www.laminaatenparket.nl",
+  "category": "bouwmarkt",
+  "osm_brands": [
+   "LaminaatenParket.nl"
+  ],
+  "osm_wikidata": [],
+  "osm_store_count": 10,
+  "tier": 3
+ },
+ {
+  "id": "rustpuntnu",
+  "name": "Rustpunt.nu",
+  "domain": "www.rustpunt.nu",
+  "category": "eten",
+  "osm_brands": [
+   "Rustpunt.nu"
+  ],
+  "osm_wikidata": [
+   "Q67200667"
+  ],
+  "osm_store_count": 10,
+  "tier": 3
+ },
+ {
+  "id": "oilvinegar",
+  "name": "Oil & Vinegar",
+  "domain": "www.oilvinegar.nl",
+  "category": "eten",
+  "osm_brands": [
+   "Oil & Vinegar"
+  ],
+  "osm_wikidata": [
+   "Q107987188"
+  ],
+  "osm_store_count": 9,
+  "tier": 3
+ },
+ {
+  "id": "twinsport",
+  "name": "Twin Sport",
+  "domain": "www.twinsport.nl",
+  "category": "sport",
+  "osm_brands": [
+   "Twin Sport"
+  ],
+  "osm_wikidata": [
+   "Q136351516"
+  ],
+  "osm_store_count": 9,
+  "tier": 3
+ },
+ {
+  "id": "dozon",
+  "name": "Dozon",
+  "domain": "www.dozon.nl",
+  "category": "bouwmarkt",
+  "osm_brands": [
+   "Dozon"
+  ],
+  "osm_wikidata": [],
+  "osm_store_count": 9,
+  "tier": 3
+ },
+ {
+  "id": "pieces",
+  "name": "Pieces",
+  "domain": "www.pieces.com",
+  "category": "kleding",
+  "osm_brands": [
+   "Pieces"
+  ],
+  "osm_wikidata": [
+   "Q12331854"
+  ],
+  "osm_store_count": 9,
+  "tier": 3
+ },
+ {
+  "id": "fietsenwinkelnl",
+  "name": "Fietsenwinkel.nl",
+  "domain": "www.fietsenwinkel.nl",
+  "category": "fiets",
+  "osm_brands": [
+   "Fietsenwinkel.nl"
+  ],
+  "osm_wikidata": [
+   "Q116172638"
+  ],
+  "osm_store_count": 9,
+  "tier": 3
+ },
+ {
+  "id": "adidas",
+  "name": "Adidas",
+  "domain": "www.adidas.com",
+  "category": "sport",
+  "osm_brands": [
+   "Adidas"
+  ],
+  "osm_wikidata": [
+   "Q3895"
+  ],
+  "osm_store_count": 9,
+  "tier": 3
+ },
+ {
+  "id": "vandervelde",
+  "name": "Van der Velde",
+  "domain": "www.boekhandelvandervelde.nl",
+  "category": "boeken",
+  "osm_brands": [
+   "Van der Velde"
+  ],
+  "osm_wikidata": [],
+  "osm_store_count": 8,
+  "tier": 3
+ },
+ {
+  "id": "trek",
+  "name": "Trek",
+  "domain": "www.trekbikes.com",
+  "category": "fiets",
+  "osm_brands": [
+   "Trek"
+  ],
+  "osm_wikidata": [
+   "Q1067617"
+  ],
+  "osm_store_count": 8,
+  "tier": 3
+ },
+ {
+  "id": "gaborstore",
+  "name": "GaborStore",
+  "domain": "www.gaborstore.nl",
+  "category": "schoenen",
+  "osm_brands": [
+   "GaborStore"
+  ],
+  "osm_wikidata": [
+   "Q135750359"
+  ],
+  "osm_store_count": 8,
+  "tier": 3
+ },
+ {
+  "id": "sportsworld",
+  "name": "Sports World",
+  "domain": "www.sportsworld.nl",
+  "category": "sport",
+  "osm_brands": [
+   "Sports World"
+  ],
+  "osm_wikidata": [
+   "Q130300083"
+  ],
+  "osm_store_count": 8,
+  "tier": 3
+ },
+ {
+  "id": "gant",
+  "name": "GANT",
+  "domain": "www.ligtblauw.nl",
+  "category": "kleding",
+  "osm_brands": [
+   "GANT"
+  ],
+  "osm_wikidata": [
+   "Q1493667"
+  ],
+  "osm_store_count": 8,
+  "tier": 3
+ },
+ {
+  "id": "lippe",
+  "name": "Lippe",
+  "domain": "www.lippewonen.nl",
+  "category": "wonen",
+  "osm_brands": [
+   "Lippe"
+  ],
+  "osm_wikidata": [],
+  "osm_store_count": 8,
+  "tier": 3
+ },
+ {
+  "id": "swatch",
+  "name": "Swatch",
+  "domain": "www.swatch.com",
+  "category": "sieraden",
+  "osm_brands": [
+   "Swatch"
+  ],
+  "osm_wikidata": [
+   "Q573422"
+  ],
+  "osm_store_count": 8,
+  "tier": 3
+ },
+ {
+  "id": "fruitcompany",
+  "name": "Fruitcompany",
+  "domain": "www.degoudreinet.nl",
+  "category": "eten",
+  "osm_brands": [
+   "Fruitcompany"
+  ],
+  "osm_wikidata": [
+   "Q138774682"
+  ],
+  "osm_store_count": 8,
+  "tier": 3
+ },
+ {
+  "id": "superdry",
+  "name": "Superdry",
+  "domain": "stores.superdry.nl",
+  "category": "kleding",
+  "osm_brands": [
+   "Superdry"
+  ],
+  "osm_wikidata": [
+   "Q1684445"
+  ],
+  "osm_store_count": 8,
+  "tier": 3
+ },
+ {
+  "id": "coppelmans",
+  "name": "Coppelmans",
+  "domain": "www.coppelmans.nl",
+  "category": "tuin & dier",
+  "osm_brands": [
+   "Coppelmans"
+  ],
+  "osm_wikidata": [
+   "Q116679574"
+  ],
+  "osm_store_count": 8,
+  "tier": 3
+ },
+ {
+  "id": "uniqlo",
+  "name": "Uniqlo",
+  "domain": "www.uniqlo.com",
+  "category": "kleding",
+  "osm_brands": [
+   "Uniqlo"
+  ],
+  "osm_wikidata": [
+   "Q26070"
+  ],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "soliver",
+  "name": "s.Oliver",
+  "domain": "www.mcarthurglen.com",
+  "category": "kleding",
+  "osm_brands": [
+   "s.Oliver",
+   "Samsonite",
+   "Tom Tailor",
+   "Polo Ralph Lauren",
+   "Vans",
+   "Marc Cain"
+  ],
+  "osm_wikidata": [
+   "Q265056",
+   "Q1203426",
+   "Q571206",
+   "Q1641437",
+   "Q1135366",
+   "Q63342543"
+  ],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "lacoste",
+  "name": "Lacoste",
+  "domain": "www.lacoste.com",
+  "category": "kleding",
+  "osm_brands": [
+   "Lacoste"
+  ],
+  "osm_wikidata": [
+   "Q309031"
+  ],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "debijenkorf",
+  "name": "De Bijenkorf",
+  "domain": "www.debijenkorf.nl",
+  "category": "warenhuis",
+  "osm_brands": [
+   "De Bijenkorf"
+  ],
+  "osm_wikidata": [
+   "Q2063937"
+  ],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "calvinklein",
+  "name": "Calvin Klein",
+  "domain": "www.calvinklein.nl",
+  "category": "kleding",
+  "osm_brands": [
+   "Calvin Klein"
+  ],
+  "osm_wikidata": [
+   "Q1068628"
+  ],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "coef",
+  "name": "Coef",
+  "domain": "coef.nl",
+  "category": "kleding",
+  "osm_brands": [
+   "Coef"
+  ],
+  "osm_wikidata": [],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "samsung",
+  "name": "Samsung",
+  "domain": "www.samsung.com",
+  "category": "elektronica",
+  "osm_brands": [
+   "Samsung"
+  ],
+  "osm_wikidata": [
+   "Q20718"
+  ],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "opnieuwco",
+  "name": "Opnieuw & Co",
+  "domain": "www.opnieuwenco.nl",
+  "category": "kringloop",
+  "osm_brands": [
+   "Opnieuw & Co"
+  ],
+  "osm_wikidata": [
+   "Q138040643"
+  ],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "thenorthface",
+  "name": "The North Face",
+  "domain": "www.thenorthface.nl",
+  "category": "kleding",
+  "osm_brands": [
+   "The North Face"
+  ],
+  "osm_wikidata": [
+   "Q152784"
+  ],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "kamsmaschoenen",
+  "name": "Kamsma Schoenen",
+  "domain": "www.kamsmaschoenen.nl",
+  "category": "schoenen",
+  "osm_brands": [
+   "Kamsma Schoenen"
+  ],
+  "osm_wikidata": [],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "automat",
+  "name": "Automat",
+  "domain": "www.automathardenberg.nl",
+  "category": "auto",
+  "osm_brands": [
+   "Automat"
+  ],
+  "osm_wikidata": [
+   "Q70623238"
+  ],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "vanbeekartsupplies",
+  "name": "Van Beek Art Supplies",
+  "domain": "www.vanbeekart.nl",
+  "category": "hobby",
+  "osm_brands": [
+   "Van Beek Art Supplies"
+  ],
+  "osm_wikidata": [],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "drmartens",
+  "name": "Dr. Martens",
+  "domain": "www.drmartens.com",
+  "category": "schoenen",
+  "osm_brands": [
+   "Dr. Martens"
+  ],
+  "osm_wikidata": [
+   "Q1126126"
+  ],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "pietklerkx",
+  "name": "Piet Klerkx",
+  "domain": "www.pietklerkx.nl",
+  "category": "wonen",
+  "osm_brands": [
+   "Piet Klerkx"
+  ],
+  "osm_wikidata": [
+   "Q129101213"
+  ],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "huurmaat",
+  "name": "HuurMaat",
+  "domain": "www.huurmaat.nl",
+  "category": "bouwmarkt",
+  "osm_brands": [
+   "HuurMaat"
+  ],
+  "osm_wikidata": [],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "urbanoutfitters",
+  "name": "Urban Outfitters",
+  "domain": "www.urbanoutfitters.com",
+  "category": "kleding",
+  "osm_brands": [
+   "Urban Outfitters"
+  ],
+  "osm_wikidata": [
+   "Q3552193"
+  ],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "stradivarius",
+  "name": "Stradivarius",
+  "domain": "www.stradivarius.com",
+  "category": "kleding",
+  "osm_brands": [
+   "Stradivarius"
+  ],
+  "osm_wikidata": [
+   "Q3322945"
+  ],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "lecot",
+  "name": "Lecot",
+  "domain": "lecot-biermans.nl",
+  "category": "bouwmarkt",
+  "osm_brands": [
+   "Lecot"
+  ],
+  "osm_wikidata": [
+   "Q108272936"
+  ],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "gerryweber",
+  "name": "Gerry Weber",
+  "domain": "www.gerrywebermode.nl",
+  "category": "kleding",
+  "osm_brands": [
+   "Gerry Weber"
+  ],
+  "osm_wikidata": [
+   "Q873447"
+  ],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "koetshuyschkaaswinke",
+  "name": "Koetshuysch Kaaswinkel",
+  "domain": "koetshuyschkaas.nl",
+  "category": "eten",
+  "osm_brands": [
+   "Koetshuysch Kaaswinkel"
+  ],
+  "osm_wikidata": [],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "estafette",
+  "name": "Estafette",
+  "domain": "www.estafetterecyclewinkels.nl",
+  "category": "kringloop",
+  "osm_brands": [
+   "Estafette"
+  ],
+  "osm_wikidata": [
+   "Q140987477"
+  ],
+  "osm_store_count": 7,
+  "tier": 3
+ },
+ {
+  "id": "coop",
+  "name": "Coop",
+  "domain": "wijblijvencoop.nl",
+  "category": "supermarkt",
+  "osm_brands": [
+   "Coop"
+  ],
+  "osm_wikidata": [
+   "Q2390074"
+  ],
+  "osm_store_count": 6,
+  "tier": 3
+ },
+ {
+  "id": "mcd",
+  "name": "MCD",
+  "domain": "www.mcd-supermarkt.nl",
+  "category": "supermarkt",
+  "osm_brands": [
+   "MCD"
+  ],
+  "osm_wikidata": [
+   "Q46936596"
+  ],
+  "osm_store_count": 6,
+  "tier": 3
+ },
+ {
+  "id": "runx",
+  "name": "RunX",
+  "domain": "runx.nl",
+  "category": "sport",
+  "osm_brands": [
+   "RunX"
+  ],
+  "osm_wikidata": [
+   "Q138506843"
+  ],
+  "osm_store_count": 6,
+  "tier": 3
+ },
+ {
+  "id": "fietswereld",
+  "name": "Fietswereld",
+  "domain": "www.telmantweewielers.nl",
+  "category": "fiets",
+  "osm_brands": [
+   "Fietswereld"
+  ],
+  "osm_wikidata": [
+   "Q116172680"
+  ],
+  "osm_store_count": 6,
+  "tier": 3
+ },
+ {
+  "id": "loods5",
+  "name": "Loods 5",
+  "domain": "loods5.nl",
+  "category": "wonen",
+  "osm_brands": [
+   "Loods 5"
+  ],
+  "osm_wikidata": [
+   "Q129101186"
+  ],
+  "osm_store_count": 6,
+  "tier": 3
+ },
+ {
+  "id": "birkenstock",
+  "name": "Birkenstock",
+  "domain": "www.birkenstock.com",
+  "category": "schoenen",
+  "osm_brands": [
+   "Birkenstock"
+  ],
+  "osm_wikidata": [
+   "Q648458"
+  ],
+  "osm_store_count": 6,
+  "tier": 3
+ },
+ {
+  "id": "sportsdirect",
+  "name": "Sports Direct",
+  "domain": "www.sportsdirect.com",
+  "category": "sport",
+  "osm_brands": [
+   "Sports Direct"
+  ],
+  "osm_wikidata": [
+   "Q7579661"
+  ],
+  "osm_store_count": 6,
+  "tier": 3
+ },
+ {
+  "id": "elferinkschoenen",
+  "name": "Elferink Schoenen",
+  "domain": "elferinkschoenen.nl",
+  "category": "schoenen",
+  "osm_brands": [
+   "Elferink Schoenen"
+  ],
+  "osm_wikidata": [
+   "Q134520232"
+  ],
+  "osm_store_count": 6,
+  "tier": 3
+ },
+ {
+  "id": "gerstaecker",
+  "name": "Gerstaecker",
+  "domain": "www.gerstaecker.nl",
+  "category": "hobby",
+  "osm_brands": [
+   "Gerstaecker"
+  ],
+  "osm_wikidata": [],
+  "osm_store_count": 6,
+  "tier": 3
+ },
+ {
+  "id": "witzandbouwmateriale",
+  "name": "Witzand Bouwmaterialen",
+  "domain": "www.witzand.nl",
+  "category": "bouwmarkt",
+  "osm_brands": [
+   "Witzand Bouwmaterialen"
+  ],
+  "osm_wikidata": [
+   "Q132675204"
+  ],
+  "osm_store_count": 6,
+  "tier": 3
+ },
+ {
+  "id": "debosrand",
+  "name": "De Bosrand",
+  "domain": "www.bosrand.nl",
+  "category": "tuin & dier",
+  "osm_brands": [
+   "De Bosrand"
+  ],
+  "osm_wikidata": [
+   "Q123469922"
+  ],
+  "osm_store_count": 6,
+  "tier": 3
+ },
+ {
+  "id": "henriwillig",
+  "name": "Henri Willig",
+  "domain": "www.cheeseandmore.com",
+  "category": "eten",
+  "osm_brands": [
+   "Henri Willig"
+  ],
+  "osm_wikidata": [],
+  "osm_store_count": 6,
+  "tier": 3
+ },
+ {
+  "id": "sleepfast",
+  "name": "Sleepfast",
+  "domain": "www.sleepfast.nl",
+  "category": "wonen",
+  "osm_brands": [
+   "Sleepfast"
+  ],
+  "osm_wikidata": [
+   "Q135342324"
+  ],
+  "osm_store_count": 6,
+  "tier": 3
+ },
+ {
+  "id": "fietsservice",
+  "name": "Fiets & Service",
+  "domain": "www.ns.nl",
+  "category": "fiets",
+  "osm_brands": [
+   "Fiets & Service"
+  ],
+  "osm_wikidata": [
+   "Q134972535"
+  ],
+  "osm_store_count": 6,
+  "tier": 3
+ },
+ {
+  "id": "fashionomi",
+  "name": "Fashionomi",
+  "domain": "fashionomi.com",
+  "category": "kleding",
+  "osm_brands": [
+   "Fashionomi"
+  ],
+  "osm_wikidata": [],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "bolia",
+  "name": "Bolia",
+  "domain": "www.bolia.com",
+  "category": "wonen",
+  "osm_brands": [
+   "Bolia"
+  ],
+  "osm_wikidata": [
+   "Q11961809"
+  ],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "americanvintage",
+  "name": "American Vintage",
+  "domain": "www.americanvintage-store.com",
+  "category": "kleding",
+  "osm_brands": [
+   "American Vintage"
+  ],
+  "osm_wikidata": [
+   "Q2422884"
+  ],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "mostertjuweliers",
+  "name": "Mostert Juweliers",
+  "domain": "www.mostert-juweliers.nl",
+  "category": "sieraden",
+  "osm_brands": [
+   "Mostert Juweliers"
+  ],
+  "osm_wikidata": [],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "sacha",
+  "name": "Sacha",
+  "domain": "www.strego.nl",
+  "category": "schoenen",
+  "osm_brands": [
+   "Sacha"
+  ],
+  "osm_wikidata": [
+   "Q116414246"
+  ],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "profile2",
+  "name": "Profile",
+  "domain": "www.profile.nl",
+  "category": "fiets",
+  "osm_brands": [
+   "Profile"
+  ],
+  "osm_wikidata": [],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "euronics",
+  "name": "Euronics",
+  "domain": "www.euronics.nl",
+  "category": "elektronica",
+  "osm_brands": [
+   "Euronics"
+  ],
+  "osm_wikidata": [
+   "Q184860"
+  ],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "decokay",
+  "name": "Decokay",
+  "domain": "www.decokayvanslooten.nl",
+  "category": "wonen",
+  "osm_brands": [
+   "Decokay"
+  ],
+  "osm_wikidata": [
+   "Q134972480"
+  ],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "dewijnbrigade",
+  "name": "De Wijnbrigade",
+  "domain": "www.dewijnbrigade.nl",
+  "category": "drank",
+  "osm_brands": [
+   "De Wijnbrigade"
+  ],
+  "osm_wikidata": [
+   "Q137604052"
+  ],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "lego",
+  "name": "Lego",
+  "domain": "www.lego.com",
+  "category": "speelgoed",
+  "osm_brands": [
+   "Lego"
+  ],
+  "osm_wikidata": [
+   "Q25385996"
+  ],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "cos",
+  "name": "COS",
+  "domain": "www.cosstores.com",
+  "category": "kleding",
+  "osm_brands": [
+   "COS"
+  ],
+  "osm_wikidata": [
+   "Q60772401"
+  ],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "ameubel",
+  "name": "A-Meubel",
+  "domain": "www.a-meubel.nl",
+  "category": "wonen",
+  "osm_brands": [
+   "A-Meubel"
+  ],
+  "osm_wikidata": [
+   "Q122904371"
+  ],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "dearend",
+  "name": "De Arend",
+  "domain": "de-arend.nl",
+  "category": "wonen",
+  "osm_brands": [
+   "De Arend"
+  ],
+  "osm_wikidata": [],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "maxmara",
+  "name": "Max Mara",
+  "domain": "nl.maxmara.com",
+  "category": "kleding",
+  "osm_brands": [
+   "Max Mara"
+  ],
+  "osm_wikidata": [
+   "Q1151774"
+  ],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "zarahome",
+  "name": "Zara Home",
+  "domain": "www.zarahome.com",
+  "category": "wonen",
+  "osm_brands": [
+   "Zara Home"
+  ],
+  "osm_wikidata": [
+   "Q3114054"
+  ],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "riviramaison",
+  "name": "Rivièra Maison",
+  "domain": "rivieramaison.com",
+  "category": "kleding",
+  "osm_brands": [
+   "Rivièra Maison"
+  ],
+  "osm_wikidata": [
+   "Q135342321"
+  ],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "diesel",
+  "name": "Diesel",
+  "domain": "storelocator.diesel.com",
+  "category": "kleding",
+  "osm_brands": [
+   "Diesel"
+  ],
+  "osm_wikidata": [
+   "Q158285"
+  ],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "max",
+  "name": "Max",
+  "domain": "www.max25.nl",
+  "category": "kleding",
+  "osm_brands": [
+   "Max"
+  ],
+  "osm_wikidata": [
+   "Q24939079"
+  ],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "degoudsbloem",
+  "name": "De Goudsbloem",
+  "domain": "www.degoudsbloem.nl",
+  "category": "drogist",
+  "osm_brands": [
+   "De Goudsbloem"
+  ],
+  "osm_wikidata": [],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "solange",
+  "name": "Solange",
+  "domain": "solangefashion.nl",
+  "category": "kleding",
+  "osm_brands": [
+   "Solange"
+  ],
+  "osm_wikidata": [],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "lecreuset",
+  "name": "Le Creuset",
+  "domain": "www.lecreuset.nl",
+  "category": "huishoud",
+  "osm_brands": [
+   "Le Creuset"
+  ],
+  "osm_wikidata": [
+   "Q555861"
+  ],
+  "osm_store_count": 5,
+  "tier": 3
+ },
+ {
+  "id": "gucci",
+  "name": "Gucci",
+  "domain": "prod-www.mcarthurglen.com",
+  "category": "kleding",
+  "osm_brands": [
+   "Gucci"
+  ],
+  "osm_wikidata": [
+   "Q178516"
+  ],
+  "osm_store_count": 5,
+  "tier": 3
  }
 ]
