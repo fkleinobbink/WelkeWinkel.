@@ -3,5 +3,9 @@
  "sitemaps": [
   "https://www.dirk.nl/products-sitemap.xml"
  ],
- "parser": "dirk"
+ "parser": "dirk",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "concurrency": 2,
+ "delayMs": 700
 }

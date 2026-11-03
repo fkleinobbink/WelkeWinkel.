@@ -7,5 +7,6 @@
  "site": "https://www.trekpleister.nl",
  "media": "https://media.trekpleister.nl",
  "delayMs": 800,
- "baseQuery": ":name-asc"
+ "baseQuery": ":name-asc",
+ "daily": true
 }

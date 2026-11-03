@@ -4,5 +4,6 @@
  "wcBase": "https://rataplan.nl",
  "storeAttribute": "pa_rataplan-winkel",
  "delayMs": 500,
- "notes": "Elk item ligt in precies 1 filiaal (store_hint = plaatsnaam van de winkel)."
+ "notes": "Elk item ligt in precies 1 filiaal (store_hint = plaatsnaam van de winkel).",
+ "daily": true
 }
