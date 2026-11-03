@@ -1,8 +1,10 @@
 // Kruidvat (SAP Commerce / Spartacus). Productzoek-API via de browser (Akamai blokkeert gewone requests).
 // Alleen eigen assortiment (geen marketplace: ligt niet in de winkel). Per categorie (niveau 2) pagineren,
 // want één grote lijst geeft dubbelingen/gaten tussen pagina's.
-const API = "https://api.kruidvat.nl/api/v2/kvn-spa";
-const MEDIA = "https://media.kruidvat.nl";
+// Werkt ook voor Trekpleister (zelfde platform): config.api / config.site / config.media
+let API = "https://api.kruidvat.nl/api/v2/kvn-spa";
+let MEDIA = "https://media.kruidvat.nl";
+let SITE = "https://www.kruidvat.nl";
 const BASE_Q = ":name-asc:marketplaceProduct:false";
 
 async function search(get, query, page, pageSize = 100) {
@@ -27,16 +29,19 @@ function map(p, tag) {
     category: cats.slice(-1)[0] || null,
     breadcrumb: cats.join(" > ") || null,
     amount: p.shortDescription || null,
-    product_url: "https://www.kruidvat.nl" + p.url,
+    product_url: SITE + p.url,
     page_url: tag,
   };
 }
 
-export async function* products({ get, log, deadline, max }) {
+export async function* products({ shop, get, log, deadline, max }) {
+  if (shop.api) API = shop.api;
+  if (shop.media) MEDIA = shop.media;
+  if (shop.site) SITE = shop.site;
   const first = await search(get, BASE_Q, 0, 20);
   const total = first.pagination?.totalResults;
   const cats = (first.facets || []).find((f) => f.code === "categoryCodeLevel2")?.values || [];
-  log(`kruidvat: ${total} producten in ${cats.length} categorieën`);
+  log(`${shop.id}: ${total} producten in ${cats.length} categorieën`);
   const seen = new Set();
   let n = 0;
   for (const c of cats) {
@@ -44,7 +49,7 @@ export async function* products({ get, log, deadline, max }) {
     const q = `${BASE_Q}:categoryCodeLevel2:${c.code}`;
     for (let page = 0, pages = 1; page < pages; page++) {
       let d;
-      try { d = await search(get, q, page); } catch (e) { log(`kruidvat: ${c.name || c.code} p${page} mislukt: ${e.message}`); continue; }
+      try { d = await search(get, q, page); } catch (e) { log(`${shop.id}: ${c.name || c.code} p${page} mislukt: ${e.message}`); continue; }
       pages = d.pagination?.totalPages ?? 1;
       for (const p of d.products || []) {
         if (p.marketplaceProduct || String(p.code).startsWith("mp-") || seen.has(p.code)) continue;
@@ -54,5 +59,5 @@ export async function* products({ get, log, deadline, max }) {
       }
     }
   }
-  log(`kruidvat: ${n} unieke producten (van ${total})`);
+  log(`${shop.id}: ${n} unieke producten (van ${total})`);
 }
