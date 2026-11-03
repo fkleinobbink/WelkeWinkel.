@@ -6,6 +6,6 @@
  "urlInclude": "decathlon\\.nl/p/(?!mp/)",
  "concurrency": 1,
  "delayMs": 2500,
- "daily": false,
+ "daily": true,
  "reuseDays": 60
 }

@@ -8,5 +8,6 @@
  "urlExclude": "/catalog/product/view/",
  "concurrency": 2,
  "delayMs": 500,
- "notes": "Cloudflare-check: alleen echte Chromium komt erdoor"
+ "notes": "Cloudflare-check: alleen echte Chromium komt erdoor",
+ "daily": true
 }

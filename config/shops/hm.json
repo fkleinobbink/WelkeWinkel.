@@ -8,5 +8,6 @@
  "urlInclude": "/nl_nl/productpage\\.",
  "concurrency": 2,
  "delayMs": 600,
- "notes": "Akamai laat alleen Safari-TLS door"
+ "notes": "Homepage lukt met Safari-TLS, productpagina's 403 (Akamai sensor). Geparkeerd.",
+ "enabled": false
 }

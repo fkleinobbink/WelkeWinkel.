@@ -1,12 +1,13 @@
 {
  "strategy": "sitemap",
- "engine": "impersonate",
+ "engine": "browser",
  "impersonate": "chrome",
  "sitemaps": [
   "https://sitemaps.coolblue.nl/www.coolblue.nl/nl/products_1.xml"
  ],
  "urlInclude": "coolblue\\.nl/product/\\d+/",
- "concurrency": 2,
- "delayMs": 800,
- "notes": "Eerder 403 door te snel; werkt met alle engines bij lage snelheid"
+ "concurrency": 1,
+ "delayMs": 2000,
+ "notes": "Eerder 403 door te snel; werkt met alle engines bij lage snelheid",
+ "browserOrigin": "https://www.coolblue.nl"
 }
