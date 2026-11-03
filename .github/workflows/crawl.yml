@@ -139,7 +139,14 @@ jobs:
       - name: Filialen (OpenStreetMap)
         # alleen bij de nachtelijke run (of als er nog niets is) opnieuw ophalen
         run: |
-          if [ "${{ github.event_name }}" = "schedule" ] || [ ! -f data/stores.ndjson.gz ]; then
+          MISSING=$(node -e '
+            const fs=require("fs"),z=require("zlib");
+            if(!fs.existsSync("data/stores.ndjson.gz")){console.log(999);process.exit()}
+            const have=new Set(z.gunzipSync(fs.readFileSync("data/stores.ndjson.gz")).toString().split("\n").filter(Boolean).map(l=>JSON.parse(l).site));
+            console.log(JSON.parse(fs.readFileSync("config/shops.json")).filter(s=>!have.has(s.id)&&s.osm_store_count>0).length)')
+          echo "winkels zonder filialen: $MISSING"
+          # nachtrun, of als er nieuwe winkels zonder filialen zijn
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "$MISSING" -gt 0 ]; then
             node src/stores.mjs data/stores-new.ndjson.gz && mv data/stores-new.ndjson.gz data/stores.ndjson.gz || echo "OSM mislukt, vorige filialen gebruiken"
           else echo "filialen uit vorige build"; fi
       - name: Database bouwen
