@@ -16,9 +16,9 @@ export async function* products({ get, log, deadline, max }) {
       let d;
       try { d = JSON.parse((await get(url, { headers: A, retries: 3, timeout: 60000 })).text); }
       catch (e) { log(`ah: ${c.name} p${page} mislukt ${e.message}`); break; }
-      if (page === 0 && d.page.totalElements >= 10000 && d.taxonomyNodes?.length) {
+      if (page === 0 && d.page.totalElements > 3000 && d.taxonomyNodes?.length && c.depth !== 3) {
         // te groot: subcategorieën apart
-        for (const t of d.taxonomyNodes) queue.push({ id: t.id, name: `${c.name} > ${t.name}` });
+        for (const t of d.taxonomyNodes) queue.push({ id: t.id, name: `${c.name} > ${t.name}`, depth: (c.depth || 0) + 1 });
         log(`ah: ${c.name} te groot (${d.page.totalElements}), opgesplitst`);
         break;
       }
