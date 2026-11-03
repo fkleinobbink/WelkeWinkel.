@@ -63,7 +63,7 @@ function pickOffer(offers) {
   for (const o of list) {
     if (!o || typeof o !== "object") continue;
     const price = parsePrice(o.price ?? o.lowPrice ?? o.priceSpecification?.price ?? first(o.priceSpecification)?.price);
-    if (price == null) continue;
+    if (price == null || price === 0) continue;
     if (!best || price < best.price) best = { price, currency: o.priceCurrency || first(o.priceSpecification)?.priceCurrency || null, availability: str(o.availability), sku: o.sku || null, gtin: o.gtin13 || o.gtin || null };
   }
   return best || {};
