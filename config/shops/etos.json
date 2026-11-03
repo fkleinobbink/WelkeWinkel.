@@ -1,0 +1,9 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": ["https://www.etos.nl/sitemap_index.xml"],
+ "sitemapInclude": "-product\\.xml",
+ "concurrency": 4,
+ "delayMs": 250
+}
