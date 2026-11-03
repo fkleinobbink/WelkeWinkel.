@@ -8,5 +8,6 @@
  "concurrency": 3,
  "delayMs": 300,
  "auto": true,
- "urlInclude": "/p/"
+ "urlInclude": "/p/",
+ "daily": true
 }

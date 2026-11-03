@@ -8,5 +8,6 @@
  "concurrency": 3,
  "delayMs": 300,
  "auto": true,
- "urlInclude": "/products/"
+ "urlInclude": "^https://pauw\\.com/products/",
+ "daily": true
 }
