@@ -9,5 +9,6 @@
  "concurrency": 1,
  "delayMs": 2000,
  "notes": "Eerder 403 door te snel; werkt met alle engines bij lage snelheid",
- "browserOrigin": "https://www.coolblue.nl"
+ "browserOrigin": "https://www.coolblue.nl",
+ "daily": true
 }

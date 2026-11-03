@@ -2,10 +2,13 @@
  "strategy": "sitemap",
  "engine": "browser",
  "browserOrigin": "https://www.zara.com",
- "sitemaps": ["https://www.zara.com/sitemaps/sitemap-index.xml.gz"],
+ "sitemaps": [
+  "https://www.zara.com/sitemaps/sitemap-index.xml.gz"
+ ],
  "sitemapInclude": "nl-nl",
  "urlInclude": "/nl/nl/.+-p\\d+\\.html",
  "concurrency": 2,
  "delayMs": 600,
- "notes": "Akamai JS-check: alleen echte Chromium"
+ "notes": "Akamai JS-check: alleen echte Chromium",
+ "daily": true
 }
