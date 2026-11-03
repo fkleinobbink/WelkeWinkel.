@@ -1,0 +1,9 @@
+{
+ "strategy": "sitemap",
+ "sitemaps": [
+  "https://sostrenegrene.com/nl/sitemap.xml"
+ ],
+ "urlInclude": "/nl/producten/",
+ "concurrency": 3,
+ "delayMs": 300
+}

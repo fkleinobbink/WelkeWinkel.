@@ -1,0 +1,11 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": [
+  "https://www.bever.nl/sitemap/index.xml"
+ ],
+ "sitemapInclude": "product",
+ "concurrency": 3,
+ "delayMs": 300
+}

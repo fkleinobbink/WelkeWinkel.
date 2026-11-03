@@ -1,0 +1,9 @@
+{
+ "strategy": "sitemap",
+ "sitemaps": [
+  "https://www.odin.nl/sitemap.xml"
+ ],
+ "urlInclude": "/producten/(?!alle-producten)",
+ "concurrency": 3,
+ "delayMs": 300
+}

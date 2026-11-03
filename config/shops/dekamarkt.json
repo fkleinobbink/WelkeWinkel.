@@ -1,0 +1,12 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": [
+  "https://www.dekamarkt.nl/products-sitemap.xml"
+ ],
+ "parser": "dirk",
+ "concurrency": 2,
+ "delayMs": 600,
+ "notes": "Zelfde platform als Dirk (Detailresult)"
+}
