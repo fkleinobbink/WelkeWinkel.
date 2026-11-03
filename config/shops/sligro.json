@@ -1,8 +1,11 @@
 {
  "strategy": "sitemap",
- "sitemaps": ["https://www.sligro.nl/sitemap.nl-products-sitemap.xml"],
+ "sitemaps": [
+  "https://www.sligro.nl/sitemap.nl-products-sitemap.xml"
+ ],
  "parser": "sligro",
  "concurrency": 3,
  "delayMs": 300,
- "notes": "Groothandel: prijzen alleen met account, dus zonder prijs"
+ "notes": "Groothandel: prijzen alleen met account, dus zonder prijs",
+ "daily": true
 }

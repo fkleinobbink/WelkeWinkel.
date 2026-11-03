@@ -6,5 +6,6 @@
  "parser": "jeanscentre",
  "concurrency": 3,
  "delayMs": 300,
- "notes": "Prijs wordt client-side geladen; zonder prijs"
+ "notes": "Prijs wordt client-side geladen; zonder prijs",
+ "daily": true
 }
