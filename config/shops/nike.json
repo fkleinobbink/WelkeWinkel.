@@ -1,0 +1,16 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": [
+  "https://www.nike.com/sitemap-v2-pdp-index.xml",
+  "https://www.nike.com/sitemap-v2-snkrsweb-index.xml",
+  "https://www.nike.com/sitemap-v2-gridwall-index.xml",
+  "https://www.nike.com/sitemap-v2-article-index.xml",
+  "https://www.nike.com/sitemap-locator-index.xml"
+ ],
+ "concurrency": 3,
+ "delayMs": 300,
+ "auto": true,
+ "urlInclude": "/nl/"
+}

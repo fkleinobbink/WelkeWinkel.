@@ -1,0 +1,12 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": [
+  "https://www.be-one.nl/sitemap.xml",
+  "https://www.be-one.nl/sitemap_index.xml"
+ ],
+ "concurrency": 3,
+ "delayMs": 300,
+ "auto": true
+}

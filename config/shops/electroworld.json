@@ -1,0 +1,11 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": [
+  "https://www.electroworld.nl/media/sitemap_electroworld/sitemap.xml"
+ ],
+ "concurrency": 3,
+ "delayMs": 300,
+ "auto": true
+}

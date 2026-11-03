@@ -1,0 +1,11 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": [
+  "https://www.prenatal.nl/media/siteindex/prenatal_nl_nl/siteindex.xml"
+ ],
+ "concurrency": 3,
+ "delayMs": 300,
+ "auto": true
+}

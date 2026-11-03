@@ -1,0 +1,11 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": [
+  "https://www.grapedistrict.nl/sitemap.xml"
+ ],
+ "concurrency": 3,
+ "delayMs": 300,
+ "auto": true
+}

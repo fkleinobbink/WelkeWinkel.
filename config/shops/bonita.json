@@ -1,0 +1,12 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": [
+  "https://www.bonita.de/export/sitemap/sitemap_index.xml"
+ ],
+ "concurrency": 3,
+ "delayMs": 300,
+ "auto": true,
+ "urlInclude": "/nl/"
+}

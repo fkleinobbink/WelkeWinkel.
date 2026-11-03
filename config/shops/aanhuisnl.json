@@ -1,0 +1,13 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": [
+  "https://aanhuis.nl/sitemap.xml",
+  "https://aanhuis.nl/sitemap_index.xml"
+ ],
+ "concurrency": 3,
+ "delayMs": 300,
+ "auto": true,
+ "urlInclude": "/producten/"
+}

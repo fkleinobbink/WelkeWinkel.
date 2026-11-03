@@ -1,0 +1,20 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": [
+  "https://www.suitableshop.nl/sitemap.xml",
+  "https://www.suitableshop.nl/feeds/sitemaps/1_products.xml",
+  "https://www.suitableshop.nl/feeds/sitemaps/1_manufacturer_categories.xml",
+  "https://www.suitableshop.nl/feeds/sitemaps/1_manufacturers.xml",
+  "https://www.suitableshop.nl/feeds/sitemaps/1_categories.xml",
+  "https://www.suitableshop.nl/feeds/sitemaps/1_filters.xml",
+  "https://www.suitableshop.nl/feeds/sitemaps/1_stores_manufacturers.xml",
+  "https://www.suitableshop.nl/feeds/sitemaps/1_stores.xml",
+  "https://www.suitableshop.nl/feeds/sitemaps/1_pages.xml",
+  "https://www.suitableshop.nl/feeds/sitemaps/1_index.xml"
+ ],
+ "concurrency": 3,
+ "delayMs": 300,
+ "auto": true
+}

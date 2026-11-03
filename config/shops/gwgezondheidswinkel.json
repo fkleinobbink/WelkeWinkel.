@@ -1,0 +1,13 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": [
+  "https://www.gezondheidswinkel.nl/sitemap.xml",
+  "https://www.gezondheidswinkel.nl/sitemap_index.xml"
+ ],
+ "concurrency": 3,
+ "delayMs": 300,
+ "auto": true,
+ "urlInclude": "/p/"
+}

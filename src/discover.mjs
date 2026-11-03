@@ -112,7 +112,7 @@ export async function discover(shop, { log = console.log } = {}) {
 
 function commonPattern(locs) {
   // simpele heuristiek: gemeenschappelijk woord in pad
-  const words = ["product", "pdp", "artikel", "article", "item", "sku", "catalog"];
+  const words = ["product", "pdp", "artikel", "article", "sku", "catalog"];
   for (const w of words) if (locs.every((l) => l.toLowerCase().includes(w))) return w;
   return null;
 }
