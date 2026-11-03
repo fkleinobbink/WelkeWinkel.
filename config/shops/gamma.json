@@ -1,0 +1,8 @@
+{
+ "strategy": "sitemap",
+ "engine": "browser",
+ "browserOrigin": "https://www.gamma.nl",
+ "sitemapInclude": "product",
+ "concurrency": 3,
+ "delayMs": 300
+}

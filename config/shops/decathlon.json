@@ -1,0 +1,9 @@
+{
+ "strategy": "sitemap",
+ "engine": "browser",
+ "browserOrigin": "https://www.decathlon.nl",
+ "sitemapInclude": "product",
+ "urlInclude": "/p/",
+ "concurrency": 3,
+ "delayMs": 300
+}
