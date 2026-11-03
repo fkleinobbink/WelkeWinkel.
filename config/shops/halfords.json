@@ -1,0 +1,12 @@
+{
+ "strategy": "sitemap",
+ "engine": "browser",
+ "browserOrigin": "https://www.halfords.nl",
+ "sitemaps": [
+  "https://www.halfords.nl/google_sitemap_2_index.xml"
+ ],
+ "urlExclude": "/catalog/product/view/",
+ "concurrency": 2,
+ "delayMs": 500,
+ "notes": "Cloudflare-check: alleen echte Chromium komt erdoor"
+}

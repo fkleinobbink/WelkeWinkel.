@@ -4,7 +4,8 @@
  "browserOrigin": "https://www.decathlon.nl",
  "sitemapInclude": "product",
  "urlInclude": "decathlon\\.nl/p/(?!mp/)",
- "concurrency": 2,
- "delayMs": 1200,
- "daily": false
+ "concurrency": 1,
+ "delayMs": 2500,
+ "daily": false,
+ "reuseDays": 60
 }

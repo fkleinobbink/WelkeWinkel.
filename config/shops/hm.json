@@ -1,0 +1,12 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "safari",
+ "sitemaps": [
+  "https://www2.hm.com/nl_nl.sitemap.xml"
+ ],
+ "urlInclude": "/nl_nl/productpage\\.",
+ "concurrency": 2,
+ "delayMs": 600,
+ "notes": "Akamai laat alleen Safari-TLS door"
+}
