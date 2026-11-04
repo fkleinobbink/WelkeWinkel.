@@ -1,0 +1,12 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": [
+  "https://www.marskramer.nl/pub/media/sitemap/sitemap_marskramer.xml"
+ ],
+ "concurrency": 3,
+ "delayMs": 300,
+ "auto": true,
+ "urlExclude": "/catalog/product/view/"
+}

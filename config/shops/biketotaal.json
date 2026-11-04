@@ -1,0 +1,12 @@
+{
+ "strategy": "sitemap",
+ "engine": "impersonate",
+ "impersonate": "chrome",
+ "sitemaps": [
+  "https://www.biketotaal.nl/sitemap/nl-nl.xml"
+ ],
+ "concurrency": 3,
+ "delayMs": 300,
+ "auto": true,
+ "urlInclude": "/product/"
+}
