@@ -1,0 +1,11 @@
+{
+ "strategy": "linkcrawl",
+ "linkcrawl": {
+  "seeds": ["https://www.vomar.nl/producten"],
+  "follow": "vomar\\.nl/producten/[a-z0-9-]+(/[a-z0-9-]+)?$",
+  "product": "vomar\\.nl/producten/[a-z0-9-]+/[a-z0-9-]+/[^/]+/\\d+$",
+  "maxPages": 600
+ },
+ "concurrency": 3,
+ "delayMs": 300
+}
