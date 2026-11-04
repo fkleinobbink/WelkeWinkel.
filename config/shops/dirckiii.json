@@ -8,5 +8,6 @@
  "concurrency": 3,
  "delayMs": 300,
  "auto": true,
- "urlExclude": "/blog/"
+ "urlExclude": "/blog/",
+ "daily": true
 }
