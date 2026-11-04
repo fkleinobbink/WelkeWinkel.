@@ -8,5 +8,6 @@
  "concurrency": 3,
  "delayMs": 300,
  "auto": true,
- "urlExclude": "/catalog/product/view/"
+ "urlExclude": "/catalog/product/view/",
+ "daily": true
 }
