@@ -2,12 +2,15 @@
  "strategy": "linkcrawl",
  "linkcrawl": {
   "base": "https://webwinkel.poiesz-supermarkten.nl",
-  "seeds": ["https://webwinkel.poiesz-supermarkten.nl/boodschappen"],
+  "seeds": [
+   "https://webwinkel.poiesz-supermarkten.nl/boodschappen"
+  ],
   "follow": "/boodschappen/[a-z0-9-]+(/[a-z0-9-]+)?$",
   "product": "/boodschappen/producten/\\d+$",
   "pageParam": "page",
   "maxPages": 800
  },
  "concurrency": 3,
- "delayMs": 300
+ "delayMs": 300,
+ "parser": "poiesz"
 }
