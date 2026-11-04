@@ -8,8 +8,8 @@
   "https://prdapi.readshop.nl/waroot/sitemap-readshop_nl.xml"
  ],
  "sitemapInclude": "product",
- "urlExclude": "/engelse-boeken/|/duitse-boeken/|/franse-boeken/|/spaanse-boeken/",
+ "urlExclude": "/(engelse-|duitse-|franse-|spaanse-)?boeken/|/e-?books?/|/luisterboeken/|/tweedehands",
  "reuseDays": 30,
- "notes": "Enorme catalogus; progressief",
+ "notes": "Boeken uitgesloten: enorme online-only catalogus, ligt grotendeels niet in de winkel. Rest (kantoor, cadeau, speelgoed, tijdschriften) blijft.",
  "daily": true
 }
