@@ -3,3 +3,4 @@ out/
 probe-out/
 *.db
 *.db-*
+__pycache__/
