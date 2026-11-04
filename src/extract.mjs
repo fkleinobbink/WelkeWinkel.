@@ -34,9 +34,11 @@ function flatten(node, acc = []) {
   return acc;
 }
 
+// "@type" kan ook "http://schema.org/Product" zijn (bv. Bever)
+const normType = (x) => String(x || "").toLowerCase().replace(/^https?:\/\/schema\.org\//, "");
 const isType = (n, t) => {
   const ty = n["@type"];
-  return Array.isArray(ty) ? ty.some((x) => String(x).toLowerCase() === t) : String(ty || "").toLowerCase() === t;
+  return Array.isArray(ty) ? ty.some((x) => normType(x) === t) : normType(ty) === t;
 };
 
 export function parsePrice(v) {
