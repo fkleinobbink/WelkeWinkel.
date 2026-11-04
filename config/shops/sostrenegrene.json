@@ -6,5 +6,6 @@
  "urlInclude": "/nl/producten/",
  "concurrency": 3,
  "delayMs": 300,
- "parser": "sostrenegrene"
+ "parser": "sostrenegrene",
+ "daily": true
 }
