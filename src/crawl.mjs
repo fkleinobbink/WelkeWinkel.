@@ -48,7 +48,7 @@ for (const sig of ["SIGTERM", "SIGINT"]) process.on(sig, () => { if (!STOP) cons
 // linkcrawl: { seeds: [...], seedSitemap: true, follow: "regex", product: "regex", pageParam: "page", maxPages: 4000 }
 async function collectByLinkCrawl(shop, { deadline, log, max }) {
   const L = shop.linkcrawl;
-  const base = `https://${shop.domain}`;
+  const base = L.base || `https://${shop.domain}`;
   const follow = new RegExp(L.follow, "i"), product = new RegExp(L.product, "i");
   const listingDeadline = Date.now() + Math.min(120 * 60000, (deadline - Date.now()) * 0.45);
   let seeds = [...(L.seeds || [])];
