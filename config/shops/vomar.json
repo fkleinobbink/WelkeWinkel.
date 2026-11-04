@@ -1,7 +1,9 @@
 {
  "strategy": "linkcrawl",
  "linkcrawl": {
-  "seeds": ["https://www.vomar.nl/producten"],
+  "seeds": [
+   "https://www.vomar.nl/producten"
+  ],
   "follow": "vomar\\.nl/producten/[a-z0-9-]+$",
   "product": "vomar\\.nl/producten/[a-z0-9-]+/[a-z0-9-]+$",
   "maxPages": 100
@@ -10,5 +12,6 @@
  "multi": true,
  "concurrency": 2,
  "delayMs": 400,
- "notes": "Subcategoriepagina's als bron (productpagina's zijn client-side)"
+ "notes": "Subcategoriepagina's als bron (productpagina's zijn client-side)",
+ "daily": true
 }
