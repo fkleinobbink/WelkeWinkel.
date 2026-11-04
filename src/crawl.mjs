@@ -202,6 +202,8 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
   const multi = !!shop.multi;
   let i = 0, consecutiveBlocks = 0, stop = false, pausedUntil = 0, cooldowns = 0, lastCheckpoint = Date.now();
   let hostDelay = shop.delayMs ?? 200;
+  const baseDelay = hostDelay;
+  let okSinceSlow = 0;
   const worker = async () => {
     while (!stop && i < todo.length) {
       if (Date.now() > deadline || STOP) { stop = true; break; }
@@ -216,6 +218,12 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
         const prods = JSON.parse(JSON.stringify(pickProduct(ex.products, t.loc, multi).filter((p) => p.name)));
         if (prods.length) {
           consecutiveBlocks = 0;
+          // na een blokkade weer langzaam versnellen: elke 150 goede pagina's 25% minder wachttijd, tot de basis
+          if (hostDelay > baseDelay && ++okSinceSlow >= 150) {
+            okSinceSlow = 0;
+            hostDelay = Math.max(baseDelay, Math.round(hostDelay * 0.75));
+            setHostDelay(new URL(origin).host, hostDelay);
+          }
           results.set(t.loc, prods.map((p) => ({ ...p, page_url: t.loc, lastmod: t.lastmod, sitemap_image: t.image, fetched_at: new Date().toISOString(), method: ex.method })));
         } else {
           const b = blockSignal(r.text, r.status);

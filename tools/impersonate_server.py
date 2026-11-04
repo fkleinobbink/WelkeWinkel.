@@ -6,15 +6,20 @@ import json, sys, threading
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from curl_cffi import requests as cr
 
-local = threading.local()
+# Pool van hergebruikte sessies per browserprofiel: houdt TLS-verbindingen en cookies vast
+# (voorheen nieuwe sessie per verzoek = elke keer een nieuwe TLS-handshake, erg traag).
+import queue
+POOLS = {}
+POOL_LOCK = threading.Lock()
 
-def session(imp):
-    key = "s_" + imp
-    s = getattr(local, key, None)
-    if s is None:
-        s = cr.Session(impersonate=imp)
-        setattr(local, key, s)
-    return s
+def pool(imp):
+    with POOL_LOCK:
+        if imp not in POOLS:
+            q = queue.Queue()
+            for _ in range(8):
+                q.put(cr.Session(impersonate=imp))
+            POOLS[imp] = q
+        return POOLS[imp]
 
 class H(BaseHTTPRequestHandler):
     def log_message(self, *a):
@@ -24,9 +29,13 @@ class H(BaseHTTPRequestHandler):
         n = int(self.headers.get("content-length", 0))
         req = json.loads(self.rfile.read(n))
         try:
-            s = session(req.get("impersonate") or "chrome")
-            r = s.request(req.get("method") or "GET", req["url"], headers=req.get("headers") or {}, data=req.get("body"),
-                          timeout=req.get("timeout") or 30, allow_redirects=True)
+            q = pool(req.get("impersonate") or "chrome")
+            s = q.get()
+            try:
+                r = s.request(req.get("method") or "GET", req["url"], headers=req.get("headers") or {}, data=req.get("body"),
+                              timeout=req.get("timeout") or 30, allow_redirects=True)
+            finally:
+                q.put(s)
             body = r.content
             self.send_response(200)
             self.send_header("x-status", str(r.status_code))
