@@ -1,8 +1,13 @@
 {
- "strategy": "sitemap",
- "sitemaps": [
-  "https://www.toolstation.nl/sitemap/departments.xml"
- ],
- "multi": true,
- "daily": false
+ "strategy": "linkcrawl",
+ "sitemaps": ["https://www.toolstation.nl/sitemap/departments.xml"],
+ "linkcrawl": {
+  "seedSitemap": true,
+  "follow": "toolstation\\.nl/[a-z0-9-]+(/[a-z0-9-]+)?/c\\d+$",
+  "product": "toolstation\\.nl/[a-z0-9-]+/p\\d+$",
+  "pageParam": "page",
+  "maxPages": 4000
+ },
+ "concurrency": 3,
+ "delayMs": 300
 }

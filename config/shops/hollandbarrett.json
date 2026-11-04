@@ -1,0 +1,9 @@
+{
+ "strategy": "sitemap",
+ "engine": "browser",
+ "browserOrigin": "https://www.hollandandbarrett.nl",
+ "sitemaps": ["https://seo-sitemaps.assets.hollandandbarrett.com/hollandandbarrett.nl/sitemaps/sitemap-products-nl-1.xml"],
+ "urlInclude": "/shop/product/[^/]+-\\d+$",
+ "concurrency": 2,
+ "delayMs": 500
+}

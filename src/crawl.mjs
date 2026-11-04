@@ -66,8 +66,10 @@ async function collectByLinkCrawl(shop, { deadline, log, max }) {
     let html;
     try { html = (await get(url, { retries: 1, timeout: 45000 })).text; opened++; } catch { continue; }
     let fresh = 0;
-    for (const m of html.matchAll(/href=["']([^"'#]+)["']/g)) {
-      let abs; try { abs = new URL(m[1].replace(/&amp;/g, "&"), base).href.split("#")[0]; } catch { continue; }
+    // links uit href's én uit JSON (bv. JSON-LD ItemList "url")
+    const found = [...html.matchAll(/href=["']([^"'#]+)["']/g), ...html.matchAll(/"(?:url|@id)"\s*:\s*"(https?:[^"]+)"/g)];
+    for (const m of found) {
+      let abs; try { abs = new URL(m[1].replace(/&amp;/g, "&").replace(/\\\//g, "/"), base).href.split("#")[0].replace(/^http:/, "https:"); } catch { continue; }
       if (!abs.startsWith(base)) continue;
       const isProd = product.test(abs);
       if (isProd) { const k = L.stripQuery ? abs.split("?")[0] : abs; if (!prods.has(k)) { prods.set(k, { loc: k, lastmod: null }); fresh++; } }
