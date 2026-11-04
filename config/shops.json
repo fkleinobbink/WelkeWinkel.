@@ -1435,7 +1435,7 @@
  {
   "id": "biketotaal",
   "name": "Bike Totaal",
-  "domain": "biketotaaldamhuis.nl",
+  "domain": "www.biketotaal.nl",
   "category": "fiets",
   "osm_brands": [
    "Bike Totaal"
@@ -1689,7 +1689,7 @@
  {
   "id": "marskramer",
   "name": "Marskramer",
-  "domain": "www.novy.nl",
+  "domain": "www.marskramer.nl",
   "category": "huishoud",
   "osm_brands": [
    "Marskramer"
@@ -4423,5 +4423,21 @@
   ],
   "osm_store_count": 5,
   "tier": 3
+ },
+ {
+  "id": "benu",
+  "name": "BENU Apotheek",
+  "domain": "www.benu.nl",
+  "category": "drogist",
+  "osm_brands": [
+   "BENU",
+   "BENU Apotheek"
+  ],
+  "osm_wikidata": [
+   "Q55094520"
+  ],
+  "osm_store_count": 0,
+  "tier": 3,
+  "osm_amenity": "pharmacy"
  }
 ]

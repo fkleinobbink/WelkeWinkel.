@@ -15,7 +15,7 @@ for (const s of shops) {
 
 const q = `[out:json][timeout:900];
 area["ISO3166-1"="NL"][admin_level=2]->.nl;
-(nwr["shop"]["brand"](area.nl); nwr["amenity"="marketplace"]["brand"](area.nl););
+(nwr["shop"]["brand"](area.nl); nwr["amenity"~"^(marketplace|pharmacy)$"]["brand"](area.nl););
 out tags center;`;
 const endpoints = [
   "https://overpass-api.de/api/interpreter",
