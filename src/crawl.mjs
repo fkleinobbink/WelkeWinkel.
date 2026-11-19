@@ -192,7 +192,7 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
     const newest = list.reduce((m, p) => ((p.fetched_at || "") > m ? p.fetched_at || "" : m), "");
     if (list.some((p) => (p.fetched_at || "") !== newest)) prev.set(k, list.filter((p) => (p.fetched_at || "") === newest));
   }
-  const reuseDays = shop.reuseDays ?? 7;
+  const reuseDays = shop.reuseDays ?? (process.env.REUSE_DAYS ? +process.env.REUSE_DAYS : 30); // niet live: bekende pagina's 30 dagen hergebruiken, nieuwe eerst
   const results = new Map();
   const todo = [];
   for (const t of targets) {
