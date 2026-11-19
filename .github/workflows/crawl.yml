@@ -35,6 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       shops: ${{ steps.list.outputs.shops }}
+      jobs: ${{ steps.list.outputs.jobs }}
       max: ${{ steps.list.outputs.max }}
       minutes: ${{ steps.list.outputs.minutes }}
     steps:
@@ -49,7 +50,8 @@ jobs:
             MAX=$(node -p "require('./trigger.json').max||''")
             MINUTES=$(node -p "require('./trigger.json').minutes||''")
           fi
-          EVENT=${{ github.event_name }} node -e '
+          curl -sfL "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/status/reports.json" -o reports.json || echo "[]" > reports.json
+          EVENT=${{ github.event_name }} MAX="$MAX" node -e '
             const fs=require("fs");
             const want=(process.argv[1]||"").split(",").map(s=>s.trim()).filter(Boolean);
             let ids=fs.readdirSync("config/shops").filter(f=>f.endsWith(".json")).map(f=>f.slice(0,-5))
@@ -58,6 +60,19 @@ jobs:
             if(process.env.EVENT==="schedule") ids=ids.filter(id=>JSON.parse(fs.readFileSync("config/shops/"+id+".json")).daily===true);
             if(want.length) ids=ids.filter(i=>want.includes(i));
             fs.appendFileSync(process.env.GITHUB_OUTPUT,"shops="+JSON.stringify(ids)+"\n");
+            // grote sitemap-winkels over meerdere jobs verdelen (elke job eigen runner/IP, eigen deel van de URLs)
+            let reps=[]; try{reps=JSON.parse(fs.readFileSync("reports.json"))}catch{}
+            const urls=Object.fromEntries(reps.map(r=>[r.id,r.urls||0]));
+            const jobs=[];
+            for(const id of ids){
+              const c=JSON.parse(fs.readFileSync("config/shops/"+id+".json"));
+              const sitemapOnly=!c.listing&&!c.linkcrawl&&!c.adapter&&(c.strategy||"sitemap")==="sitemap";
+              let of=c.shards??Math.min(6,Math.max(1,Math.ceil((urls[id]||0)/25000)));
+              if(process.env.MAX||!sitemapOnly) of=1;
+              for(let k=0;k<of;k++) jobs.push({shop:id,shard:k,of});
+            }
+            fs.appendFileSync(process.env.GITHUB_OUTPUT,"jobs="+JSON.stringify(jobs)+"\n");
+            console.log(jobs.length+" jobs");
           ' "$SHOPS"
           echo "max=$MAX" >> $GITHUB_OUTPUT
           echo "minutes=${MINUTES:-330}" >> $GITHUB_OUTPUT
@@ -67,13 +82,14 @@ jobs:
   crawl:
     needs: setup
     if: needs.setup.outputs.shops != '[]'
+    name: crawl (${{ matrix.shop }}${{ matrix.of > 1 && format(' #{0}', matrix.shard) || '' }})
     runs-on: ubuntu-latest
     timeout-minutes: 350
     strategy:
       fail-fast: false
       max-parallel: 15
       matrix:
-        shop: ${{ fromJson(needs.setup.outputs.shops) }}
+        include: ${{ fromJson(needs.setup.outputs.jobs) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -98,12 +114,14 @@ jobs:
         # bij een testrun bewust niets hergebruiken, anders test je niets
         run: |
           if [ -n "${{ needs.setup.outputs.max }}" ]; then echo "testrun: geen vorige data"; exit 0; fi
-          gh release download $RELEASE -p "${{ matrix.shop }}.ndjson.gz" -D prev || echo "geen vorige data"
+          gh release download $RELEASE -p "${{ matrix.shop }}.ndjson.gz" -p "${{ matrix.shop }}.part*.ndjson.gz" -D prev || echo "geen vorige data"
+          # (los gebleven delen van een eerdere gesplitste run tellen mee; gzip-bestanden mogen achter elkaar)
+          if ls prev/*.ndjson.gz >/dev/null 2>&1; then cat prev/*.ndjson.gz > prev.ndjson.gz; fi
       - name: Crawl
         run: |
           MAX="${{ needs.setup.outputs.max }}"
-          $WRAP node --max-old-space-size=6000 src/crawl.mjs ${{ matrix.shop }} --prev prev/${{ matrix.shop }}.ndjson.gz --out out \
-            --minutes ${{ needs.setup.outputs.minutes }} ${MAX:+--max $MAX}
+          $WRAP node --max-old-space-size=6000 src/crawl.mjs ${{ matrix.shop }} --prev prev.ndjson.gz --out out \
+            --minutes ${{ needs.setup.outputs.minutes }} ${MAX:+--max $MAX} --shard ${{ matrix.shard }} --of ${{ matrix.of }}
       - name: Testcontrole
         if: needs.setup.outputs.max != ''
         run: node src/check.mjs out/${{ matrix.shop }}.ndjson.gz out/${{ matrix.shop }}.report.json | tee -a $GITHUB_STEP_SUMMARY
@@ -136,6 +154,14 @@ jobs:
           gh release download $RELEASE -p "*.ndjson.gz" -p "*.report.json" -D data --clobber || true
           rm -f data/test-*
           ls data | head -300
+      - name: Gesplitste crawls samenvoegen
+        run: |
+          IDS=$(node tools/merge-parts.mjs data)
+          for id in $IDS; do
+            gh release upload $RELEASE data/$id.ndjson.gz data/$id.report.json --clobber
+            gh api "repos/${GITHUB_REPOSITORY}/releases/tags/$RELEASE" --jq ".assets[] | select(.name|startswith(\"$id.part\")) | .name" |
+              while read n; do gh release delete-asset $RELEASE "$n" -y; done
+          done
       - name: Filialen (OpenStreetMap)
         # alleen bij de nachtelijke run (of als er nog niets is) opnieuw ophalen
         run: |

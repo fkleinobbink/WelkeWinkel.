@@ -6,10 +6,18 @@ export const UA =
 
 const hostState = new Map(); // host -> { next: timestamp }
 
-export function setHostDelay(host, ms) {
+// base = normale wachttijd voor deze host; na 429's/blokkades gaat delay omhoog en zakt daarna vanzelf weer terug naar base
+export function setHostDelay(host, ms, { base = false } = {}) {
   const s = hostState.get(host) || { next: 0, delay: 0 };
   s.delay = ms;
+  if (base || s.base == null) s.base = ms;
+  s.ok = 0;
   hostState.set(host, s);
+}
+function hostOk(host) {
+  const s = hostState.get(host);
+  if (!s || s.base == null || s.delay <= s.base) return;
+  if (++s.ok >= 40) { s.ok = 0; s.delay = Math.max(s.base, Math.round(s.delay * 0.8)); }
 }
 
 async function waitForHost(host) {
@@ -162,12 +170,13 @@ export async function get(url, opts = {}) {
       if (!ok) {
         if ([429, 500, 502, 503, 504].includes(res.status) && attempt < retries) {
           const ra = parseInt(res.headers.get("retry-after") || "", 10);
-          if (res.status === 429) { const st = hostState.get(host); if (st) st.delay = Math.min((st.delay || 250) * 1.5 + 250, 8000); }
+          if (res.status === 429) { const st = hostState.get(host); if (st) { st.delay = Math.min((st.delay || 250) * 1.5 + 250, 8000); st.ok = 0; } }
           await new Promise((r) => setTimeout(r, (Number.isFinite(ra) ? ra * 1000 : 3000 * (attempt + 1))));
           continue;
         }
         throw new HttpError(res.status, url, buf.toString("utf8").slice(0, 2000));
       }
+      hostOk(host);
       if (raw) return { status: res.status, url: res.url, headers: res.headers, buffer: buf };
       return { status: res.status, url: res.url, headers: res.headers, text: buf.toString("utf8") };
     } catch (e) {

@@ -9,6 +9,7 @@ import path from "node:path";
 import { get, setHostDelay, blockSignal, setEngine, closeBrowser } from "./http.mjs";
 import { walkSitemaps, robotsSitemaps } from "./sitemap.mjs";
 import { extractProducts, guessAmount } from "./extract.mjs";
+import { shardOf } from "./shard.mjs";
 
 // Overzichtspagina's aflopen (bv. /producten/?offSet={offset}) en productlinks verzamelen.
 // listing: { pages: ["https://x/producten/?offSet={offset}"], start: 0, step: 24, maxPages: 3000, link: "regex", base: "https://x" }
@@ -119,12 +120,14 @@ function pickProduct(list, pageUrl, multi) {
   return [out];
 }
 
-export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330, max = Infinity, log = console.log } = {}) {
+export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330, max = Infinity, shard = 0, of = 1, log = console.log } = {}) {
+  shop.fileId = of > 1 ? `${shop.id}.part${shard}` : shop.id;
   const t0 = Date.now();
   const deadline = t0 + minutes * 60000;
   const origin = `https://${shop.domain}`;
   const report = { id: shop.id, started: new Date().toISOString(), errors: {}, blocked: 0, fetched: 0, reused: 0, kept: 0, products: 0 };
-  setHostDelay(new URL(origin).host, shop.delayMs ?? 200);
+  setHostDelay(new URL(origin).host, shop.delayMs ?? 200, { base: true });
+  if (of > 1) Object.assign(report, { shard, of });
   if (shop.engine === "impersonate") setEngine("impersonate", shop.impersonate || "chrome");
   if (shop.engine === "browser") setEngine("browser", null, null, shop.browserOrigin || null);
 
@@ -166,6 +169,8 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
   for (const [from, to] of shop.urlRewrite || []) { const re = new RegExp(from); for (const u of urls) u.loc = u.loc.replace(re, to); }
   const seen = new Set();
   let targets = urls.filter((u) => (seen.has(u.loc) ? false : seen.add(u.loc)));
+  // grote winkels worden over meerdere jobs (= meerdere IP's) verdeeld; elke job doet zijn eigen deel van de URL's
+  if (of > 1) targets = targets.filter((u) => shardOf(u.loc, of) === shard);
   report.sitemapsOpened = opened;
   report.urls = targets.length;
   log(`${shop.id}: ${targets.length} product-URL's uit ${opened} sitemaps`);
@@ -181,6 +186,11 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
     const k = p.page_url || p.product_url;
     if (!prev.has(k)) prev.set(k, []);
     prev.get(k).push(p);
+  }
+  // dezelfde pagina kan in meerdere vorige bestanden staan: alleen de nieuwste versie houden
+  for (const [k, list] of prev) {
+    const newest = list.reduce((m, p) => ((p.fetched_at || "") > m ? p.fetched_at || "" : m), "");
+    if (list.some((p) => (p.fetched_at || "") !== newest)) prev.set(k, list.filter((p) => (p.fetched_at || "") === newest));
   }
   const reuseDays = shop.reuseDays ?? 7;
   const results = new Map();
@@ -198,19 +208,22 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
 
   // 3) Pagina's ophalen (eigen parser per winkel mogelijk: src/parsers/<naam>.mjs)
   const parser = shop.parser ? await import(path.resolve(`src/parsers/${shop.parser}.mjs`)) : null;
-  const conc = shop.concurrency ?? 4;
+  // tempo wordt begrensd door delayMs (start-interval per host); meer workers vangen alleen trage antwoorden op
+  const conc = Math.max(shop.concurrency ?? 0, shop.engine === "browser" ? 4 : 8);
+  let fetchMs = 0;
   const multi = !!shop.multi;
   let i = 0, consecutiveBlocks = 0, stop = false, pausedUntil = 0, cooldowns = 0, lastCheckpoint = Date.now();
   let hostDelay = shop.delayMs ?? 200;
   const baseDelay = hostDelay;
-  let okSinceSlow = 0;
   const worker = async () => {
     while (!stop && i < todo.length) {
       if (Date.now() > deadline || STOP) { stop = true; break; }
       if (Date.now() < pausedUntil) { await new Promise((r) => setTimeout(r, pausedUntil - Date.now())); continue; }
       const t = todo[i++];
       try {
+        const tf = Date.now();
         const r = await get(t.loc, { retries: 2, timeout: 30000, headers: shop.headers || {} });
+        fetchMs += Date.now() - tf;
         report.fetched++;
         let ex = parser ? { method: shop.parser, products: parser.parse(r.text, t.loc) } : extractProducts(r.text, t.loc);
         if (parser && !ex.products.length) ex = extractProducts(r.text, t.loc);
@@ -218,12 +231,6 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
         const prods = JSON.parse(JSON.stringify(pickProduct(ex.products, t.loc, multi).filter((p) => p.name)));
         if (prods.length) {
           consecutiveBlocks = 0;
-          // na een blokkade weer langzaam versnellen: elke 150 goede pagina's 25% minder wachttijd, tot de basis
-          if (hostDelay > baseDelay && ++okSinceSlow >= 150) {
-            okSinceSlow = 0;
-            hostDelay = Math.max(baseDelay, Math.round(hostDelay * 0.75));
-            setHostDelay(new URL(origin).host, hostDelay);
-          }
           results.set(t.loc, prods.map((p) => ({ ...p, page_url: t.loc, lastmod: t.lastmod, sitemap_image: t.image, fetched_at: new Date().toISOString(), method: ex.method })));
         } else {
           const b = blockSignal(r.text, r.status);
@@ -242,7 +249,7 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
         if (cooldowns >= 3) { log(`${shop.id}: geblokkeerd, stop`); report.aborted = "blocked"; stop = true; }
         else {
           cooldowns++; consecutiveBlocks = 0;
-          hostDelay = Math.min(hostDelay * 2 + 500, 10000);
+          hostDelay = Math.min(baseDelay * 2 ** cooldowns + 500, 10000);
           setHostDelay(new URL(origin).host, hostDelay);
           pausedUntil = Date.now() + 120000 * cooldowns;
           log(`${shop.id}: geblokkeerd, pauze ${2 * cooldowns} min, vertraging nu ${hostDelay}ms`);
@@ -254,6 +261,9 @@ export async function crawlShop(shop, { prevFile, outDir = "out", minutes = 330,
     }
   };
   await Promise.all(Array.from({ length: conc }, worker));
+  report.concurrency = conc;
+  report.fetchMsAvg = report.fetched ? Math.round(fetchMs / report.fetched) : null;
+  report.pagesPerMin = Math.round(report.fetched / Math.max(0.1, (Date.now() - t0) / 60000));
 
   // niet-bezochte URL's: vorige data houden
   for (const t of todo) {
@@ -267,8 +277,8 @@ function checkpoint(shop, getItems, outDir) {
   try {
     const items = getItems();
     fs.mkdirSync(outDir, { recursive: true });
-    fs.writeFileSync(`${outDir}/${shop.id}.ndjson.gz.tmp`, zlib.gzipSync(items.map((p) => JSON.stringify({ site: shop.id, ...p })).join("\n") + "\n"));
-    fs.renameSync(`${outDir}/${shop.id}.ndjson.gz.tmp`, `${outDir}/${shop.id}.ndjson.gz`);
+    fs.writeFileSync(`${outDir}/${shop.fileId}.ndjson.gz.tmp`, zlib.gzipSync(items.map((p) => JSON.stringify({ site: shop.id, ...p })).join("\n") + "\n"));
+    fs.renameSync(`${outDir}/${shop.fileId}.ndjson.gz.tmp`, `${outDir}/${shop.fileId}.ndjson.gz`);
     console.log(`${shop.id}: tussenstand opgeslagen (${items.length})`);
   } catch (e) { console.log("checkpoint mislukt", e.message); }
 }
@@ -276,14 +286,14 @@ function checkpoint(shop, getItems, outDir) {
 function finish(shop, items, report, outDir, t0) {
   fs.mkdirSync(outDir, { recursive: true });
   const gz = zlib.gzipSync(items.map((p) => JSON.stringify({ site: shop.id, ...p })).join("\n") + "\n");
-  fs.writeFileSync(`${outDir}/${shop.id}.ndjson.gz`, gz);
+  fs.writeFileSync(`${outDir}/${shop.fileId || shop.id}.ndjson.gz`, gz);
   report.products = items.length;
   report.withPrice = items.filter((p) => p.price != null).length;
   report.withGtin = items.filter((p) => p.gtin).length;
   report.minutes = Math.round((Date.now() - t0) / 6000) / 10;
   report.finished = new Date().toISOString();
   report.sample = items.slice(0, 3).map((p) => ({ name: p.name, price: p.price, url: p.product_url }));
-  fs.writeFileSync(`${outDir}/${shop.id}.report.json`, JSON.stringify(report, null, 1));
+  fs.writeFileSync(`${outDir}/${shop.fileId || shop.id}.report.json`, JSON.stringify(report, null, 1));
   console.log(JSON.stringify({ id: shop.id, products: report.products, fetched: report.fetched, reused: report.reused, kept: report.kept, errors: report.errors, minutes: report.minutes }));
   return report;
 }
@@ -299,6 +309,8 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     outDir: opt("--out", "out"),
     minutes: parseFloat(opt("--minutes", "330")),
     max: opt("--max") ? parseInt(opt("--max"), 10) : Infinity,
+    shard: parseInt(opt("--shard", "0"), 10),
+    of: parseInt(opt("--of", "1"), 10),
   });
   await closeBrowser();
 }
